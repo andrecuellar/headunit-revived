@@ -165,9 +165,11 @@ class UsbListFragment : Fragment() {
                 notifyDataSetChanged()
             } else {
                 if (AapService.isConnected) {
-                    // Already connected -> just open UI
-                    val aapIntent = Intent(mContext, AapProjectionActivity::class.java)
-                    aapIntent.putExtra(AapProjectionActivity.EXTRA_FOCUS, true)
+                    // Already connected -> bring existing projection to front
+                    val aapIntent = AapProjectionActivity.intent(mContext).apply {
+                        putExtra(AapProjectionActivity.EXTRA_FOCUS, true)
+                        addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
+                    }
                     mContext.startActivity(aapIntent)
                 } else if (device.isInAccessoryMode) {
                     // Device is in Accessory Mode but we are NOT connected.

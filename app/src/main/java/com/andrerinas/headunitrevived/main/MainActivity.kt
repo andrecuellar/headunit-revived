@@ -13,6 +13,7 @@ import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.andrerinas.headunitrevived.R
+import com.andrerinas.headunitrevived.aap.AapProjectionActivity
 import com.andrerinas.headunitrevived.aap.AapService
 import com.andrerinas.headunitrevived.app.BaseActivity
 import com.andrerinas.headunitrevived.utils.AppLog
@@ -109,6 +110,16 @@ class MainActivity : BaseActivity() {
     override fun onResume() {
         super.onResume()
         setFullscreen()
+
+        // If an Android Auto session is active, bring the projection activity to front
+        if (AapService.isConnected) {
+            AppLog.i("MainActivity: Active session detected, bringing projection to front")
+            val aapIntent = AapProjectionActivity.intent(this).apply {
+                putExtra(AapProjectionActivity.EXTRA_FOCUS, true)
+                addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
+            }
+            startActivity(aapIntent)
+        }
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
