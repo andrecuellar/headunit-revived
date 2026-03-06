@@ -33,6 +33,7 @@ import com.andrerinas.headunitrevived.connection.UsbDeviceCompat
 import com.andrerinas.headunitrevived.connection.UsbReceiver
 import com.andrerinas.headunitrevived.location.GpsLocationService
 import com.andrerinas.headunitrevived.utils.AppLog
+import com.andrerinas.headunitrevived.utils.Settings
 import com.andrerinas.headunitrevived.utils.DeviceIntent
 import com.andrerinas.headunitrevived.utils.LocaleHelper
 import com.andrerinas.headunitrevived.utils.NightModeManager
@@ -82,6 +83,16 @@ class AapService : Service(), UsbReceiver.Listener {
     private var usbStabilityJob: Job? = null
     private var stableDeviceName: String? = null
 
+    /**
+     * Tracks the number of consecutive handshake failures on an accessory-mode device
+     * (Google 18D1:2D00). Wireless AA dongles stay in accessory mode after a session
+     * ends, but the USB endpoints contain stale data from the old SSL session. Connecting
+     * to such a device always fails because the handshake reads garbage instead of a
+     * fresh VERSION_RESPONSE. After [MAX_STALE_ACCESSORY_RETRIES] failures, the app
+     * sends AOA descriptors to force the dongle to re-enumerate with clean USB buffers.
+     */
+    private var accessoryHandshakeFailures = 0
+
     fun updateMediaSessionState(isPlaying: Boolean) {
         val state = if (isPlaying) {
             android.support.v4.media.session.PlaybackStateCompat.STATE_PLAYING
@@ -127,6 +138,7 @@ class AapService : Service(), UsbReceiver.Listener {
         observeConnectedState()
         observeDisconnectedState()
         observeTransportStartedState()
+        observeErrorState()
         registerReceivers()
 
         startService(GpsLocationService.intent(this))
@@ -177,6 +189,55 @@ class AapService : Service(), UsbReceiver.Listener {
     }
 
     /**
+     * Observes [CommManager.ConnectionState.Error] to detect handshake failures on
+     * accessory-mode devices (stale wireless AA dongles). When the handshake fails on
+     * a device already in accessory mode, the USB endpoints contain leftover data from
+     * a previous session. After [MAX_STALE_ACCESSORY_RETRIES] failures, we force the
+     * dongle to re-enumerate by sending AOA descriptors, which resets its USB state.
+     */
+    private fun observeErrorState() {
+        serviceScope.launch {
+            commManager.connectionState
+                .filterIsInstance<CommManager.ConnectionState.Error>()
+                .collect { error ->
+                    if (error.message.contains("Handshake failed")) {
+                        onHandshakeFailed()
+                    }
+                }
+        }
+    }
+
+    /**
+     * Called when a handshake fails. If an accessory-mode device is still present,
+     * it's likely a stale wireless AA dongle. Force re-enumeration by sending AOA
+     * descriptors — this resets the dongle's USB state so the next connection
+     * starts with clean buffers.
+     */
+    private fun onHandshakeFailed() {
+        val usbManager = getSystemService(Context.USB_SERVICE) as UsbManager
+        val accessoryDevice = usbManager.deviceList.values.firstOrNull {
+            UsbDeviceCompat.isInAccessoryMode(it)
+        } ?: return
+
+        accessoryHandshakeFailures++
+        val deviceName = UsbDeviceCompat(accessoryDevice).uniqueName
+        AppLog.w("Handshake failed on accessory device $deviceName (failure #$accessoryHandshakeFailures)")
+
+        if (accessoryHandshakeFailures > MAX_STALE_ACCESSORY_RETRIES) {
+            AppLog.i("Stale accessory detected: forcing re-enumeration via AOA descriptors for $deviceName")
+            accessoryHandshakeFailures = 0
+            val usbMode = UsbAccessoryMode(usbManager)
+            serviceScope.launch(Dispatchers.IO) {
+                if (usbMode.connectAndSwitch(accessoryDevice)) {
+                    AppLog.i("AOA re-enumeration requested for stale device $deviceName")
+                } else {
+                    AppLog.w("AOA re-enumeration failed for $deviceName, waiting for device to reset on its own")
+                }
+            }
+        }
+    }
+
+    /**
      * Observes [CommManager.ConnectionState.Disconnected] and calls onDisconnect
      * `drop(1)` skips the initial `Disconnected` value that `StateFlow` replays on subscribe.
      */
@@ -204,6 +265,7 @@ class AapService : Service(), UsbReceiver.Listener {
      */
     private fun onConnected() {
         updateNotification()
+        accessoryHandshakeFailures = 0
         mediaSession = MediaSessionCompat(this, "HeadunitRevived").apply { isActive = true }
         serviceScope.launch { commManager.startHandshake() }
         startActivity(AapProjectionActivity.intent(this).apply {
@@ -232,9 +294,14 @@ class AapService : Service(), UsbReceiver.Listener {
     }
 
     /**
-     * Schedules a reconnect attempt 2 seconds after an unexpected disconnect:
-     * - **Server mode** ([wirelessServer] != null): always restarts the discovery loop.
-     * - **Auto WiFi mode** (mode == 1): triggers a one-shot scan on unclean disconnect only.
+     * Schedules a reconnect attempt after a disconnect:
+     *
+     * - **Server mode** ([wirelessServer] != null): always restarts the WiFi discovery loop.
+     * - **Auto WiFi mode** (mode == 1): triggers a one-shot WiFi scan on unclean disconnect.
+     * - **USB auto-connect**: if auto-connect is enabled and the last connection was USB,
+     *   schedule a USB reconnect attempt. This handles wireless AA dongles that stay in
+     *   stale accessory mode after a session ends — the dongle eventually re-enumerates
+     *   as its native identity, and [checkAlreadyConnectedUsb] picks it up.
      *
      * [CommManager.ConnectionState.Disconnected.isClean] is `true` only when the phone
      * explicitly sends a `ByeByeRequest`. All other causes (USB detach, read error, explicit
@@ -247,9 +314,27 @@ class AapService : Service(), UsbReceiver.Listener {
                 delay(2000)
                 if (!commManager.isConnected) startDiscovery()
             }
-        } else if (!state.isClean) {
-            val mode = App.provide(this).settings.wifiConnectionMode
-            if (mode == 1) {
+            return
+        }
+
+        val settings = App.provide(this).settings
+        val lastType = settings.lastConnectionType
+
+        // USB auto-reconnect: try again after a delay to give the dongle time to re-enumerate
+        if (lastType == Settings.CONNECTION_TYPE_USB &&
+            (settings.autoConnectLastSession || settings.autoConnectSingleUsbDevice)) {
+            AppLog.i("AapService: USB disconnect. Scheduling reconnect check in 3s...")
+            serviceScope.launch {
+                delay(3000)
+                if (!commManager.isConnected) {
+                    checkAlreadyConnectedUsb(force = true)
+                }
+            }
+        }
+
+        if (!state.isClean) {
+            val mode = settings.wifiConnectionMode
+            if (mode == 1 && lastType != Settings.CONNECTION_TYPE_USB) {
                 AppLog.i("AapService: Unclean disconnect in Auto Mode. Retrying discovery in 2s...")
                 serviceScope.launch {
                     delay(2000)
@@ -894,5 +979,8 @@ class AapService : Service(), UsbReceiver.Listener {
          * does nothing for this action.
          */
         const val ACTION_CONNECT_SOCKET            = "com.andrerinas.headunitrevived.ACTION_CONNECT_SOCKET"
+
+        /** Max handshake failures on a stale accessory device before forcing AOA re-enumeration. */
+        private const val MAX_STALE_ACCESSORY_RETRIES = 1
     }
 }
