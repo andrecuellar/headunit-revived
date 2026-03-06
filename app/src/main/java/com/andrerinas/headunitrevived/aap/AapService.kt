@@ -83,6 +83,7 @@ class AapService : Service(), UsbReceiver.Listener {
 
     private var usbStabilityJob: Job? = null
     private var stableDeviceName: String? = null
+    private var accessoryHandshakeFailures = 0
 
     private val transport: AapTransport
         get() = App.provide(this).transport
@@ -718,17 +719,18 @@ class AapService : Service(), UsbReceiver.Listener {
                 }
 
                 if (transportStarted) {
+                    accessoryHandshakeFailures = 0
                     isConnected = true;
                     updateNotification();
                     sendBroadcast(ConnectedIntent());
-                    
+
                     transport.onAudioFocusStateChanged = { isPlaying ->
                         updateMediaSessionState(isPlaying)
                     }
 
                     // Sync current night mode state immediately after connection
                     nightModeManager?.resendCurrentState()
-                    
+
                     if (pendingConnectionType.isNotEmpty()) {
                         val settings = App.provide(this).settings;
                         settings.saveLastConnection(
@@ -748,6 +750,7 @@ class AapService : Service(), UsbReceiver.Listener {
                     };
                     startActivity(aapIntent);
                 } else {
+                    onHandshakeFailed()
                     stopSelf();
                 }
             }
@@ -780,9 +783,20 @@ class AapService : Service(), UsbReceiver.Listener {
                 if (!isConnected) startDiscovery();
             }
         } else if (!isClean && !isDestroying) {
-             val mode = App.provide(this).settings.wifiConnectionMode
-             val lastType = App.provide(this).settings.lastConnectionType
-             if (mode == 1 && lastType == Settings.CONNECTION_TYPE_WIFI) { // Auto Mode, WiFi only
+             val settings = App.provide(this).settings
+             val lastType = settings.lastConnectionType
+
+             if (lastType == Settings.CONNECTION_TYPE_USB &&
+                 (settings.autoConnectLastSession || settings.autoConnectSingleUsbDevice)) {
+                 AppLog.i("AapService: USB disconnect. Scheduling reconnect check in 3s...")
+                 serviceScope.launch {
+                     delay(3000)
+                     if (!isConnected) checkAlreadyConnectedUsb()
+                 }
+             }
+
+             val mode = settings.wifiConnectionMode
+             if (mode == 1 && lastType == Settings.CONNECTION_TYPE_WIFI) {
                  AppLog.i("AapService: Unclean WiFi disconnect in Auto Mode. Retrying discovery in 2s...");
                  serviceScope.launch {
                      delay(2000);
@@ -994,6 +1008,30 @@ class AapService : Service(), UsbReceiver.Listener {
     }
     override fun onUsbPermission(granted: Boolean, connect: Boolean, device: UsbDevice) {}
 
+    private fun onHandshakeFailed() {
+        val usbManager = getSystemService(Context.USB_SERVICE) as UsbManager
+        val accessoryDevice = usbManager.deviceList.values.firstOrNull {
+            UsbDeviceCompat.isInAccessoryMode(it)
+        } ?: return
+
+        accessoryHandshakeFailures++
+        val deviceName = UsbDeviceCompat(accessoryDevice).uniqueName
+        AppLog.w("Handshake failed on accessory device $deviceName (failure #$accessoryHandshakeFailures)")
+
+        if (accessoryHandshakeFailures > MAX_STALE_ACCESSORY_RETRIES) {
+            AppLog.i("Stale accessory detected: forcing re-enumeration via AOA descriptors for $deviceName")
+            accessoryHandshakeFailures = 0
+            val usbMode = UsbAccessoryMode(usbManager)
+            serviceScope.launch(Dispatchers.IO) {
+                if (usbMode.connectAndSwitch(accessoryDevice)) {
+                    AppLog.i("AOA re-enumeration requested for stale device $deviceName")
+                } else {
+                    AppLog.w("AOA re-enumeration failed for $deviceName")
+                }
+            }
+        }
+    }
+
     companion object {
         var isConnected = false;
         var selfMode = false;
@@ -1014,6 +1052,7 @@ class AapService : Service(), UsbReceiver.Listener {
         const val ACTION_RESET_USB = "com.andrerinas.headunitrevived.ACTION_RESET_USB"
         private const val TYPE_USB = 1;
         private const val TYPE_WIFI = 2;
+        private const val MAX_STALE_ACCESSORY_RETRIES = 1
         private const val EXTRA_CONNECTION_TYPE = "extra_connection_type";
         private const val EXTRA_IP = "extra_ip";
 
