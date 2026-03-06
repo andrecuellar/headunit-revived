@@ -181,10 +181,10 @@ class AapService : Service(), UsbReceiver.Listener {
             commManager.connectionState
                 .filterIsInstance<CommManager.ConnectionState.TransportStarted>()
                 .collect {
+                    accessoryHandshakeFailures = 0
                     sendBroadcast(Intent(ACTION_REQUEST_NIGHT_MODE_UPDATE).apply {
                         setPackage(packageName)
                     })
-                }
         }
     }
 
@@ -265,7 +265,6 @@ class AapService : Service(), UsbReceiver.Listener {
      */
     private fun onConnected() {
         updateNotification()
-        accessoryHandshakeFailures = 0
         mediaSession = MediaSessionCompat(this, "HeadunitRevived").apply { isActive = true }
         serviceScope.launch { commManager.startHandshake() }
         startActivity(AapProjectionActivity.intent(this).apply {
