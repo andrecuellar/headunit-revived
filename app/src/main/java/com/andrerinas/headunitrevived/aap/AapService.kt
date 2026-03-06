@@ -185,6 +185,7 @@ class AapService : Service(), UsbReceiver.Listener {
                     sendBroadcast(Intent(ACTION_REQUEST_NIGHT_MODE_UPDATE).apply {
                         setPackage(packageName)
                     })
+                }
         }
     }
 
