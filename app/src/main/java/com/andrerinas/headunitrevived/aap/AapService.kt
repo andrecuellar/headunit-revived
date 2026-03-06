@@ -788,9 +788,9 @@ class AapService : Service(), UsbReceiver.Listener {
 
              if (lastType == Settings.CONNECTION_TYPE_USB &&
                  (settings.autoConnectLastSession || settings.autoConnectSingleUsbDevice)) {
-                 AppLog.i("AapService: USB disconnect. Scheduling reconnect check in 3s...")
+                 AppLog.i("AapService: USB disconnect. Scheduling reconnect check in ${USB_RECONNECT_DELAY_MS}ms...")
                  serviceScope.launch {
-                     delay(3000)
+                     delay(USB_RECONNECT_DELAY_MS)
                      if (!isConnected) checkAlreadyConnectedUsb()
                  }
              }
@@ -1023,10 +1023,14 @@ class AapService : Service(), UsbReceiver.Listener {
             accessoryHandshakeFailures = 0
             val usbMode = UsbAccessoryMode(usbManager)
             serviceScope.launch(Dispatchers.IO) {
-                if (usbMode.connectAndSwitch(accessoryDevice)) {
-                    AppLog.i("AOA re-enumeration requested for stale device $deviceName")
-                } else {
-                    AppLog.w("AOA re-enumeration failed for $deviceName")
+                try {
+                    if (usbMode.connectAndSwitch(accessoryDevice)) {
+                        AppLog.i("AOA re-enumeration requested for stale device $deviceName")
+                    } else {
+                        AppLog.w("AOA re-enumeration failed for $deviceName")
+                    }
+                } catch (e: Exception) {
+                    AppLog.e("AOA re-enumeration for $deviceName failed with exception", e)
                 }
             }
         }
@@ -1053,6 +1057,7 @@ class AapService : Service(), UsbReceiver.Listener {
         private const val TYPE_USB = 1;
         private const val TYPE_WIFI = 2;
         private const val MAX_STALE_ACCESSORY_RETRIES = 1
+        private const val USB_RECONNECT_DELAY_MS = 3000L
         private const val EXTRA_CONNECTION_TYPE = "extra_connection_type";
         private const val EXTRA_IP = "extra_ip";
 
