@@ -190,12 +190,10 @@ class AapService : Service(), UsbReceiver.Listener {
         LogExporter.startCapture(this, LogExporter.LogLevel.DEBUG)
         AppLog.i("Auto-started continuous log capture")
 
-        LogExporter.startCapture(this, LogExporter.LogLevel.DEBUG)
-        AppLog.i("Auto-started continuous log capture")
-
         startService(GpsLocationService.intent(this))
         wifiDirectManager = WifiDirectManager(this)
         initWifiMode()
+        AppLog.i("AapService.onCreate: About to run startup USB check")
         checkAlreadyConnectedUsb()
         registerNetworkMonitor()
     }
@@ -351,6 +349,9 @@ class AapService : Service(), UsbReceiver.Listener {
      * disconnect) produce `isClean = false`.
      */
     private fun scheduleReconnectIfNeeded(state: CommManager.ConnectionState.Disconnected) {
+        AppLog.i("scheduleReconnectIfNeeded: isClean=${state.isClean}, isUserExit=${state.isUserExit}, " +
+                "selfMode=$selfMode, userExitedAA=$userExitedAA, " +
+                "wirelessServer=${wirelessServer != null}")
         if (selfMode) {
             AppLog.i("AapService: Self Mode disconnected. Not restarting.")
             selfMode = false
@@ -505,6 +506,7 @@ class AapService : Service(), UsbReceiver.Listener {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        AppLog.i("AapService.onStartCommand: action=${intent?.action}, flags=$flags, startId=$startId")
         // Handle stop before re-posting the notification to avoid a flash
         if (intent?.action == ACTION_STOP_SERVICE) {
             AppLog.i("Stop action received.")
@@ -559,6 +561,10 @@ class AapService : Service(), UsbReceiver.Listener {
     // -------------------------------------------------------------------------
 
     override fun onUsbAttach(device: UsbDevice) {
+        val dn = UsbDeviceCompat(device).uniqueName
+        AppLog.i("onUsbAttach: device=$dn (${String.format("%04X:%04X", device.vendorId, device.productId)}), " +
+                "isAccessoryMode=${UsbDeviceCompat.isInAccessoryMode(device)}, " +
+                "userExitedAA=$userExitedAA, isConnected=${commManager.isConnected}")
         userExitedAA = false
         if (UsbDeviceCompat.isInAccessoryMode(device)) {
             // Device already in AOA mode (re-enumerated after UsbAttachedActivity switched it).
@@ -648,13 +654,21 @@ class AapService : Service(), UsbReceiver.Listener {
      */
     private fun onHandshakeFailed() {
         val usbManager = getSystemService(Context.USB_SERVICE) as UsbManager
-        val accessoryDevice = usbManager.deviceList.values.firstOrNull {
+        val allDevices = usbManager.deviceList
+        AppLog.i("onHandshakeFailed: ${allDevices.size} USB device(s) present: ${
+            allDevices.values.joinToString { "${UsbDeviceCompat(it).uniqueName} (${String.format("%04X:%04X", it.vendorId, it.productId)})" }
+        }")
+        val accessoryDevice = allDevices.values.firstOrNull {
             UsbDeviceCompat.isInAccessoryMode(it)
-        } ?: return
+        }
+        if (accessoryDevice == null) {
+            AppLog.i("onHandshakeFailed: No accessory-mode device found, nothing to retry")
+            return
+        }
 
         accessoryHandshakeFailures++
         val deviceName = UsbDeviceCompat(accessoryDevice).uniqueName
-        AppLog.w("Handshake failed on accessory device $deviceName (failure #$accessoryHandshakeFailures)")
+        AppLog.w("Handshake failed on accessory device $deviceName (failure #$accessoryHandshakeFailures, max=$MAX_STALE_ACCESSORY_RETRIES)")
 
         if (accessoryHandshakeFailures > MAX_STALE_ACCESSORY_RETRIES) {
             AppLog.i("Stale accessory detected: forcing re-enumeration via AOA descriptors for $deviceName")
@@ -691,13 +705,28 @@ class AapService : Service(), UsbReceiver.Listener {
         val lastSession = settings.autoConnectLastSession
         val singleUsb = settings.autoConnectSingleUsbDevice
 
-        if (!force && !lastSession && !singleUsb) return
+        AppLog.i("checkAlreadyConnectedUsb: force=$force, lastSession=$lastSession, singleUsb=$singleUsb, " +
+                "isConnected=${commManager.isConnected}, " +
+                "connectionState=${commManager.connectionState.value::class.simpleName}, " +
+                "isSwitchingToAccessory=${isSwitchingToAccessory.get()}, " +
+                "userExitedAA=$userExitedAA")
+
+        if (!force && !lastSession && !singleUsb) {
+            AppLog.i("checkAlreadyConnectedUsb: Skipping — no auto-connect enabled and not forced")
+            return
+        }
         if (commManager.isConnected ||
             commManager.connectionState.value is CommManager.ConnectionState.Connecting ||
-            isSwitchingToAccessory.get()) return
+            isSwitchingToAccessory.get()) {
+            AppLog.i("checkAlreadyConnectedUsb: Skipping — already connected/connecting/switching")
+            return
+        }
 
         val usbManager = getSystemService(Context.USB_SERVICE) as UsbManager
         val deviceList = usbManager.deviceList
+        AppLog.i("checkAlreadyConnectedUsb: Found ${deviceList.size} USB device(s): ${
+            deviceList.values.joinToString { "${UsbDeviceCompat(it).uniqueName} (${String.format("%04X:%04X", it.vendorId, it.productId)})" }
+        }")
 
         // Check for devices already in accessory mode first
         for (device in deviceList.values) {
@@ -769,8 +798,10 @@ class AapService : Service(), UsbReceiver.Listener {
 
     private fun performSingleUsbConnect(device: UsbDevice) {
         val usbManager = getSystemService(Context.USB_SERVICE) as UsbManager
-        if (usbManager.hasPermission(device)) {
-            val deviceName = UsbDeviceCompat(device).uniqueName
+        val hasPermission = usbManager.hasPermission(device)
+        val deviceName = UsbDeviceCompat(device).uniqueName
+        AppLog.i("performSingleUsbConnect: device=$deviceName (${String.format("%04X:%04X", device.vendorId, device.productId)}), hasPermission=$hasPermission")
+        if (hasPermission) {
             AppLog.i("Single USB auto-connect: connecting to $deviceName")
             isSwitchingToAccessory.set(true)
             val usbMode = UsbAccessoryMode(usbManager)

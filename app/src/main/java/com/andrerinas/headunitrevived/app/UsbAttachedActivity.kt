@@ -45,17 +45,27 @@ class UsbAttachedActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        AppLog.i("USB Intent: $intent")
+        AppLog.i("UsbAttachedActivity: USB Intent received. Action: ${intent?.action}, Data: ${intent?.data}")
 
         val device = resolveUsbDevice(intent)
         if (device == null) {
+            AppLog.w("UsbAttachedActivity: No USB device found in intent, finishing")
             finish()
             return
         }
 
+        val deviceCompat = UsbDeviceCompat(device)
+        val usbManager = getSystemService(Context.USB_SERVICE) as UsbManager
+        val hasPermission = usbManager.hasPermission(device)
+        AppLog.i("UsbAttachedActivity: Device=${deviceCompat.uniqueName} " +
+                "(${String.format("%04X:%04X", device.vendorId, device.productId)}), " +
+                "isAccessoryMode=${UsbDeviceCompat.isInAccessoryMode(device)}, " +
+                "hasPermission=$hasPermission, " +
+                "isConnected=${App.provide(this).commManager.isConnected}")
+
         val settings = Settings(this)
         if (settings.autoStartOnUsb && !App.provide(this).commManager.isConnected) {
-            AppLog.i("USB auto-start: launching app")
+            AppLog.i("UsbAttachedActivity: USB auto-start enabled, launching MainActivity")
             try {
                 startActivity(Intent(this, MainActivity::class.java).apply {
                     addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -80,14 +90,12 @@ class UsbAttachedActivity : Activity() {
             return
         }
 
-        val deviceCompat = UsbDeviceCompat(device)
         if (!settings.isConnectingDevice(deviceCompat)) {
             AppLog.i("Skipping device " + deviceCompat.uniqueName)
             finish()
             return
         }
 
-        val usbManager = getSystemService(Context.USB_SERVICE) as UsbManager
         val usbMode = UsbAccessoryMode(usbManager)
         AppLog.i("Switching USB device to accessory mode " + deviceCompat.uniqueName)
         Toast.makeText(this, getString(R.string.switching_usb_accessory_mode, deviceCompat.uniqueName), Toast.LENGTH_SHORT).show()

@@ -37,8 +37,6 @@ class HomeFragment : Fragment() {
     private lateinit var wifi_text_view: TextView
     private lateinit var exitButton: Button
     private lateinit var self_mode_text: TextView
-    private var hasAttemptedAutoConnect = false
-    private var hasAttemptedSingleUsbAutoConnect = false
 
     private fun updateWifiButtonFeedback(scanning: Boolean) {
         if (scanning) {
@@ -82,24 +80,36 @@ class HomeFragment : Fragment() {
 
         val appSettings = App.provide(requireContext()).settings
 
+        AppLog.i("HomeFragment: Auto-connect priority order: ${appSettings.autoConnectPriorityOrder}, " +
+                "isConnected=${commManager.isConnected}, " +
+                "hasAttemptedAutoConnect=$hasAttemptedAutoConnect, " +
+                "hasAttemptedSingleUsbAutoConnect=$hasAttemptedSingleUsbAutoConnect, " +
+                "hasAutoStarted=$hasAutoStarted")
+
         // Execute auto-connect methods in user-defined priority order
         for (methodId in appSettings.autoConnectPriorityOrder) {
-            if (commManager.isConnected) break
+            if (commManager.isConnected) {
+                AppLog.i("HomeFragment: Already connected, stopping auto-connect loop")
+                break
+            }
             when (methodId) {
                 Settings.AUTO_CONNECT_LAST_SESSION -> {
                     if (appSettings.autoConnectLastSession && !hasAttemptedAutoConnect && !commManager.isConnected) {
+                        AppLog.i("HomeFragment: Attempting last-session auto-connect")
                         hasAttemptedAutoConnect = true
                         attemptAutoConnect()
                     }
                 }
                 Settings.AUTO_CONNECT_SELF_MODE -> {
                     if (appSettings.autoStartSelfMode && !hasAutoStarted && !commManager.isConnected) {
+                        AppLog.i("HomeFragment: Attempting self-mode auto-start")
                         hasAutoStarted = true
                         startSelfMode()
                     }
                 }
                 Settings.AUTO_CONNECT_SINGLE_USB -> {
                     if (appSettings.autoConnectSingleUsbDevice && !hasAttemptedSingleUsbAutoConnect && !commManager.isConnected) {
+                        AppLog.i("HomeFragment: Attempting single-USB auto-connect")
                         hasAttemptedSingleUsbAutoConnect = true
                         attemptSingleUsbAutoConnect()
                     }
@@ -273,8 +283,13 @@ class HomeFragment : Fragment() {
 
     companion object {
         private var hasAutoStarted = false
+        private var hasAttemptedAutoConnect = false
+        private var hasAttemptedSingleUsbAutoConnect = false
+
         fun resetAutoStart() {
             hasAutoStarted = false
+            hasAttemptedAutoConnect = false
+            hasAttemptedSingleUsbAutoConnect = false
         }
     }
 }
