@@ -8,4 +8,15 @@
         <item>Senzor de lumină</item>
         <item>Luminozitate ecran</item>
     </string-array>
+
+    <string-array name="app_theme">
+        <item>Automat (Sistem)</item>
+        <item>Deschis</item>
+        <item>Întunecat</item>
+        <item>Întunecat extrem</item>
+        <item>Auto (Răsărit/Apus)</item>
+        <item>Ora manuală</item>
+        <item>Senzor de lumină</item>
+        <item>Luminozitatea ecranului</item>
+    </string-array>
 </resources>

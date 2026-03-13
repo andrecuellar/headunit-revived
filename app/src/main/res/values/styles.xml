@@ -61,4 +61,10 @@
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowNoTitle">true</item>
     </style>
+
+    <style name="ThemeOverlay.ExtremeDark" parent="">
+        <item name="colorSurface">@color/extreme_dark_background</item>
+        <item name="android:colorBackground">@color/extreme_dark_background</item>
+        <item name="android:windowBackground">@color/extreme_dark_background</item>
+    </style>
 </resources>

@@ -8,4 +8,15 @@
         <item>光傳感器</item>
         <item>屏幕亮度</item>
     </string-array>
+
+    <string-array name="app_theme">
+        <item>自動（系統）</item>
+        <item>淺色</item>
+        <item>深色</item>
+        <item>極致深色</item>
+        <item>自動（日出/日落）</item>
+        <item>手動時間</item>
+        <item>光線感測器</item>
+        <item>螢幕亮度</item>
+    </string-array>
 </resources>

@@ -19,13 +19,17 @@
     <string name="dpi">Densitate pixeli (DPI)</string>
     <string name="mic_sample_rate">Rată eșantionare microfon</string>
     <string name="keymap">Mapare taste</string>
-    <string name="night_mode">Mod de noapte</string>
+    <string name="night_mode">Mod întunecat (Android Auto)</string>
     <string name="night_mode_threshold">Prag mod de noapte</string>
     <string name="enter_threshold_value">Introdu valoarea pragului</string>
     <string name="threshold_lux_desc">Valoare Lux (0–10000). Sub aceasta = Noapte.</string>
     <string name="threshold_brightness_desc">Luminozitate (0–255). Sub aceasta = Noapte.</string>
     <string name="night_mode_start">Oră început mod de noapte</string>
     <string name="night_mode_end">Oră sfârșit mod de noapte</string>
+
+    <string name="app_theme">Mod întunecat (Aplicație)</string>
+    <string name="app_theme_description">Controlează aspectul vizual al aplicației</string>
+    <string name="change_app_theme">Schimbă tema</string>
 
     <string name="reconnection_required_title">Reconectare necesară</string>
     <string name="reconnection_required_message">Dispozitivul este în așteptare. Te rog să deconectezi și să reconectezi cablul USB pentru a reporni Android Auto.</string>

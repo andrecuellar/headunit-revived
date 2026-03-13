@@ -8,4 +8,15 @@
         <item>Датчик світла</item>
         <item>Яскравість екрана</item>
     </string-array>
+
+    <string-array name="app_theme">
+        <item>Автоматично (Система)</item>
+        <item>Світла</item>
+        <item>Темна</item>
+        <item>Надтемна</item>
+        <item>Авто (Схід/Захід сонця)</item>
+        <item>Ручний час</item>
+        <item>Датчик світла</item>
+        <item>Яскравість екрану</item>
+    </string-array>
 </resources>

@@ -19,13 +19,17 @@
     <string name="dpi">Pixel density (DPI)</string>
     <string name="mic_sample_rate">Mic sample rate</string>
     <string name="keymap">Keymap</string>
-    <string name="night_mode">Night mode</string>
+    <string name="night_mode">Dark Mode (Android Auto)</string>
     <string name="night_mode_threshold">Night Mode Threshold</string>
     <string name="enter_threshold_value">Enter Threshold Value</string>
     <string name="threshold_lux_desc">Lux value (0–10000). Below this = Night.</string>
     <string name="threshold_brightness_desc">Brightness value (0–255). Below this = Night.</string>
     <string name="night_mode_start">Night Mode Start Time</string>
     <string name="night_mode_end">Night Mode End Time</string>
+
+    <string name="app_theme">Dark Mode (Application)</string>
+    <string name="app_theme_description">Control the app\'s visual appearance</string>
+    <string name="change_app_theme">Change App Theme</string>
 
     <string name="reconnection_required_title">Reconnection Required</string>
     <string name="reconnection_required_message">The device is in a waiting state. Please unplug and re-plug the USB cable to start Android Auto again.</string>

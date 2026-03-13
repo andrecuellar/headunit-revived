@@ -19,13 +19,17 @@
     <string name="dpi">Hustota pixelů (DPI)</string>
     <string name="mic_sample_rate">Vzorkovací frekvence mikrofonu</string>
     <string name="keymap">Mapování kláves</string>
-    <string name="night_mode">Noční režim</string>
+    <string name="night_mode">Tmavý režim (Android Auto)</string>
     <string name="night_mode_threshold">Práh nočního režimu</string>
     <string name="enter_threshold_value">Zadejte hodnotu prahu</string>
     <string name="threshold_lux_desc">Hodnota Lux (0-10000). Pod touto hodnotou = Noc.</string>
     <string name="threshold_brightness_desc">Hodnota jasu (0-255). Pod touto hodnotou = Noc.</string>
     <string name="night_mode_start">Čas zahájení nočního režimu</string>
     <string name="night_mode_end">Čas ukončení nočního režimu</string>
+
+    <string name="app_theme">Tmavý režim (Aplikace)</string>
+    <string name="app_theme_description">Ovládejte vzhled aplikace</string>
+    <string name="change_app_theme">Změnit téma</string>
 
     <string name="reconnection_required_title">Vyžadováno opětovné připojení</string>
     <string name="reconnection_required_message">Zařízení čeká. Odpojte a znovu připojte kabel USB pro restart Android Auto.</string>

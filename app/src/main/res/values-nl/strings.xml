@@ -18,13 +18,17 @@
     <string name="dpi">Pixel dichtheid (DPI)</string>
     <string name="mic_sample_rate">Samplefrequentie van de microfoon</string>
     <string name="keymap">Keymap</string>
-    <string name="night_mode">Nacht modes</string>
+    <string name="night_mode">Donkere modus (Android Auto)</string>
     <string name="night_mode_threshold">Drempelwaarde nachtmodus</string>
     <string name="enter_threshold_value">Voer drempelwaarde in</string>
     <string name="threshold_lux_desc">Lux waarde (0-10000). Hieronder = Nacht.</string>
     <string name="threshold_brightness_desc">Helderheidswaarde (0-255). Hieronder = Nacht.</string>
     <string name="night_mode_start">Starttijd nachtmodus</string>
     <string name="night_mode_end">Eindtijd nachtmodus</string>
+
+    <string name="app_theme">Donkere modus (Applicatie)</string>
+    <string name="app_theme_description">Bepaal het uiterlijk van de app</string>
+    <string name="change_app_theme">Thema wijzigen</string>
 
     <string name="reconnection_required_title">Opnieuw verbinden vereist</string>
     <string name="reconnection_required_message">Het apparaat staat in de wachtstand. Koppel de USB-kabel los en sluit deze opnieuw aan om Android Auto opnieuw te starten.</string>

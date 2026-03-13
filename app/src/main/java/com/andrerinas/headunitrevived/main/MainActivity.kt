@@ -61,6 +61,9 @@ class MainActivity : BaseActivity() {
         }
 
         setTheme(R.style.AppTheme)
+        if (Settings(this).appTheme == Settings.AppTheme.EXTREME_DARK) {
+            theme.applyStyle(R.style.ThemeOverlay_ExtremeDark, true)
+        }
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
 

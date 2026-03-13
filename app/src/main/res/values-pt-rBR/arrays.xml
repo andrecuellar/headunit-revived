@@ -8,4 +8,15 @@
         <item>Sensor de luz</item>
         <item>Brilho da tela</item>
     </string-array>
+
+    <string-array name="app_theme">
+        <item>Automático (Sistema)</item>
+        <item>Claro</item>
+        <item>Escuro</item>
+        <item>Escuro extremo</item>
+        <item>Auto (Nascer/Pôr do sol)</item>
+        <item>Hora manual</item>
+        <item>Sensor de luz</item>
+        <item>Brilho da tela</item>
+    </string-array>
 </resources>

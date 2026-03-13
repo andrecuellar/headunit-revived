@@ -19,13 +19,17 @@
     <string name="dpi">كثافة البكسل (DPI)</string>
     <string name="mic_sample_rate">معدل أخذ عينات الميكروفون</string>
     <string name="keymap">مفاتيح التحكم</string>
-    <string name="night_mode">الوضع الليلي</string>
+    <string name="night_mode">الوضع الداكن (Android Auto)</string>
     <string name="night_mode_threshold">عتبة الوضع الليلي</string>
     <string name="enter_threshold_value">أدخل قيمة العتبة</string>
     <string name="threshold_lux_desc">قيمة Lux (0–10000). ما دونها = ليلي.</string>
     <string name="threshold_brightness_desc">قيمة السطوع (0–255). ما دونها = ليلي.</string>
     <string name="night_mode_start">وقت بدء الوضع الليلي</string>
     <string name="night_mode_end">وقت انتهاء الوضع الليلي</string>
+
+    <string name="app_theme">الوضع الداكن (التطبيق)</string>
+    <string name="app_theme_description">التحكم في المظهر المرئي للتطبيق</string>
+    <string name="change_app_theme">تغيير سمة التطبيق</string>
 
     <string name="reconnection_required_title">يلزم إعادة الاتصال</string>
     <string name="reconnection_required_message">الجهاز في حالة انتظار. يرجى فصل كابل USB وإعادة توصيله لبدء Android Auto مجددا.</string>

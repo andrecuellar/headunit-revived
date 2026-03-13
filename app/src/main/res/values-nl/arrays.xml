@@ -8,4 +8,15 @@
         <item>Lichtsensor</item>
         <item>Schermhelderheid</item>
     </string-array>
+
+    <string-array name="app_theme">
+        <item>Automatisch (Systeem)</item>
+        <item>Licht</item>
+        <item>Donker</item>
+        <item>Extra donker</item>
+        <item>Auto (Zonsopgang/Ondergang)</item>
+        <item>Handmatige tijd</item>
+        <item>Lichtsensor</item>
+        <item>Schermhelderheid</item>
+    </string-array>
 </resources>

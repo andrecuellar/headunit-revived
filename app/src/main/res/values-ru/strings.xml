@@ -19,13 +19,17 @@
     <string name="dpi">Плотность пикселей (DPI)</string>
     <string name="mic_sample_rate">Частота дискретизации микрофона</string>
     <string name="keymap">Раскладка клавиш</string>
-    <string name="night_mode">Ночной режим</string>
+    <string name="night_mode">Тёмный режим (Android Auto)</string>
     <string name="night_mode_threshold">Порог ночного режима</string>
     <string name="enter_threshold_value">Введите пороговое значение</string>
     <string name="threshold_lux_desc">Значение люкс (0-10000). Ниже = Ночь.</string>
     <string name="threshold_brightness_desc">Значение яркости (0-255). Ниже = Ночь.</string>
     <string name="night_mode_start">Время начала ночного режима</string>
     <string name="night_mode_end">Время окончания ночного режима</string>
+
+    <string name="app_theme">Тёмный режим (Приложение)</string>
+    <string name="app_theme_description">Управление внешним видом приложения</string>
+    <string name="change_app_theme">Изменить тему</string>
 
     <string name="reconnection_required_title">Требуется переподключение</string>
     <string name="reconnection_required_message">Устройство находится в режиме ожидания. Отсоедините и снова подключите USB-кабель для перезапуска Android Auto.</string>

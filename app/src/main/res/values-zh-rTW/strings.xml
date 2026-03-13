@@ -18,13 +18,17 @@
     <string name="dpi">像素密度 (DPI)</string>
     <string name="mic_sample_rate">麥克風取樣率</string>
     <string name="keymap">按鍵映射</string>
-    <string name="night_mode">夜晚模式</string>
+    <string name="night_mode">深色模式（Android Auto）</string>
     <string name="night_mode_threshold">夜間模式閾值</string>
     <string name="enter_threshold_value">輸入閾值</string>
     <string name="threshold_lux_desc">Lux 值 (0-10000)。低於此值 = 夜間。</string>
     <string name="threshold_brightness_desc">亮度值 (0-255)。低於此值 = 夜間。</string>
     <string name="night_mode_start">夜間模式開始時間</string>
     <string name="night_mode_end">夜間模式結束時間</string>
+
+    <string name="app_theme">深色模式（應用程式）</string>
+    <string name="app_theme_description">控制應用的視覺外觀</string>
+    <string name="change_app_theme">更改應用主題</string>
 
     <string name="reconnection_required_title">需要重新連接</string>
     <string name="reconnection_required_message">設備處於等待狀態。請拔下並重新插入 USB 電纜以重新啟動 Android Auto。</string>

@@ -8,4 +8,15 @@
         <item>Světelný senzor</item>
         <item>Jas obrazovky</item>
     </string-array>
+
+    <string-array name="app_theme">
+        <item>Automaticky (Systém)</item>
+        <item>Světlé</item>
+        <item>Tmavé</item>
+        <item>Extra tmavé</item>
+        <item>Auto (Východ/Západ slunce)</item>
+        <item>Manuální čas</item>
+        <item>Senzor světla</item>
+        <item>Jas obrazovky</item>
+    </string-array>
 </resources>

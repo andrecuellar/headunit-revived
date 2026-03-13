@@ -8,4 +8,15 @@
         <item>Czujnik światła</item>
         <item>Jasność ekranu</item>
     </string-array>
+
+    <string-array name="app_theme">
+        <item>Automatycznie (System)</item>
+        <item>Jasny</item>
+        <item>Ciemny</item>
+        <item>Ekstremalnie ciemny</item>
+        <item>Auto (Wschód/Zachód słońca)</item>
+        <item>Ręczny czas</item>
+        <item>Czujnik światła</item>
+        <item>Jasność ekranu</item>
+    </string-array>
 </resources>

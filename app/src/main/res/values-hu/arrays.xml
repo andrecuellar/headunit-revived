@@ -9,6 +9,17 @@
         <item>Kijelző fényerő</item>
     </string-array>
 
+    <string-array name="app_theme">
+        <item>Automatikus (Rendszer)</item>
+        <item>Világos</item>
+        <item>Sötét</item>
+        <item>Extra sötét</item>
+        <item>Automatikus (Napkelte/Napnyugta)</item>
+        <item>Kézi idő</item>
+        <item>Fényérzékelő</item>
+        <item>Képernyő fényereje</item>
+    </string-array>
+
     <string-array name="screen_orientation">
         <item>@string/orientation_system_default</item>
         <item>@string/orientation_auto_sensor</item>

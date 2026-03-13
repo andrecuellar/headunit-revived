@@ -19,13 +19,17 @@
     <string name="dpi">Pixel sűrűség (DPI)</string>
     <string name="mic_sample_rate">Mikrofon mintavételi frekvencia</string>
     <string name="keymap">Gombkiosztás</string>
-    <string name="night_mode">Éjszakai mód</string>
+    <string name="night_mode">Sötét mód (Android Auto)</string>
     <string name="night_mode_threshold">Éjszakai mód küszöb</string>
     <string name="enter_threshold_value">Add meg a küszöb értéket</string>
     <string name="threshold_lux_desc">Lux érték (0–10000). Ez alatt = Éjszaka.</string>
     <string name="threshold_brightness_desc">Fényerő érték (0–255). Ez alatt = Éjszaka.</string>
     <string name="night_mode_start">Éjszakai mód kezdete</string>
     <string name="night_mode_end">Éjszakai mód vége</string>
+
+    <string name="app_theme">Sötét mód (Alkalmazás)</string>
+    <string name="app_theme_description">Az alkalmazás megjelenésének vezérlése</string>
+    <string name="change_app_theme">Téma módosítása</string>
 
     <string name="reconnection_required_title">Újrakapcsolódás szükséges</string>
     <string name="reconnection_required_message">Az eszköz várakozó állapotban van. Kérlek húzd ki, majd dugd vissza az USB-kábelt az Android Auto újraindításához.</string>

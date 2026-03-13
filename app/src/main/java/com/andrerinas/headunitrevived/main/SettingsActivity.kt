@@ -13,10 +13,13 @@ class SettingsActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
-        
+
         val appSettings = Settings(this)
+        if (appSettings.appTheme == Settings.AppTheme.EXTREME_DARK) {
+            theme.applyStyle(R.style.ThemeOverlay_ExtremeDark, true)
+        }
         requestedOrientation = appSettings.screenOrientation.androidOrientation
-        
+
         setContentView(R.layout.activity_settings)
         
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.settings_nav_host) as NavHostFragment

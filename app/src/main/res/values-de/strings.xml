@@ -19,13 +19,17 @@
     <string name="dpi">Pixeldichte (DPI)</string>
     <string name="mic_sample_rate">Mikrofon-Abtastrate</string>
     <string name="keymap">Tastenbelegung</string>
-    <string name="night_mode">Nachtmodus</string>
+    <string name="night_mode">Dunkelmodus (Android Auto)</string>
     <string name="night_mode_threshold">Nachtmodus Schwellenwert</string>
     <string name="enter_threshold_value">Schwellenwert eingeben</string>
     <string name="threshold_lux_desc">Lux Wert (0-10000). Darunter = Nacht.</string>
     <string name="threshold_brightness_desc">Helligkeit (0-255). Darunter = Nacht.</string>
     <string name="night_mode_start">Nachtmodus Startzeit</string>
     <string name="night_mode_end">Nachtmodus Endzeit</string>
+
+    <string name="app_theme">Dunkelmodus (Anwendung)</string>
+    <string name="app_theme_description">Aussehen der App steuern</string>
+    <string name="change_app_theme">Design ändern</string>
 
     <string name="reconnection_required_title">Neuverbindung erforderlich</string>
     <string name="reconnection_required_message">Das Gerät befindet sich in einem Wartezustand. Bitte ziehen Sie das USB-Kabel ab und stecken Sie es wieder ein, um Android Auto neu zu starten.</string>

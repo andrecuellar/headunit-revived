@@ -11,6 +11,7 @@ import com.andrerinas.headunitrevived.main.BackgroundNotification
 import com.andrerinas.headunitrevived.aap.AapNavigation
 import com.andrerinas.headunitrevived.ssl.ConscryptInitializer
 import com.andrerinas.headunitrevived.utils.AppLog
+import com.andrerinas.headunitrevived.utils.AppThemeManager
 import com.andrerinas.headunitrevived.utils.Settings
 import java.io.File
 
@@ -34,6 +35,14 @@ class App : Application() {
 
         val settings = Settings(this) // Create a Settings instance
         AppLog.init(settings) // Initialize AppLog with settings for conditional logging
+
+        // Apply app theme
+        if (AppThemeManager.isStaticMode(settings.appTheme)) {
+            AppThemeManager.applyStaticTheme(settings)
+        } else {
+            appThemeManager = AppThemeManager(this, settings)
+            appThemeManager?.start()
+        }
 
         if (ConscryptInitializer.isAvailable()) {
             AppLog.i("Conscrypt security provider is active")
@@ -67,6 +76,7 @@ class App : Application() {
 
     companion object {
         const val defaultChannel = "headunit_service_v2"
+        var appThemeManager: AppThemeManager? = null
 
         fun get(context: Context): App {
             return context.applicationContext as App

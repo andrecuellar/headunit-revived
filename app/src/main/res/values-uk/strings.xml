@@ -19,13 +19,17 @@
     <string name="dpi">Щільність екрана (DPI)</string>
     <string name="mic_sample_rate">Частота дискретизації мікрофона</string>
     <string name="keymap">Розкладка клавіш</string>
-    <string name="night_mode">Нічний режим</string>
+    <string name="night_mode">Темний режим (Android Auto)</string>
     <string name="night_mode_threshold">Поріг нічного режиму</string>
     <string name="enter_threshold_value">Введіть порогове значення</string>
     <string name="threshold_lux_desc">Значення люкс (0-10000). Нижче = Ніч.</string>
     <string name="threshold_brightness_desc">Значення яскравості (0-255). Нижче = Ніч.</string>
     <string name="night_mode_start">Час початку нічного режиму</string>
     <string name="night_mode_end">Час закінчення нічного режиму</string>
+
+    <string name="app_theme">Темний режим (Додаток)</string>
+    <string name="app_theme_description">Керування зовнішнім виглядом додатку</string>
+    <string name="change_app_theme">Змінити тему</string>
 
     <string name="reconnection_required_title">Потрібне перепідключення</string>
     <string name="reconnection_required_message">Пристрій у стані очікування. Відʼєднайте та знову підключіть USB-кабель, щоб перезапустити Android Auto.</string>

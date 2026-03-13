@@ -23,6 +23,7 @@ import com.andrerinas.headunitrevived.R
 import com.andrerinas.headunitrevived.aap.AapService
 import com.andrerinas.headunitrevived.main.settings.SettingItem
 import com.andrerinas.headunitrevived.main.settings.SettingsAdapter
+import com.andrerinas.headunitrevived.utils.AppThemeManager
 import com.andrerinas.headunitrevived.utils.Settings
 import com.andrerinas.headunitrevived.utils.LocaleHelper
 import com.andrerinas.headunitrevived.BuildConfig
@@ -91,6 +92,7 @@ class SettingsFragment : Fragment() {
     private var pendingInsetBottom: Int? = null
 
     private var pendingAutoStartOnUsb: Boolean? = null
+    private var pendingAppTheme: Settings.AppTheme? = null
 
     private var pendingMediaVolumeOffset: Int? = null
     private var pendingAssistantVolumeOffset: Int? = null
@@ -146,6 +148,7 @@ class SettingsFragment : Fragment() {
         pendingMediaVolumeOffset = settings.mediaVolumeOffset
         pendingAssistantVolumeOffset = settings.assistantVolumeOffset
         pendingNavigationVolumeOffset = settings.navigationVolumeOffset
+        pendingAppTheme = settings.appTheme
 
         // Intercept system back button
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
@@ -245,6 +248,24 @@ class SettingsFragment : Fragment() {
         pendingAssistantVolumeOffset?.let { settings.assistantVolumeOffset = it }
         pendingNavigationVolumeOffset?.let { settings.navigationVolumeOffset = it }
 
+        val themeChanged = pendingAppTheme != settings.appTheme
+        pendingAppTheme?.let { newTheme ->
+            settings.appTheme = newTheme
+            if (themeChanged) {
+                // Stop existing auto theme manager
+                com.andrerinas.headunitrevived.App.appThemeManager?.stop()
+                com.andrerinas.headunitrevived.App.appThemeManager = null
+
+                if (AppThemeManager.isStaticMode(newTheme)) {
+                    AppThemeManager.applyStaticTheme(settings)
+                } else {
+                    val manager = AppThemeManager(requireContext().applicationContext, settings)
+                    com.andrerinas.headunitrevived.App.appThemeManager = manager
+                    manager.start()
+                }
+            }
+        }
+
         val languageChanged = pendingAppLanguage != settings.appLanguage
         pendingAppLanguage?.let { settings.appLanguage = it }
         
@@ -300,8 +321,8 @@ class SettingsFragment : Fragment() {
             }
         }
 
-        // Restart activity if language changed to apply new locale
-        if (languageChanged) {
+        // Restart activity if language or theme changed
+        if (languageChanged || themeChanged) {
             requireActivity().recreate()
         }
     }
@@ -340,7 +361,8 @@ class SettingsFragment : Fragment() {
                         pendingInsetBottom != settings.insetBottom ||
                         pendingMediaVolumeOffset != settings.mediaVolumeOffset ||
                         pendingAssistantVolumeOffset != settings.assistantVolumeOffset ||
-                        pendingNavigationVolumeOffset != settings.navigationVolumeOffset
+                        pendingNavigationVolumeOffset != settings.navigationVolumeOffset ||
+                        pendingAppTheme != settings.appTheme
 
         hasChanges = anyChange
 
@@ -605,7 +627,25 @@ class SettingsFragment : Fragment() {
 
         // --- Graphic Settings ---
         items.add(SettingItem.CategoryHeader("graphic", R.string.category_graphic))
-        
+
+        val appThemeTitles = resources.getStringArray(R.array.app_theme)
+        items.add(SettingItem.SettingEntry(
+            stableId = "appTheme",
+            nameResId = R.string.app_theme,
+            value = appThemeTitles[pendingAppTheme!!.value],
+            onClick = { _ ->
+                AlertDialog.Builder(requireContext())
+                    .setTitle(R.string.change_app_theme)
+                    .setSingleChoiceItems(appThemeTitles, pendingAppTheme!!.value) { dialog, which ->
+                        pendingAppTheme = Settings.AppTheme.fromInt(which)
+                        checkChanges()
+                        dialog.dismiss()
+                        updateSettingsList()
+                    }
+                    .show()
+            }
+        ))
+
         items.add(SettingItem.SettingEntry(
             stableId = "resolution",
             nameResId = R.string.resolution,

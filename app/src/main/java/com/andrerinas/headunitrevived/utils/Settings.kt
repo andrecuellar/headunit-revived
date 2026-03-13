@@ -451,4 +451,29 @@ class Settings(context: Context) {
         }
     }
 
+    enum class AppTheme(val value: Int) {
+        AUTOMATIC(0),
+        CLEAR(1),
+        DARK(2),
+        EXTREME_DARK(3),
+        AUTO_SUNRISE(4),
+        MANUAL_TIME(5),
+        LIGHT_SENSOR(6),
+        SCREEN_BRIGHTNESS(7);
+
+        companion object {
+            private val map = values().associateBy(AppTheme::value)
+            fun fromInt(value: Int) = map[value] ?: AUTOMATIC
+        }
+    }
+
+    var appTheme: AppTheme
+        get() {
+            val value = prefs.getInt("app-theme", 0)
+            return AppTheme.fromInt(value)
+        }
+        set(theme) {
+            prefs.edit().putInt("app-theme", theme.value).apply()
+        }
+
 }

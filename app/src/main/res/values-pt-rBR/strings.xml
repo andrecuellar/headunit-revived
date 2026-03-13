@@ -19,13 +19,17 @@
     <string name="dpi">Densidade de pixels (DPI)</string>
     <string name="mic_sample_rate">Taxa de amostragem do microfone</string>
     <string name="keymap">Mapa de teclas</string>
-    <string name="night_mode">Modo noturno</string>
+    <string name="night_mode">Modo escuro (Android Auto)</string>
     <string name="night_mode_threshold">Limiar do Modo Noturno</string>
     <string name="enter_threshold_value">Inserir valor do limiar</string>
     <string name="threshold_lux_desc">Valor Lux (0-10000). Abaixo disto = Noite.</string>
     <string name="threshold_brightness_desc">Valor de brilho (0-255). Abaixo disto = Noite.</string>
     <string name="night_mode_start">Hora de início do modo noturno</string>
     <string name="night_mode_end">Hora de término do modo noturno</string>
+
+    <string name="app_theme">Modo escuro (Aplicativo)</string>
+    <string name="app_theme_description">Controlar a aparência visual do app</string>
+    <string name="change_app_theme">Alterar tema</string>
 
     <string name="reconnection_required_title">Reconexão necessária</string>
     <string name="reconnection_required_message">O dispositivo está em espera. Desconecte e reconecte o cabo USB para reiniciar o Android Auto.</string>

@@ -9,6 +9,17 @@
         <item>Screen Brightness</item>
     </string-array>
 
+    <string-array name="app_theme">
+        <item>Automatic (System)</item>
+        <item>Clear</item>
+        <item>Dark</item>
+        <item>Extreme Dark</item>
+        <item>Auto (Sunrise/Sunset)</item>
+        <item>Manual Time</item>
+        <item>Light Sensor</item>
+        <item>Screen Brightness</item>
+    </string-array>
+
     <string-array name="screen_orientation">
         <item>@string/orientation_system_default</item>
         <item>@string/orientation_auto_sensor</item>
