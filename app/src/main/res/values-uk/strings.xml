@@ -287,4 +287,29 @@
     <string name="start_log_capture_description">Починає запис системних логів у файл.</string>
     <string name="stop_log_capture">Зупинити запис лога</string>
     <string name="stop_log_capture_description">Зупиняє запис і зберігає файл лога.</string>
+
+    <!-- Navigation notifications -->
+    <string name="show_navigation_notifications">Сповіщення навігації</string>
+    <string name="show_navigation_notifications_description">Показувати «Через X метрів Y» та поточну вулицю у сповіщеннях (для налагодження)</string>
+    <string name="nav_notification_channel_name">Навігація</string>
+    <string name="nav_notification_channel_description">Покрокові вказівки від Android Auto</string>
+    <string name="nav_notification_title_format">Через %1$d м — %2$s</string>
+    <string name="nav_notification_street_format">Вулиця: %1$s</string>
+    <string name="nav_action_unknown">Дія</string>
+    <string name="nav_action_depart">Виїзд</string>
+    <string name="nav_action_name_change">Зміна назви</string>
+    <string name="nav_action_slight_turn">Плавний поворот</string>
+    <string name="nav_action_turn">Поворот</string>
+    <string name="nav_action_sharp_turn">Різкий поворот</string>
+    <string name="nav_action_uturn">Розворот</string>
+    <string name="nav_action_on_ramp">В\'їзд на дорогу</string>
+    <string name="nav_action_off_ramp">З\'їзд</string>
+    <string name="nav_action_merge">Злиття</string>
+    <string name="nav_action_roundabout_enter">В\'їзд на кільце</string>
+    <string name="nav_action_roundabout_exit">Виїзд з кільця</string>
+    <string name="nav_action_roundabout">Кільце</string>
+    <string name="nav_action_straight">Прямо</string>
+    <string name="nav_action_ferry">Пором</string>
+    <string name="nav_action_ferry_train">Пором / потяг</string>
+    <string name="nav_action_destination">Прибуття</string>
     </resources>

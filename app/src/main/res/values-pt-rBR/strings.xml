@@ -287,4 +287,29 @@
     <string name="start_log_capture_description">Começa a registrar os logs do sistema em um arquivo.</string>
     <string name="stop_log_capture">Parar captura de log</string>
     <string name="stop_log_capture_description">Interrompe a gravação e salva o arquivo de log.</string>
+
+    <!-- Navigation notifications -->
+    <string name="show_navigation_notifications">Notificações de navegação</string>
+    <string name="show_navigation_notifications_description">Mostrar "Em X metros Y" e a rua atual nas notificações (para depuração)</string>
+    <string name="nav_notification_channel_name">Navegação</string>
+    <string name="nav_notification_channel_description">Indicações passo a passo do Android Auto</string>
+    <string name="nav_notification_title_format">Em %1$d m — %2$s</string>
+    <string name="nav_notification_street_format">Rua: %1$s</string>
+    <string name="nav_action_unknown">Ação</string>
+    <string name="nav_action_depart">Partir</string>
+    <string name="nav_action_name_change">Mudança de nome</string>
+    <string name="nav_action_slight_turn">Curva leve</string>
+    <string name="nav_action_turn">Curva</string>
+    <string name="nav_action_sharp_turn">Curva fechada</string>
+    <string name="nav_action_uturn">Retorno</string>
+    <string name="nav_action_on_ramp">Entrada</string>
+    <string name="nav_action_off_ramp">Saída</string>
+    <string name="nav_action_merge">Junção</string>
+    <string name="nav_action_roundabout_enter">Entrar na rotatória</string>
+    <string name="nav_action_roundabout_exit">Sair da rotatória</string>
+    <string name="nav_action_roundabout">Rotatória</string>
+    <string name="nav_action_straight">Em frente</string>
+    <string name="nav_action_ferry">Balsa</string>
+    <string name="nav_action_ferry_train">Balsa / trem</string>
+    <string name="nav_action_destination">Chegada</string>
 </resources>

@@ -285,4 +285,29 @@
     <string name="setup_widescreen_detected">S-a detectat un ecran lat (widescreen).</string>
     <string name="auto_optimize">Optimizează automat setările</string>
     <string name="auto_optimize_desc">Rulează verificarea sistemului pentru a găsi cele mai bune setări pentru dispozitivul tău.</string>
+
+    <!-- Navigation notifications -->
+    <string name="show_navigation_notifications">Notificări de navigare</string>
+    <string name="show_navigation_notifications_description">Afișează „Peste X metri Y" și strada curentă în notificări (pentru depanare)</string>
+    <string name="nav_notification_channel_name">Navigare</string>
+    <string name="nav_notification_channel_description">Instrucțiuni pas cu pas de la Android Auto</string>
+    <string name="nav_notification_title_format">Peste %1$d m — %2$s</string>
+    <string name="nav_notification_street_format">Strada: %1$s</string>
+    <string name="nav_action_unknown">Acțiune</string>
+    <string name="nav_action_depart">Plecare</string>
+    <string name="nav_action_name_change">Schimbare nume</string>
+    <string name="nav_action_slight_turn">Virare ușoară</string>
+    <string name="nav_action_turn">Virare</string>
+    <string name="nav_action_sharp_turn">Virare bruscă</string>
+    <string name="nav_action_uturn">Întoarcere</string>
+    <string name="nav_action_on_ramp">Rampă de intrare</string>
+    <string name="nav_action_off_ramp">Rampă de ieșire</string>
+    <string name="nav_action_merge">Contopire</string>
+    <string name="nav_action_roundabout_enter">Intrare în sens giratoriu</string>
+    <string name="nav_action_roundabout_exit">Ieșire din sens giratoriu</string>
+    <string name="nav_action_roundabout">Sens giratoriu</string>
+    <string name="nav_action_straight">Înainte</string>
+    <string name="nav_action_ferry">Feribot</string>
+    <string name="nav_action_ferry_train">Feribot / tren</string>
+    <string name="nav_action_destination">Sosire</string>
 </resources>

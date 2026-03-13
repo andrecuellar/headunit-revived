@@ -286,4 +286,29 @@
     <string name="start_log_capture_description">Begins recording system logs to a file.</string>
     <string name="stop_log_capture">Stop log capture</string>
     <string name="stop_log_capture_description">Stops recording and saves the log file.</string>
+
+    <!-- Navigation notifications -->
+    <string name="show_navigation_notifications">Navigációs értesítések</string>
+    <string name="show_navigation_notifications_description">„X méter múlva Y" és az aktuális utca megjelenítése az értesítésekben (hibakereséshez)</string>
+    <string name="nav_notification_channel_name">Navigáció</string>
+    <string name="nav_notification_channel_description">Részletes navigációs utasítások az Android Auto-tól</string>
+    <string name="nav_notification_title_format">%1$d m múlva — %2$s</string>
+    <string name="nav_notification_street_format">Utca: %1$s</string>
+    <string name="nav_action_unknown">Művelet</string>
+    <string name="nav_action_depart">Indulás</string>
+    <string name="nav_action_name_change">Névváltás</string>
+    <string name="nav_action_slight_turn">Enyhe kanyar</string>
+    <string name="nav_action_turn">Kanyar</string>
+    <string name="nav_action_sharp_turn">Éles kanyar</string>
+    <string name="nav_action_uturn">Megfordulás</string>
+    <string name="nav_action_on_ramp">Felhajtó</string>
+    <string name="nav_action_off_ramp">Lehajtó</string>
+    <string name="nav_action_merge">Besorolás</string>
+    <string name="nav_action_roundabout_enter">Körforgalomba behajtás</string>
+    <string name="nav_action_roundabout_exit">Körforgalom elhagyása</string>
+    <string name="nav_action_roundabout">Körforgalom</string>
+    <string name="nav_action_straight">Egyenesen</string>
+    <string name="nav_action_ferry">Komp</string>
+    <string name="nav_action_ferry_train">Komp / vonat</string>
+    <string name="nav_action_destination">Megérkezés</string>
 </resources>

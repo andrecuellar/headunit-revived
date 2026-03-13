@@ -287,4 +287,29 @@
     <string name="start_log_capture_description">Begins recording system logs to a file.</string>
     <string name="stop_log_capture">Stop log capture</string>
     <string name="stop_log_capture_description">Stops recording and saves the log file.</string>
+
+    <!-- Navigation notifications -->
+    <string name="show_navigation_notifications">إشعارات الملاحة</string>
+    <string name="show_navigation_notifications_description">عرض "بعد X متر Y" والشارع الحالي في الإشعارات (للتصحيح)</string>
+    <string name="nav_notification_channel_name">الملاحة</string>
+    <string name="nav_notification_channel_description">توجيهات الملاحة من Android Auto</string>
+    <string name="nav_notification_title_format">بعد %1$d م — %2$s</string>
+    <string name="nav_notification_street_format">الشارع: %1$s</string>
+    <string name="nav_action_unknown">إجراء</string>
+    <string name="nav_action_depart">انطلاق</string>
+    <string name="nav_action_name_change">تغيير الاسم</string>
+    <string name="nav_action_slight_turn">انعطاف خفيف</string>
+    <string name="nav_action_turn">انعطاف</string>
+    <string name="nav_action_sharp_turn">انعطاف حاد</string>
+    <string name="nav_action_uturn">دوران</string>
+    <string name="nav_action_on_ramp">مدخل الطريق</string>
+    <string name="nav_action_off_ramp">مخرج الطريق</string>
+    <string name="nav_action_merge">اندماج</string>
+    <string name="nav_action_roundabout_enter">دخول الدوار</string>
+    <string name="nav_action_roundabout_exit">خروج من الدوار</string>
+    <string name="nav_action_roundabout">دوار</string>
+    <string name="nav_action_straight">مباشرة</string>
+    <string name="nav_action_ferry">عبّارة</string>
+    <string name="nav_action_ferry_train">عبّارة / قطار</string>
+    <string name="nav_action_destination">وصول</string>
 </resources>

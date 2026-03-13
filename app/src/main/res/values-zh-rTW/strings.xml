@@ -286,4 +286,29 @@
     <string name="start_log_capture_description">開始將系統日誌記錄到檔案中。</string>
     <string name="stop_log_capture">停止擷取日誌</string>
     <string name="stop_log_capture_description">停止記錄並儲存日誌檔案。</string>
+
+    <!-- Navigation notifications -->
+    <string name="show_navigation_notifications">導航通知</string>
+    <string name="show_navigation_notifications_description">在通知中顯示「X 公尺後 Y」及目前街道（用於除錯）</string>
+    <string name="nav_notification_channel_name">導航</string>
+    <string name="nav_notification_channel_description">來自 Android Auto 的轉彎導航指示</string>
+    <string name="nav_notification_title_format">%1$d 公尺後 — %2$s</string>
+    <string name="nav_notification_street_format">街道：%1$s</string>
+    <string name="nav_action_unknown">動作</string>
+    <string name="nav_action_depart">出發</string>
+    <string name="nav_action_name_change">路名變更</string>
+    <string name="nav_action_slight_turn">微轉</string>
+    <string name="nav_action_turn">轉彎</string>
+    <string name="nav_action_sharp_turn">急轉</string>
+    <string name="nav_action_uturn">迴轉</string>
+    <string name="nav_action_on_ramp">上匝道</string>
+    <string name="nav_action_off_ramp">下匝道</string>
+    <string name="nav_action_merge">匯入</string>
+    <string name="nav_action_roundabout_enter">進入圓環</string>
+    <string name="nav_action_roundabout_exit">離開圓環</string>
+    <string name="nav_action_roundabout">圓環</string>
+    <string name="nav_action_straight">直行</string>
+    <string name="nav_action_ferry">渡輪</string>
+    <string name="nav_action_ferry_train">渡輪／火車</string>
+    <string name="nav_action_destination">抵達</string>
 </resources>

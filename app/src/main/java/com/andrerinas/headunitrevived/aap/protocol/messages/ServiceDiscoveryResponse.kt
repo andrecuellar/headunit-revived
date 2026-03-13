@@ -182,6 +182,16 @@ class ServiceDiscoveryResponse(private val context: Context)
             }.build()
             services.add(mediaPlaybackStatus)
 
+            // Navigation Status Service — head unit receives turn-by-turn data from any AA nav app
+            val navigationStatus = Control.Service.newBuilder().also { service ->
+                service.id = Channel.ID_NAV
+                service.navigationStatusService = Control.Service.NavigationStatusService.newBuilder()
+                    .setMinimumIntervalMs(1000)
+                    .setType(Control.Service.NavigationStatusService.ClusterType.ImageCodesOnly)
+                    .build()
+            }.build()
+            services.add(navigationStatus)
+
             return Control.ServiceDiscoveryResponse.newBuilder().apply {
                 make = "Google"
                 model = "Desktop Head Unit"

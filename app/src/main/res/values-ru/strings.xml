@@ -287,4 +287,29 @@
     <string name="start_log_capture_description">Начинает запись системных логов в файл.</string>
     <string name="stop_log_capture">Остановить запись лога</string>
     <string name="stop_log_capture_description">Останавливает запись и сохраняет файл лога.</string>
+
+    <!-- Navigation notifications -->
+    <string name="show_navigation_notifications">Уведомления навигации</string>
+    <string name="show_navigation_notifications_description">Показывать «Через X метров Y» и текущую улицу в уведомлениях (для отладки)</string>
+    <string name="nav_notification_channel_name">Навигация</string>
+    <string name="nav_notification_channel_description">Подсказки маршрута от Android Auto</string>
+    <string name="nav_notification_title_format">Через %1$d м — %2$s</string>
+    <string name="nav_notification_street_format">Улица: %1$s</string>
+    <string name="nav_action_unknown">Действие</string>
+    <string name="nav_action_depart">Выезд</string>
+    <string name="nav_action_name_change">Смена названия</string>
+    <string name="nav_action_slight_turn">Плавный поворот</string>
+    <string name="nav_action_turn">Поворот</string>
+    <string name="nav_action_sharp_turn">Резкий поворот</string>
+    <string name="nav_action_uturn">Разворот</string>
+    <string name="nav_action_on_ramp">Выезд на дорогу</string>
+    <string name="nav_action_off_ramp">Съезд</string>
+    <string name="nav_action_merge">Слияние</string>
+    <string name="nav_action_roundabout_enter">Въезд на кольцо</string>
+    <string name="nav_action_roundabout_exit">Выезд с кольца</string>
+    <string name="nav_action_roundabout">Кольцо</string>
+    <string name="nav_action_straight">Прямо</string>
+    <string name="nav_action_ferry">Паром</string>
+    <string name="nav_action_ferry_train">Паром / поезд</string>
+    <string name="nav_action_destination">Прибытие</string>
 </resources>

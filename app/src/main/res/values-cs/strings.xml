@@ -287,4 +287,29 @@
     <string name="start_log_capture_description">Spustí nahrávání systémových protokolů do souboru.</string>
     <string name="stop_log_capture">Zastavit záznam protokolu</string>
     <string name="stop_log_capture_description">Zastaví nahrávání a uloží soubor protokolu.</string>
+
+    <!-- Navigation notifications -->
+    <string name="show_navigation_notifications">Oznámení navigace</string>
+    <string name="show_navigation_notifications_description">Zobrazit „Za X metrů Y" a aktuální ulici v oznámeních (pro ladění)</string>
+    <string name="nav_notification_channel_name">Navigace</string>
+    <string name="nav_notification_channel_description">Podrobné navigační pokyny z Android Auto</string>
+    <string name="nav_notification_title_format">Za %1$d m — %2$s</string>
+    <string name="nav_notification_street_format">Ulice: %1$s</string>
+    <string name="nav_action_unknown">Akce</string>
+    <string name="nav_action_depart">Vyjet</string>
+    <string name="nav_action_name_change">Změna názvu</string>
+    <string name="nav_action_slight_turn">Mírné odbočení</string>
+    <string name="nav_action_turn">Odbočení</string>
+    <string name="nav_action_sharp_turn">Ostré odbočení</string>
+    <string name="nav_action_uturn">Otočení</string>
+    <string name="nav_action_on_ramp">Nájezd</string>
+    <string name="nav_action_off_ramp">Sjezd</string>
+    <string name="nav_action_merge">Spojení</string>
+    <string name="nav_action_roundabout_enter">Vjezd na kruhový objezd</string>
+    <string name="nav_action_roundabout_exit">Výjezd z kruhového objezdu</string>
+    <string name="nav_action_roundabout">Kruhový objezd</string>
+    <string name="nav_action_straight">Rovně</string>
+    <string name="nav_action_ferry">Trajekt</string>
+    <string name="nav_action_ferry_train">Trajekt / vlak</string>
+    <string name="nav_action_destination">Příjezd</string>
 </resources>

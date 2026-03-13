@@ -287,5 +287,30 @@
     <string name="setup_widescreen_detected">Widescreen display detected.</string>
     <string name="auto_optimize">Auto-Optimize Settings</string>
     <string name="auto_optimize_desc">Run the system check to find the best settings for your device.</string>
+
+    <!-- Navigation notifications (from any AA nav app) -->
+    <string name="show_navigation_notifications">Navigation notifications</string>
+    <string name="show_navigation_notifications_description">Show \"In X meters do Y\" and current street in notifications (for debugging)</string>
+    <string name="nav_notification_channel_name">Navigation</string>
+    <string name="nav_notification_channel_description">Turn-by-turn navigation updates from Android Auto</string>
+    <string name="nav_notification_title_format">In %1$d m — %2$s</string>
+    <string name="nav_notification_street_format">Street: %1$s</string>
+    <string name="nav_action_unknown">Action</string>
+    <string name="nav_action_depart">Depart</string>
+    <string name="nav_action_name_change">Name change</string>
+    <string name="nav_action_slight_turn">Slight turn</string>
+    <string name="nav_action_turn">Turn</string>
+    <string name="nav_action_sharp_turn">Sharp turn</string>
+    <string name="nav_action_uturn">U-turn</string>
+    <string name="nav_action_on_ramp">Enter road</string>
+    <string name="nav_action_off_ramp">Exit ramp</string>
+    <string name="nav_action_merge">Merge</string>
+    <string name="nav_action_roundabout_enter">Enter roundabout</string>
+    <string name="nav_action_roundabout_exit">Exit roundabout</string>
+    <string name="nav_action_roundabout">Roundabout</string>
+    <string name="nav_action_straight">Straight</string>
+    <string name="nav_action_ferry">Ferry</string>
+    <string name="nav_action_ferry_train">Ferry / train</string>
+    <string name="nav_action_destination">Arrival</string>
 </resources>
 

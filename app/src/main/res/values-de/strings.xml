@@ -287,4 +287,29 @@
     <string name="start_log_capture_description">Startet das Mitschreiben von System-Logs in eine Datei.</string>
     <string name="stop_log_capture">Log-Aufzeichnung stoppen</string>
     <string name="stop_log_capture_description">Stoppt die Aufzeichnung und speichert die Log-Datei.</string>
+
+    <!-- Navigation notifications -->
+    <string name="show_navigation_notifications">Navigationsbenachrichtigungen</string>
+    <string name="show_navigation_notifications_description">„In X Metern Y" und aktuelle Straße in Benachrichtigungen anzeigen (zum Debuggen)</string>
+    <string name="nav_notification_channel_name">Navigation</string>
+    <string name="nav_notification_channel_description">Abbiegehinweise von Android Auto</string>
+    <string name="nav_notification_title_format">In %1$d m — %2$s</string>
+    <string name="nav_notification_street_format">Straße: %1$s</string>
+    <string name="nav_action_unknown">Aktion</string>
+    <string name="nav_action_depart">Losfahren</string>
+    <string name="nav_action_name_change">Straßenwechsel</string>
+    <string name="nav_action_slight_turn">Leicht abbiegen</string>
+    <string name="nav_action_turn">Abbiegen</string>
+    <string name="nav_action_sharp_turn">Scharf abbiegen</string>
+    <string name="nav_action_uturn">Wenden</string>
+    <string name="nav_action_on_ramp">Auffahrt</string>
+    <string name="nav_action_off_ramp">Abfahrt</string>
+    <string name="nav_action_merge">Einfädeln</string>
+    <string name="nav_action_roundabout_enter">In Kreisverkehr einfahren</string>
+    <string name="nav_action_roundabout_exit">Kreisverkehr verlassen</string>
+    <string name="nav_action_roundabout">Kreisverkehr</string>
+    <string name="nav_action_straight">Geradeaus</string>
+    <string name="nav_action_ferry">Fähre</string>
+    <string name="nav_action_ferry_train">Fähre / Zug</string>
+    <string name="nav_action_destination">Ankunft</string>
 </resources>

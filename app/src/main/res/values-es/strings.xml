@@ -287,4 +287,29 @@
     <string name="start_log_capture_description">Comienza a registrar los logs del sistema en un archivo.</string>
     <string name="stop_log_capture">Detener captura de log</string>
     <string name="stop_log_capture_description">Detiene la grabación y guarda el archivo de log.</string>
+
+    <!-- Navigation notifications -->
+    <string name="show_navigation_notifications">Notificaciones de navegación</string>
+    <string name="show_navigation_notifications_description">Mostrar "En X metros Y" y la calle actual en notificaciones (para depuración)</string>
+    <string name="nav_notification_channel_name">Navegación</string>
+    <string name="nav_notification_channel_description">Indicaciones paso a paso de Android Auto</string>
+    <string name="nav_notification_title_format">En %1$d m — %2$s</string>
+    <string name="nav_notification_street_format">Calle: %1$s</string>
+    <string name="nav_action_unknown">Acción</string>
+    <string name="nav_action_depart">Salir</string>
+    <string name="nav_action_name_change">Cambio de nombre</string>
+    <string name="nav_action_slight_turn">Giro leve</string>
+    <string name="nav_action_turn">Giro</string>
+    <string name="nav_action_sharp_turn">Giro cerrado</string>
+    <string name="nav_action_uturn">Retorno</string>
+    <string name="nav_action_on_ramp">Incorporación</string>
+    <string name="nav_action_off_ramp">Salida</string>
+    <string name="nav_action_merge">Incorporación</string>
+    <string name="nav_action_roundabout_enter">Entrar a rotonda</string>
+    <string name="nav_action_roundabout_exit">Salir de rotonda</string>
+    <string name="nav_action_roundabout">Rotonda</string>
+    <string name="nav_action_straight">Recto</string>
+    <string name="nav_action_ferry">Ferry</string>
+    <string name="nav_action_ferry_train">Ferry / tren</string>
+    <string name="nav_action_destination">Llegada</string>
 </resources>

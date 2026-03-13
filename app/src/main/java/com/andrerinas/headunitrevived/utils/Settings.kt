@@ -65,6 +65,12 @@ class Settings(context: Context) {
             prefs.edit().putBoolean("gps-navigation", value).apply()
         }
 
+    var showNavigationNotifications: Boolean
+        get() = prefs.getBoolean("show-navigation-notifications", false)
+        set(value) {
+            prefs.edit().putBoolean("show-navigation-notifications", value).apply()
+        }
+
     var nightMode: NightMode
         get() {
             val value = prefs.getInt("night-mode", 0)

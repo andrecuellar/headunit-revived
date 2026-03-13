@@ -18,6 +18,7 @@ internal class AapMessageHandlerType(
 
     private val aapControl: AapControl = AapControlGateway(transport, recorder, aapAudio, settings, context)
     private val mediaPlayback = AapMediaPlayback(backgroundNotification)
+    private val aapNavigation = AapNavigation(context, settings)
     private var videoPacketCount = 0
 
     @Throws(AapMessageHandler.HandleException::class)
@@ -59,7 +60,16 @@ internal class AapMessageHandlerType(
             return
         }
 
-        // 4. Control Message Fallback
+        // 4. Navigation (turn-by-turn from any AA nav app)
+        // Process only payload messages on NAV channel (>31).
+        // Control/handshake messages on NAV channel must pass through to AapControl.
+        if (message.channel == Channel.ID_NAV && msgType > 31) {
+            if (aapNavigation.process(message)) {
+                return
+            }
+        }
+
+        // 5. Control Message Fallback
         if (msgType in 0..31 || msgType in 32768..32799 || msgType in 65504..65535) {
             try {
                 aapControl.execute(message)

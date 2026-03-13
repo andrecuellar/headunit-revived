@@ -286,4 +286,29 @@
     <string name="start_log_capture_description">Begins recording system logs to a file.</string>
     <string name="stop_log_capture">Stop log capture</string>
     <string name="stop_log_capture_description">Stops recording and saves the log file.</string>
+
+    <!-- Navigation notifications -->
+    <string name="show_navigation_notifications">Navigatiemeldingen</string>
+    <string name="show_navigation_notifications_description">Toon "Over X meter Y" en huidige straat in meldingen (voor foutopsporing)</string>
+    <string name="nav_notification_channel_name">Navigatie</string>
+    <string name="nav_notification_channel_description">Afslag-voor-afslag navigatie van Android Auto</string>
+    <string name="nav_notification_title_format">Over %1$d m — %2$s</string>
+    <string name="nav_notification_street_format">Straat: %1$s</string>
+    <string name="nav_action_unknown">Actie</string>
+    <string name="nav_action_depart">Vertrekken</string>
+    <string name="nav_action_name_change">Naamswijziging</string>
+    <string name="nav_action_slight_turn">Licht afslaan</string>
+    <string name="nav_action_turn">Afslaan</string>
+    <string name="nav_action_sharp_turn">Scherp afslaan</string>
+    <string name="nav_action_uturn">Keren</string>
+    <string name="nav_action_on_ramp">Oprit</string>
+    <string name="nav_action_off_ramp">Afrit</string>
+    <string name="nav_action_merge">Invoegen</string>
+    <string name="nav_action_roundabout_enter">Rotonde oprijden</string>
+    <string name="nav_action_roundabout_exit">Rotonde verlaten</string>
+    <string name="nav_action_roundabout">Rotonde</string>
+    <string name="nav_action_straight">Rechtdoor</string>
+    <string name="nav_action_ferry">Veerboot</string>
+    <string name="nav_action_ferry_train">Veerboot / trein</string>
+    <string name="nav_action_destination">Aankomst</string>
     </resources>
