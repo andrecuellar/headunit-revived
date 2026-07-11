@@ -55,6 +55,11 @@ class SettingsFragment : Fragment() {
     private var saveButton: MaterialButton? = null
     private var resetButton: MaterialButton? = null
 
+    // Redesign 3.2: settings tab (0 = Basic, 1 = Advanced) + search query.
+    // These only affect what is displayed; the full settings list is untouched.
+    private var activeSettingsTab = 0
+    private var settingsSearchQuery = ""
+
     // Local state to hold changes before saving
     private var pendingUseGps: Boolean? = null
     private var pendingShowNavigationNotifications: Boolean? = null
@@ -222,6 +227,7 @@ class SettingsFragment : Fragment() {
         settingsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         settingsRecyclerView.adapter = settingsAdapter
 
+        setupTabsAndSearch(view)
         updateSettingsList()
         setupToolbar()
 
@@ -528,6 +534,16 @@ class SettingsFragment : Fragment() {
             }
         ))
 
+        // Redesign 3.2: re-run the "Meet the new design" onboarding.
+        items.add(SettingItem.SettingEntry(
+            stableId = "rerunGuide",
+            nameResId = R.string.onb_guide,
+            value = getString(R.string.onb_rerun),
+            onClick = { _ ->
+                startActivity(android.content.Intent(requireContext(), OnboardingActivity::class.java))
+            }
+        ))
+
         // Language Selector
         val availableLocales = LocaleHelper.getAvailableLocales(requireContext())
         val currentLocale = LocaleHelper.stringToLocale(pendingAppLanguage ?: "")
@@ -764,7 +780,7 @@ class SettingsFragment : Fragment() {
         items.add(SettingItem.SettingEntry(
             stableId = "staticBSSID",
             nameResId = R.string.static_bssid_title,
-            value = if (pendingStaticBSSID == "0" || pendingStaticBSSID == null) getString(R.string.auto) else pendingStaticBSSID,
+            value = pendingStaticBSSID.let { if (it == "0" || it == null) getString(R.string.auto) else it },
             onClick = { _ ->
                 DialogUtils.showTextInputDialog(
                     requireContext(),
@@ -796,6 +812,31 @@ class SettingsFragment : Fragment() {
                 } catch (e: Exception) {
                     // Failover
                 }
+            }
+        ))
+
+        // Redesign 3.2: Home layout variant (Minimal / Focus / Full). Applied
+        // immediately; HomeFragment inflates the chosen variant on next open.
+        items.add(SettingItem.SegmentedButtonSettingEntry(
+            stableId = "homeStyle",
+            nameResId = R.string.home_layout_title,
+            options = listOf(
+                getString(R.string.home_layout_minimal),
+                getString(R.string.home_layout_focus),
+                getString(R.string.home_layout_full)
+            ),
+            selectedIndex = when (settings.homeStyle) {
+                Settings.HOME_STYLE_MINIMAL -> 0
+                Settings.HOME_STYLE_FOCUS -> 1
+                else -> 2
+            },
+            onOptionSelected = { index ->
+                settings.homeStyle = when (index) {
+                    0 -> Settings.HOME_STYLE_MINIMAL
+                    1 -> Settings.HOME_STYLE_FOCUS
+                    else -> Settings.HOME_STYLE_FULL
+                }
+                updateSettingsList()
             }
         ))
 
@@ -1503,9 +1544,102 @@ class SettingsFragment : Fragment() {
             ))
         }
 
-        settingsAdapter.submitList(items) {
+        // Redesign 3.2: the full `items` list keeps every setting; we only
+        // filter what is DISPLAYED by the active tab / search query.
+        settingsAdapter.submitList(filterSettings(items)) {
             scrollState?.let { settingsRecyclerView.layoutManager?.onRestoreInstanceState(it) }
         }
+    }
+
+    // ----- Redesign 3.2: Basic/Advanced tabs + search (display filter only) -----
+
+    private val basicCategories = setOf(
+        "general", "wirelessConnection", "darkMode", "automation", "info"
+    )
+
+    private fun setupTabsAndSearch(view: View) {
+        val tabGroup = view.findViewById<com.google.android.material.button.MaterialButtonToggleGroup>(
+            R.id.settings_tab_group
+        )
+        tabGroup?.check(if (activeSettingsTab == 1) R.id.settings_tab_advanced else R.id.settings_tab_basic)
+        tabGroup?.addOnButtonCheckedListener { _, checkedId, isChecked ->
+            if (!isChecked) return@addOnButtonCheckedListener
+            activeSettingsTab = if (checkedId == R.id.settings_tab_advanced) 1 else 0
+            updateSettingsList()
+        }
+
+        val search = view.findViewById<EditText>(R.id.settings_search)
+        search?.setText(settingsSearchQuery)
+        search?.addTextChangedListener(object : android.text.TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, a: Int, b: Int, c: Int) {}
+            override fun onTextChanged(s: CharSequence?, a: Int, b: Int, c: Int) {}
+            override fun afterTextChanged(s: android.text.Editable?) {
+                settingsSearchQuery = s?.toString().orEmpty()
+                // Hide the tab bar while searching (search spans all categories).
+                view.findViewById<View>(R.id.settings_tab_group)?.visibility =
+                    if (settingsSearchQuery.isBlank()) View.VISIBLE else View.GONE
+                updateSettingsList()
+            }
+        })
+    }
+
+    private fun categoryIsInActiveTab(stableId: String): Boolean {
+        val isBasic = basicCategories.contains(stableId)
+        return if (activeSettingsTab == 0) isBasic else !isBasic
+    }
+
+    private fun settingSearchText(item: SettingItem): String {
+        val sb = StringBuilder()
+        fun add(resId: Int) { if (resId != 0) try { sb.append(getString(resId)).append(' ') } catch (_: Exception) {} }
+        when (item) {
+            is SettingItem.SettingEntry -> { add(item.nameResId); item.value?.let { sb.append(it) } }
+            is SettingItem.ToggleSettingEntry -> { add(item.nameResId); item.nameOverride?.let { sb.append(it).append(' ') }; item.descriptionResId?.let { add(it) } }
+            is SettingItem.SliderSettingEntry -> add(item.nameResId)
+            is SettingItem.SegmentedButtonSettingEntry -> { add(item.nameResId); item.options.forEach { sb.append(it).append(' ') } }
+            is SettingItem.ActionButton -> add(item.textResId)
+            else -> {}
+        }
+        return sb.toString().lowercase()
+    }
+
+    /**
+     * Filters the full settings list for DISPLAY only. The underlying list still
+     * contains every setting, so nothing is ever lost — this just controls what
+     * the user sees under the current tab or search query. The bottom Save
+     * button is always kept so users can save from any tab / search.
+     */
+    private fun filterSettings(all: List<SettingItem>): List<SettingItem> {
+        val saveButton = all.lastOrNull { it.stableId == "bottomSaveButton" }
+        val core = all.filter { it.stableId != "bottomSaveButton" }
+        val query = settingsSearchQuery.trim().lowercase()
+        val result = ArrayList<SettingItem>()
+
+        var k = 0
+        while (k < core.size) {
+            val header = core[k]
+            if (header is SettingItem.CategoryHeader) {
+                val section = ArrayList<SettingItem>()
+                var j = k + 1
+                while (j < core.size && core[j] !is SettingItem.CategoryHeader) { section.add(core[j]); j++ }
+                if (query.isEmpty()) {
+                    if (categoryIsInActiveTab(header.stableId)) { result.add(header); result.addAll(section) }
+                } else {
+                    val matched = section.filter { settingSearchText(it).contains(query) }
+                    if (matched.isNotEmpty()) { result.add(header); result.addAll(matched) }
+                }
+                k = j
+            } else {
+                // Items without a preceding header: keep them.
+                result.add(header)
+                k++
+            }
+        }
+
+        if (query.isNotEmpty() && result.none { it !is SettingItem.CategoryHeader }) {
+            result.add(SettingItem.InfoBanner("noResults", R.string.settings_no_results))
+        }
+        saveButton?.let { result.add(it) }
+        return result
     }
 
     private data class ImportSnapshot(

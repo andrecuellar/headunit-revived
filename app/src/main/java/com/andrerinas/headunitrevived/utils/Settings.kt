@@ -347,6 +347,19 @@ class Settings(private val context: Context) {
         get() = prefs.getBoolean("has-completed-setup-wizard", false)
         set(value) { prefs.edit().putBoolean("has-completed-setup-wizard", value).apply() }
 
+    // Redesign 3.2: gates the "Meet the new design" onboarding. Shown once to
+    // everyone after the update (including users who finished the old wizard).
+    var hasSeenRedesignIntro: Boolean
+        get() = prefs.getBoolean("has-seen-redesign-intro", false)
+        set(value) { prefs.edit().putBoolean("has-seen-redesign-intro", value).apply() }
+
+    // Redesign 3.2: Home layout variant. One of HOME_STYLE_MINIMAL / _FOCUS /
+    // _FULL. Selectable from the onboarding and from Settings > Appearance.
+    // Default = FULL (the richest, first-shipped variant) for continuity.
+    var homeStyle: String
+        get() = prefs.getString("home-style", HOME_STYLE_FULL)!!
+        set(value) { prefs.edit().putString("home-style", value).apply() }
+
     var autoConnectLastSession: Boolean
         get() = prefs.getBoolean("auto-connect-last-session", false)
         set(value) { prefs.edit().putBoolean("auto-connect-last-session", value).apply() }
@@ -639,6 +652,11 @@ class Settings(private val context: Context) {
         const val CONNECTION_TYPE_WIFI = "wifi"
         const val CONNECTION_TYPE_USB = "usb"
         const val CONNECTION_TYPE_NEARBY = "nearby"
+
+        // Redesign 3.2: Home layout variants.
+        const val HOME_STYLE_MINIMAL = "minimal"
+        const val HOME_STYLE_FOCUS = "min2"
+        const val HOME_STYLE_FULL = "full"
 
         /** SharedPreferences key; also used by [AapService] for change listener. */
         const val KEY_SYNC_MEDIA_SESSION_AA_METADATA = "sync-media-session-aa-metadata"

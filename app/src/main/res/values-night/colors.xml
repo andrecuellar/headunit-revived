@@ -7,4 +7,22 @@
     <color name="text_primary">#f7f7f7</color>
     <color name="text_shadow">#00000000</color>
     <color name="segmented_button_stroke">#CCCCCC</color>
+
+    <!-- Design system palette: DARK theme overrides (redesign 3.2).
+         Same names as *_light in values/colors.xml so ?attr/dsX picks
+         these up automatically when night mode is active. -->
+    <color name="ds_bg_light">#101217</color>
+    <color name="ds_surface_light">#22262C</color>
+    <color name="ds_surface_elevated_light">#2A2F36</color>
+    <color name="ds_line_light">#17FFFFFF</color>          <!-- rgba(255,255,255,.09) -->
+    <color name="ds_text_light">#F4F6F8</color>
+    <color name="ds_text2_light">#AAB0B7</color>
+    <color name="ds_text3_light">#787E86</color>
+    <color name="ds_primary_light">#1FB9A8</color>
+    <color name="ds_on_primary_light">#04110F</color>
+    <color name="ds_danger_light">#F0655A</color>
+    <color name="ds_success_light">#4CC177</color>
+    <color name="ds_warning_light">#F0A93E</color>
+    <color name="ds_scrim_light">#9E000000</color>         <!-- rgba(0,0,0,.62) -->
+    <color name="ds_usb_light">#F4A157</color>
 </resources>

@@ -871,13 +871,13 @@ class MainActivity : BaseActivity() {
 
     fun checkSetupFlow() {
         val appSettings = Settings(this)
-        if (!appSettings.hasAcceptedDisclaimer) {
-            SafetyDisclaimerDialog.show(supportFragmentManager)
-        } else if (!appSettings.hasCompletedSetupWizard) {
-            SetupWizard(this) {
-                // Refresh activity after setup
-                recreate()
-            }.start()
+        // Redesign 3.2: the onboarding replaces the old disclaimer + wizard chain.
+        // Shown once after the update (hasSeenRedesignIntro) and until the
+        // mandatory safety terms are accepted.
+        if (!appSettings.hasSeenRedesignIntro || !appSettings.hasAcceptedDisclaimer) {
+            if (!OnboardingActivity.isForeground) {
+                startActivity(Intent(this, OnboardingActivity::class.java))
+            }
         }
     }
 

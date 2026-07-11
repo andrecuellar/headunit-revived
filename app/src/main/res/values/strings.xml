@@ -589,4 +589,63 @@
     <string name="share_hotspot_qr_error">Could not retrieve active Wi-Fi hotspot credentials. Please ensure your hotspot is turned on and Location is enabled.</string>
     <string name="use_libusb">Use Native USB Driver</string>
     <string name="use_libusb_description">Use libusb for communication. Disable to use Android\'s standard USB API.</string>
+
+    <!-- Redesign 3.2: Home status card -->
+    <string name="home_available_devices">Available devices</string>
+    <string name="home_connect">Connect</string>
+    <string name="home_no_devices">No recent devices. Connect your phone with USB or WiFi.</string>
+    <string name="home_sub_usb_ready">USB · Ready</string>
+    <string name="home_sub_usb_last">USB · Last used</string>
+    <string name="home_sub_wifi_last">WiFi · Last used</string>
+    <string name="home_sub_wireless_last">Wireless · Last used</string>
+    <string name="home_sub_self_mode">Run Android Auto on this device</string>
+    <string name="home_auto_connect_note">Auto-connects on startup</string>
+
+    <!-- Redesign 3.2: onboarding "Meet the new design" -->
+    <string name="onb_skip">Skip</string>
+    <string name="onb_back">Back</string>
+    <string name="onb_next">Next</string>
+    <string name="onb_finish">Finish</string>
+    <string name="onb_guide">Guide</string>
+    <string name="onb_rerun">Show the setup guide again</string>
+    <string name="onb_welcome_title">Meet the new design</string>
+    <string name="onb_welcome_body">A cleaner, glanceable interface built for the car. Let\'s set up your head unit — it takes under two minutes.</string>
+    <string name="onb_welcome_lang">App language</string>
+    <string name="onb_safety_title">Safety first</string>
+    <string name="onb_safety_accept">I understand and accept the safety terms</string>
+    <string name="onb_theme_title">Choose your theme</string>
+    <string name="onb_theme_body">Preview updates live. You can fine-tune automatic switching later in Settings.</string>
+    <string name="onb_theme_light">Light</string>
+    <string name="onb_theme_dark">Dark</string>
+    <string name="onb_theme_extreme">Extreme</string>
+    <string name="onb_conn_title">How will you connect?</string>
+    <string name="onb_conn_body">We\'ll set the best defaults for your choice.</string>
+    <string name="onb_conn_usb">Wired (USB cable)</string>
+    <string name="onb_conn_wifi">Wireless (WiFi)</string>
+    <string name="onb_conn_self">Self Mode (this device)</string>
+    <string name="onb_optimize_title">Optimize for your hardware</string>
+    <string name="onb_optimize_body">Pick your screen and we\'ll set the best resolution, DPI and codec.</string>
+    <string name="onb_optimize_run">Apply recommended settings</string>
+    <string name="onb_optimize_done">Applied: %1$s · %2$s · %3$s</string>
+    <string name="onb_perms_title">Permissions</string>
+    <string name="onb_perms_body">Grant only what your setup needs. You can change these anytime in system settings.</string>
+    <string name="onb_perms_grant">Grant permissions</string>
+    <string name="onb_ready_title">You\'re all set</string>
+    <string name="onb_ready_body">Everything is configured. You can re-run this guide anytime from Settings.</string>
+    <string name="onb_ready_finish">Go to home</string>
+
+    <!-- Redesign 3.2: settings tabs + search -->
+    <string name="settings_tab_basic">Basic</string>
+    <string name="settings_tab_advanced">Advanced</string>
+    <string name="settings_search_hint">Search settings</string>
+    <string name="settings_no_results">No settings match your search</string>
+
+    <!-- Redesign 3.2: Home layout variants -->
+    <string name="home_ready">Ready to connect</string>
+    <string name="home_tap_to_connect">Tap to connect</string>
+    <string name="home_layout_title">Home layout</string>
+    <string name="home_layout_desc">Choose how the home screen looks</string>
+    <string name="home_layout_minimal">Minimal</string>
+    <string name="home_layout_focus">Focus</string>
+    <string name="home_layout_full">Full</string>
 </resources>

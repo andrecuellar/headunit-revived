@@ -9,4 +9,25 @@
         <attr name="metaButtonBarButtonStyle" format="reference" />
     </declare-styleable>
 
+    <!-- ============================================================
+         Design system tokens (redesign 3.2).
+         Resolved per theme: Light (values/), Dark (values-night/),
+         Extreme (ThemeOverlay.ExtremeDark reassigns all of these).
+         Use ?attr/dsX in new layouts instead of hardcoded @color.
+         ============================================================ -->
+    <attr name="dsBg" format="color" />               <!-- app background base -->
+    <attr name="dsSurface" format="color" />          <!-- card -->
+    <attr name="dsSurfaceElevated" format="color" />  <!-- chip / elevated -->
+    <attr name="dsLine" format="color" />             <!-- border / divider -->
+    <attr name="dsText" format="color" />             <!-- primary text -->
+    <attr name="dsText2" format="color" />            <!-- secondary text -->
+    <attr name="dsText3" format="color" />            <!-- tertiary / hint -->
+    <attr name="dsPrimary" format="color" />          <!-- brand teal (per theme) -->
+    <attr name="dsOnPrimary" format="color" />        <!-- text/icon on primary -->
+    <attr name="dsDanger" format="color" />
+    <attr name="dsSuccess" format="color" />
+    <attr name="dsWarning" format="color" />
+    <attr name="dsScrim" format="color" />            <!-- overlay scrim -->
+    <attr name="dsUsb" format="color" />              <!-- USB accent -->
+
 </resources>

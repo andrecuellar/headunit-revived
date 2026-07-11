@@ -14,6 +14,28 @@
         <item name="android:dialogTheme">@style/DarkAlertDialog</item>
         <item name="android:alertDialogTheme">@style/DarkAlertDialog</item>
         <item name="materialAlertDialogTheme">@style/DarkAlertDialog</item>
+        <!-- Redesign 3.2: map Material color roles to the ds palette so every
+             Material-role-based screen (dialogs, quick settings, sheets,
+             projection chrome) matches the design across all three themes. -->
+        <item name="colorSurface">@color/ds_surface_light</item>
+        <item name="colorOnSurface">@color/ds_text_light</item>
+        <item name="android:colorBackground">@color/ds_bg_light</item>
+        <!-- Design system tokens (redesign 3.2). ds_*_light resolves to the
+             DARK values under values-night/ automatically in night mode. -->
+        <item name="dsBg">@color/ds_bg_light</item>
+        <item name="dsSurface">@color/ds_surface_light</item>
+        <item name="dsSurfaceElevated">@color/ds_surface_elevated_light</item>
+        <item name="dsLine">@color/ds_line_light</item>
+        <item name="dsText">@color/ds_text_light</item>
+        <item name="dsText2">@color/ds_text2_light</item>
+        <item name="dsText3">@color/ds_text3_light</item>
+        <item name="dsPrimary">@color/ds_primary_light</item>
+        <item name="dsOnPrimary">@color/ds_on_primary_light</item>
+        <item name="dsDanger">@color/ds_danger_light</item>
+        <item name="dsSuccess">@color/ds_success_light</item>
+        <item name="dsWarning">@color/ds_warning_light</item>
+        <item name="dsScrim">@color/ds_scrim_light</item>
+        <item name="dsUsb">@color/ds_usb_light</item>
     </style>
 
     <style name="AppTheme.Translucent" parent="android:Theme.Translucent.NoTitleBar" />
@@ -69,8 +91,24 @@
 
     <style name="ThemeOverlay.ExtremeDark" parent="">
         <item name="colorSurface">@color/extreme_dark_background</item>
+        <item name="colorOnSurface">@color/ds_text_extreme</item>
         <item name="android:colorBackground">@color/extreme_dark_background</item>
         <item name="android:windowBackground">@color/extreme_dark_background</item>
+        <!-- Reassign ALL design system tokens to the Extreme (pure black) set. -->
+        <item name="dsBg">@color/ds_bg_extreme</item>
+        <item name="dsSurface">@color/ds_surface_extreme</item>
+        <item name="dsSurfaceElevated">@color/ds_surface_elevated_extreme</item>
+        <item name="dsLine">@color/ds_line_extreme</item>
+        <item name="dsText">@color/ds_text_extreme</item>
+        <item name="dsText2">@color/ds_text2_extreme</item>
+        <item name="dsText3">@color/ds_text3_extreme</item>
+        <item name="dsPrimary">@color/ds_primary_extreme</item>
+        <item name="dsOnPrimary">@color/ds_on_primary_extreme</item>
+        <item name="dsDanger">@color/ds_danger_extreme</item>
+        <item name="dsSuccess">@color/ds_success_extreme</item>
+        <item name="dsWarning">@color/ds_warning_extreme</item>
+        <item name="dsScrim">@color/ds_scrim_extreme</item>
+        <item name="dsUsb">@color/ds_usb_extreme</item>
     </style>
 
     <style name="ThemeOverlay.GradientBackground" parent="">
@@ -101,5 +139,93 @@
     <style name="ShapeAppearanceOverlay.App.Dialog.Rounded" parent="">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">24dp</item>
+    </style>
+
+    <!-- ============================================================
+         Typography scale (redesign 3.2). Roboto (system default).
+         sans-serif-medium (API21+) degrades to normal on older devices.
+         ============================================================ -->
+    <style name="TextAppearance.HUR.Display" parent="TextAppearance.Material3.HeadlineMedium">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">30sp</item>
+        <item name="android:textColor">?attr/dsText</item>
+    </style>
+    <style name="TextAppearance.HUR.Heading" parent="TextAppearance.Material3.HeadlineSmall">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">?attr/dsText</item>
+    </style>
+    <style name="TextAppearance.HUR.Title" parent="TextAppearance.Material3.TitleLarge">
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">?attr/dsText</item>
+    </style>
+    <style name="TextAppearance.HUR.Subtitle" parent="TextAppearance.Material3.TitleMedium">
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">?attr/dsText</item>
+    </style>
+    <style name="TextAppearance.HUR.Body" parent="TextAppearance.Material3.BodyMedium">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">?attr/dsText</item>
+    </style>
+    <style name="TextAppearance.HUR.Label" parent="TextAppearance.Material3.LabelLarge">
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">?attr/dsText2</item>
+    </style>
+    <style name="TextAppearance.HUR.Caption" parent="TextAppearance.Material3.BodySmall">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">?attr/dsText3</item>
+    </style>
+    <style name="TextAppearance.HUR.Overline" parent="TextAppearance.Material3.LabelSmall">
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textSize">10.5sp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:letterSpacing">0.07</item>
+        <item name="android:textColor">?attr/dsText3</item>
+    </style>
+
+    <!-- ============================================================
+         Component styles (redesign 3.2). MaterialCardView / MaterialButton
+         resolve ?attr/ds* on all API levels (unlike ?attr in shape XML).
+         ============================================================ -->
+    <style name="Widget.HUR.Card" parent="Widget.Material3.CardView.Outlined">
+        <item name="cardBackgroundColor">?attr/dsSurface</item>
+        <item name="strokeColor">?attr/dsLine</item>
+        <item name="strokeWidth">@dimen/ds_stroke</item>
+        <item name="cardCornerRadius">@dimen/ds_radius_card</item>
+        <item name="cardElevation">0dp</item>
+        <item name="rippleColor">?attr/dsLine</item>
+    </style>
+    <style name="Widget.HUR.Card.Item">
+        <item name="cardCornerRadius">@dimen/ds_radius_item</item>
+    </style>
+    <style name="Widget.HUR.Card.Large">
+        <item name="cardCornerRadius">@dimen/ds_radius_card_lg</item>
+    </style>
+
+    <style name="Widget.HUR.Button.Primary" parent="Widget.Material3.Button">
+        <item name="backgroundTint">?attr/dsPrimary</item>
+        <item name="android:textColor">?attr/dsOnPrimary</item>
+        <item name="cornerRadius">@dimen/ds_radius_button</item>
+        <item name="android:minHeight">@dimen/ds_button_height</item>
+        <item name="android:textAppearance">@style/TextAppearance.HUR.Subtitle</item>
+    </style>
+    <style name="Widget.HUR.Button.Secondary" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="strokeColor">?attr/dsLine</item>
+        <item name="android:textColor">?attr/dsText2</item>
+        <item name="cornerRadius">@dimen/ds_radius_button</item>
+        <item name="android:minHeight">@dimen/ds_button_height</item>
+    </style>
+    <style name="Widget.HUR.Button.Danger" parent="Widget.Material3.Button">
+        <item name="backgroundTint">?attr/dsDanger</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="cornerRadius">@dimen/ds_radius_button</item>
+        <item name="android:minHeight">@dimen/ds_button_height</item>
     </style>
 </resources>

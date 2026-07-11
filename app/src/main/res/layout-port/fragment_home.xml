@@ -40,6 +40,16 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintVertical_bias="0.45">
 
+        <!-- Redesign 3.2: "Available devices" status card above the grid -->
+        <include
+            android:id="@+id/home_status_card"
+            layout="@layout/view_home_status_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginBottom="4dp" />
+
         <!-- ── Row 1: Self Mode + USB ── -->
         <LinearLayout
             android:layout_width="match_parent"
@@ -76,7 +86,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:backgroundTint="@null"
-                        android:background="@drawable/gradient_blue"
+                        android:background="@drawable/tile_gradient_self"
                         app:iconGravity="textStart"
                         app:icon="@drawable/ic_launch_white"
                         app:iconTint="#ffffff"
@@ -127,7 +137,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:backgroundTint="@null"
-                        android:background="@drawable/gradient_orange"
+                        android:background="@drawable/tile_gradient_usb"
                         app:iconGravity="textStart"
                         app:icon="@drawable/ic_usb_white"
                         app:iconTint="#ffffff"
@@ -186,7 +196,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:backgroundTint="@null"
-                        android:background="@drawable/gradient_purple"
+                        android:background="@drawable/tile_gradient_wifi"
                         app:iconGravity="textStart"
                         app:icon="@drawable/ic_network_wifi_white"
                         app:iconTint="#ffffff"
@@ -237,7 +247,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:backgroundTint="@null"
-                        android:background="@drawable/gradient_darkblue"
+                        android:background="@drawable/tile_gradient_settings"
                         app:iconGravity="textStart"
                         app:icon="@drawable/ic_settings_white"
                         app:iconTint="#ffffff"

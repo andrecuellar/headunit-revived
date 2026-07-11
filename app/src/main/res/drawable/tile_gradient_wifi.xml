@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Home tile gradient: WiFi (Bold set). ~145deg purple. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <gradient
+        android:angle="135"
+        android:startColor="@color/tile_wifi_start"
+        android:endColor="@color/tile_wifi_end" />
+    <corners android:radius="@dimen/ds_radius_tile_port" />
+</shape>

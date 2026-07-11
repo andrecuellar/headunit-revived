@@ -63,7 +63,7 @@ externalNativeBuild
 
 #
 cert/
-playstore/
+/playstore/
 .DS_Store
 .cxx
 

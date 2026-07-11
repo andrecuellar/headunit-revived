@@ -33,4 +33,52 @@
     <!-- Segmented Button Colors -->
     <color name="segmented_button_stroke">#808080</color>
 
+    <!-- ============================================================
+         Design system palette (redesign 3.2). Raw values per theme.
+         values/ = LIGHT theme. values-night/ overrides = DARK theme.
+         *_extreme = EXTREME DARK (assigned via ThemeOverlay.ExtremeDark).
+         Attributes ds* in styles.xml point at these.
+         ============================================================ -->
+    <!-- LIGHT -->
+    <color name="ds_bg_light">#EDF0F5</color>
+    <color name="ds_surface_light">#FFFFFF</color>
+    <color name="ds_surface_elevated_light">#EAEEF3</color>
+    <color name="ds_line_light">#170F172A</color>          <!-- rgba(15,23,42,.09) -->
+    <color name="ds_text_light">#111318</color>
+    <color name="ds_text2_light">#565C64</color>
+    <color name="ds_text3_light">#8A9098</color>
+    <color name="ds_primary_light">#00897B</color>
+    <color name="ds_on_primary_light">#FFFFFF</color>
+    <color name="ds_danger_light">#D64545</color>
+    <color name="ds_success_light">#2E9E5B</color>
+    <color name="ds_warning_light">#C77D14</color>
+    <color name="ds_scrim_light">#8012161C</color>         <!-- rgba(18,22,28,.5) -->
+    <color name="ds_usb_light">#D35400</color>
+
+    <!-- EXTREME DARK (pure black / OLED) -->
+    <color name="ds_bg_extreme">#000000</color>
+    <color name="ds_surface_extreme">#0D0E10</color>
+    <color name="ds_surface_elevated_extreme">#161719</color>
+    <color name="ds_line_extreme">#24FFFFFF</color>        <!-- rgba(255,255,255,.14) -->
+    <color name="ds_text_extreme">#F0F1F2</color>
+    <color name="ds_text2_extreme">#9AA0A6</color>
+    <color name="ds_text3_extreme">#6B7075</color>
+    <color name="ds_primary_extreme">#17C4B1</color>
+    <color name="ds_on_primary_extreme">#04110F</color>
+    <color name="ds_danger_extreme">#F0655A</color>
+    <color name="ds_success_extreme">#4CC177</color>
+    <color name="ds_warning_extreme">#F0A93E</color>
+    <color name="ds_scrim_extreme">#CC000000</color>       <!-- rgba(0,0,0,.8) -->
+    <color name="ds_usb_extreme">#F4A157</color>
+
+    <!-- Home tile gradients (Bold set) - shared across themes -->
+    <color name="tile_self_start">#4CC5FB</color>
+    <color name="tile_self_end">#0A5CE0</color>
+    <color name="tile_usb_start">#FFB454</color>
+    <color name="tile_usb_end">#E24A16</color>
+    <color name="tile_wifi_start">#C77DFF</color>
+    <color name="tile_wifi_end">#7A22C4</color>
+    <color name="tile_settings_start">#6A8098</color>
+    <color name="tile_settings_end">#212F3F</color>
+
 </resources>

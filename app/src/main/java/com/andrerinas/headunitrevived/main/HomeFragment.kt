@@ -90,7 +90,15 @@ class HomeFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_home, container, false)
+        // Redesign 3.2: pick the Home layout variant. All three variants contain
+        // the 4 tiles + exit (same IDs) so the shared binding never breaks; they
+        // differ only in the "hero" area above the tiles.
+        val layout = when (App.provide(requireContext()).settings.homeStyle) {
+            Settings.HOME_STYLE_MINIMAL -> R.layout.fragment_home_minimal
+            Settings.HOME_STYLE_FOCUS -> R.layout.fragment_home_focus
+            else -> R.layout.fragment_home
+        }
+        return inflater.inflate(layout, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -112,10 +120,14 @@ class HomeFragment : Fragment() {
 
         setupListeners()
         updateProjectionButtonText()
+        updateStatusCard()
 
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                commManager.connectionState.collect { updateProjectionButtonText() }
+                commManager.connectionState.collect {
+                    updateProjectionButtonText()
+                    updateStatusCard()
+                }
             }
         }
 
@@ -301,11 +313,135 @@ class HomeFragment : Fragment() {
         return true
     }
 
+    private class PrimaryEntry(
+        val iconRes: Int,
+        val title: String,
+        val subtitle: String,
+        val action: () -> Unit
+    )
+
+    /**
+     * Redesign 3.2: computes the primary "connect" entry shared by all three
+     * Home variants. Priority: active session → attached USB (prefers last-used)
+     * → last session (Self Mode via 127.x loopback, WiFi IP, USB device, Nearby)
+     * → null (empty). Self-mode sessions are recorded as WiFi with a 127.x
+     * loopback address (design fallback rule).
+     */
+    private fun computePrimaryEntry(): PrimaryEntry? {
+        val ctx = context ?: return null
+        val appSettings = App.provide(ctx).settings
+        val usbManager = ctx.getSystemService(Context.USB_SERVICE) as UsbManager
+        val attached = usbManager.deviceList.values.let { devices ->
+            devices.find { UsbDeviceCompat.getUniqueName(it) == appSettings.lastConnectionUsbDevice }
+                ?: devices.firstOrNull()
+        }
+        val type = appSettings.lastConnectionType
+        val ip = appSettings.lastConnectionIp
+
+        return when {
+            commManager.isConnected -> PrimaryEntry(
+                R.drawable.ic_launch_white, getString(R.string.to_android_auto),
+                getString(R.string.connected)
+            ) { self_mode_button.performClick() }
+
+            attached != null -> {
+                val label = (if (Build.VERSION.SDK_INT >= 21) attached.productName else null)
+                    ?: UsbDeviceCompat.getUniqueName(attached)
+                PrimaryEntry(R.drawable.ic_usb_white, label, getString(R.string.home_sub_usb_ready)) {
+                    if (usbManager.hasPermission(attached)) {
+                        (activity as? MainActivity)?.beginAutoConnect("home USB", MainActivity.ConnectionUiMode.OVERLAY)
+                        ContextCompat.startForegroundService(ctx,
+                            Intent(ctx, AapService::class.java).apply { action = AapService.ACTION_CHECK_USB })
+                    } else usb.performClick()
+                }
+            }
+
+            type == Settings.CONNECTION_TYPE_WIFI && ip.startsWith("127.") -> PrimaryEntry(
+                R.drawable.ic_launch_white, getString(R.string.self_mode), getString(R.string.home_sub_self_mode)
+            ) { self_mode_button.performClick() }
+
+            type == Settings.CONNECTION_TYPE_WIFI && ip.isNotEmpty() -> PrimaryEntry(
+                R.drawable.ic_network_wifi_white, ip, getString(R.string.home_sub_wifi_last)
+            ) {
+                if (appSettings.wifiConnectionMode == 0 || appSettings.wifiConnectionMode == 1) {
+                    (activity as? MainActivity)?.beginAutoConnect("home WiFi", MainActivity.ConnectionUiMode.OVERLAY)
+                    lifecycleScope.launch(Dispatchers.IO) { App.provide(ctx).commManager.connect(ip, 5277) }
+                    ContextCompat.startForegroundService(ctx,
+                        Intent(ctx, AapService::class.java).apply { action = AapService.ACTION_CONNECT_SOCKET })
+                } else wifi.performClick()
+            }
+
+            type == Settings.CONNECTION_TYPE_USB && appSettings.lastConnectionUsbDevice.isNotEmpty() -> PrimaryEntry(
+                R.drawable.ic_usb_white, appSettings.lastConnectionUsbDevice, getString(R.string.home_sub_usb_last)
+            ) { usb.performClick() }
+
+            type == Settings.CONNECTION_TYPE_NEARBY -> PrimaryEntry(
+                R.drawable.ic_network_wifi_white,
+                appSettings.lastNearbyDeviceName.ifEmpty { getString(R.string.wifi) },
+                getString(R.string.home_sub_wireless_last)
+            ) { wifi.performClick() }
+
+            else -> null
+        }
+    }
+
+    /**
+     * Binds the primary entry to whichever hero the active Home variant provides:
+     * Full's status card, Minimal's hero card, or Focus's daily button. Each is
+     * guarded by findViewById so only the present variant's views are touched.
+     */
+    private fun updateStatusCard() {
+        val root = view ?: return
+        val ctx = context ?: return
+        val appSettings = App.provide(ctx).settings
+        val entry = computePrimaryEntry()
+
+        // Full variant: "Available devices" status card.
+        root.findViewById<View>(R.id.home_device_card)?.let { deviceCard ->
+            val icon = root.findViewById<ImageView>(R.id.home_device_icon)
+            val name = root.findViewById<TextView>(R.id.home_device_name)
+            val sub = root.findViewById<TextView>(R.id.home_device_sub)
+            val empty = root.findViewById<TextView>(R.id.home_status_empty)
+            val connect = root.findViewById<Button>(R.id.home_connect_button)
+            val footer = root.findViewById<TextView>(R.id.home_status_footer)
+            if (entry != null) {
+                deviceCard.visibility = View.VISIBLE
+                connect?.visibility = View.VISIBLE
+                empty?.visibility = View.GONE
+                icon?.setImageResource(entry.iconRes)
+                name?.text = entry.title
+                sub?.text = entry.subtitle
+                connect?.text = getString(R.string.home_connect)
+                connect?.setOnClickListener { entry.action() }
+                footer?.visibility = if (appSettings.autoConnectLastSession) View.VISIBLE else View.GONE
+            } else {
+                deviceCard.visibility = View.GONE
+                connect?.visibility = View.GONE
+                footer?.visibility = View.GONE
+                empty?.visibility = View.VISIBLE
+            }
+        }
+
+        // Minimal variant: the hero card IS the connect button.
+        root.findViewById<View>(R.id.home_hero_card)?.let { hero ->
+            root.findViewById<ImageView>(R.id.home_hero_icon)?.setImageResource(entry?.iconRes ?: R.drawable.ic_launch_white)
+            root.findViewById<TextView>(R.id.home_hero_name)?.text = entry?.title ?: getString(R.string.home_ready)
+            root.findViewById<TextView>(R.id.home_hero_sub)?.text = entry?.subtitle ?: getString(R.string.home_tap_to_connect)
+            hero.setOnClickListener { entry?.action?.invoke() }
+        }
+
+        // Focus variant: one big daily connect button + device label above it.
+        root.findViewById<Button>(R.id.home_daily_button)?.let { btn ->
+            btn.setOnClickListener { entry?.action?.invoke() }
+            root.findViewById<TextView>(R.id.home_daily_label)?.text = entry?.title ?: getString(R.string.home_ready)
+        }
+    }
+
     private val originalBackgrounds = mapOf(
-        R.id.self_mode_button to R.drawable.gradient_blue,
-        R.id.usb_button to R.drawable.gradient_orange,
-        R.id.wifi_button to R.drawable.gradient_purple,
-        R.id.settings_button to R.drawable.gradient_darkblue
+        R.id.self_mode_button to R.drawable.tile_gradient_self,
+        R.id.usb_button to R.drawable.tile_gradient_usb,
+        R.id.wifi_button to R.drawable.tile_gradient_wifi,
+        R.id.settings_button to R.drawable.tile_gradient_settings
     )
 
     private fun applyMonochromeStyle() {
@@ -600,6 +736,7 @@ class HomeFragment : Fragment() {
         updateProjectionButtonText()
         updateButtonStyle()
         updateTextColors()
+        updateStatusCard()
     }
 
     override fun onPause() {

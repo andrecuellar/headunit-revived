@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/onb_perms_title"
+            android:textAppearance="@style/TextAppearance.HUR.Heading" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:lineSpacingMultiplier="1.25"
+            android:text="@string/onb_perms_body"
+            android:textAppearance="@style/TextAppearance.HUR.Body"
+            android:textColor="?attr/dsText2" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/onb_perms_grant"
+            style="@style/Widget.HUR.Button.Primary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:text="@string/onb_perms_grant" />
+    </LinearLayout>
+</ScrollView>
