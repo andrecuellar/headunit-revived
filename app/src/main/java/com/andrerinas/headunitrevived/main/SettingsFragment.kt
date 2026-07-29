@@ -625,6 +625,20 @@ class SettingsFragment : Fragment() {
             }
         ))
 
+        // Permissions checklist (same list the setup wizard shows)
+        items.add(SettingItem.SettingEntry(
+            stableId = "permissions",
+            nameResId = R.string.permissions,
+            value = getString(R.string.permissions_desc),
+            onClick = { _ ->
+                try {
+                    findNavController().navigate(R.id.action_settingsFragment_to_permissionsFragment)
+                } catch (e: Exception) {
+                    // Failover
+                }
+            }
+        ))
+
         // Connection mode (Feature B): drives which options appear in the Basic tab.
         items.add(SettingItem.SettingEntry(
             stableId = "connectionMode",

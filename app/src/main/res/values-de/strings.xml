@@ -739,4 +739,29 @@
     <string name="onb_vehicle_help_advanced">Weitere Fahrzeugdetails kannst du im Tab Erweitert anpassen. Wir verwenden diese Daten nicht, sie werden nur an Android Auto gesendet, weil es sie benötigt.</string>
     <string name="onb_summary_vehicle_format">Fahrzeug: %1$s</string>
     <string name="sunrise_reference_help">Der Referenzpunkt zur Berechnung von Sonnenaufgang und Sonnenuntergang. Wähle deinen Standort einmal aus; es funktioniert ohne GPS.</string>
+
+    <!-- Permissions onboarding -->
+    <string name="onb_summary_permissions_format">Berechtigungen: %1$d von %2$d erteilt</string>
+    <string name="onb_permissions_title">Berechtigungen aktivieren</string>
+    <string name="onb_permissions_help">Aktivieren Sie die Berechtigungen, die die App benötigt, damit später keine unerwarteten Aufforderungen erscheinen. Sie können diese jederzeit ändern.</string>
+    <string name="onb_perms_enable_all">Alle aktivieren</string>
+    <string name="perm_allow">Erlauben</string>
+    <string name="perm_granted">Erteilt</string>
+    <string name="perm_optional_format">%1$s (optional)</string>
+    <string name="permissions">Berechtigungen</string>
+    <string name="permissions_desc">Berechtigungen der App prüfen und erteilen</string>
+    <string name="perm_mic_title">Mikrofon</string>
+    <string name="perm_mic_help">Ermöglicht Android Auto die Nutzung von Sprachbefehlen, dem Google Assistant und Telefonanrufen.</string>
+    <string name="perm_location_title">Standort</string>
+    <string name="perm_location_help">Sendet GPS an das Handy für die Navigation, sucht nach kabellosen Verbindungen und steuert den standortbasierten Nachtmodus.</string>
+    <string name="perm_nearby_title">Geräte in der Nähe</string>
+    <string name="perm_nearby_help">Wird benötigt, um über Bluetooth und Wi-Fi zu verbinden, Bluetooth-Audio weiterzuleiten und bei einem gekoppelten Gerät automatisch zu starten.</string>
+    <string name="perm_notifications_title">Benachrichtigungen</string>
+    <string name="perm_notifications_help">Zeigt die laufende Benachrichtigung an, solange Android Auto aktiv ist.</string>
+    <string name="perm_overlay_title">Über anderen Apps einblenden</string>
+    <string name="perm_overlay_help">Ermöglicht der App, den Autobildschirm über anderen Apps zu öffnen, einschließlich Autostart.</string>
+    <string name="perm_write_settings_title">Systemeinstellungen ändern</string>
+    <string name="perm_write_settings_help">Ermöglicht der App, den Hotspot für kabellose Verbindungen automatisch einzuschalten.</string>
+    <string name="perm_storage_title">Speicher</string>
+    <string name="perm_storage_help">Wird benötigt, um Ihre Einstellungen zu sichern und wiederherzustellen sowie ein benutzerdefiniertes Ladebild auszuwählen.</string>
 </resources>

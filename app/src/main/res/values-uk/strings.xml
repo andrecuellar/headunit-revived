@@ -735,4 +735,28 @@
     <string name="onb_vehicle_help_advanced">Більше даних про автомобіль можна налаштувати на вкладці Додатково. Ми не використовуємо ці дані; вони надсилаються лише в Android Auto, бо він їх вимагає.</string>
     <string name="onb_summary_vehicle_format">Автомобіль: %1$s</string>
     <string name="sunrise_reference_help">Опорна точка для розрахунку сходу та заходу сонця. Укажіть своє місцезнаходження один раз; працює без GPS.</string>
+
+    <string name="onb_summary_permissions_format">Дозволи: %1$d з %2$d надано</string>
+    <string name="onb_permissions_title">Увімкнути дозволи</string>
+    <string name="onb_permissions_help">Увімкніть дозволи, необхідні для роботи застосунку, щоб пізніше не виникало несподіваних запитів. Ви можете змінити їх будь-коли.</string>
+    <string name="onb_perms_enable_all">Увімкнути всі</string>
+    <string name="perm_allow">Дозволити</string>
+    <string name="perm_granted">Надано</string>
+    <string name="perm_optional_format">%1$s (необов\'язково)</string>
+    <string name="permissions">Дозволи</string>
+    <string name="permissions_desc">Переглянути та надати дозволи, необхідні для роботи застосунку</string>
+    <string name="perm_mic_title">Мікрофон</string>
+    <string name="perm_mic_help">Дозволяє Android Auto використовувати голосові команди, Google Assistant і телефонні дзвінки.</string>
+    <string name="perm_location_title">Місцезнаходження</string>
+    <string name="perm_location_help">Надсилає GPS на телефон для навігації, сканує бездротові підключення та забезпечує нічний режим на основі місцезнаходження.</string>
+    <string name="perm_nearby_title">Пристрої поблизу</string>
+    <string name="perm_nearby_help">Необхідний для підключення через Bluetooth і Wi-Fi, маршрутизації аудіо Bluetooth та автозапуску на сполученому пристрої.</string>
+    <string name="perm_notifications_title">Сповіщення</string>
+    <string name="perm_notifications_help">Показує постійне сповіщення під час роботи Android Auto.</string>
+    <string name="perm_overlay_title">Відображення поверх інших додатків</string>
+    <string name="perm_overlay_help">Дозволяє застосунку відкривати екран автомобіля поверх інших додатків, включаючи автозапуск.</string>
+    <string name="perm_write_settings_title">Зміна системних налаштувань</string>
+    <string name="perm_write_settings_help">Дозволяє застосунку автоматично вмикати точку доступу для бездротових підключень.</string>
+    <string name="perm_storage_title">Сховище</string>
+    <string name="perm_storage_help">Необхідне для резервного копіювання та відновлення налаштувань, а також для вибору користувацького зображення завантаження.</string>
 </resources>

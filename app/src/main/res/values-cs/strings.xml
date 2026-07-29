@@ -733,4 +733,29 @@
     <string name="onb_vehicle_help_advanced">Další podrobnosti o vozidle můžete upravit na kartě Pokročilé. Tato data nepoužíváme; odesílají se pouze do Android Auto, protože je vyžaduje.</string>
     <string name="onb_summary_vehicle_format">Vozidlo: %1$s</string>
     <string name="sunrise_reference_help">Referenční bod používaný pro výpočet východu a západu slunce. Vyberte svou polohu jednou; funguje to bez GPS.</string>
+
+    <!-- Permissions / Onboarding -->
+    <string name="onb_summary_permissions_format">Oprávnění: %1$d z %2$d uděleno</string>
+    <string name="onb_permissions_title">Povolit oprávnění</string>
+    <string name="onb_permissions_help">Zapněte oprávnění, která aplikace potřebuje, aby vše fungovalo bez nečekaných výzev později. Tato oprávnění můžete kdykoli změnit.</string>
+    <string name="onb_perms_enable_all">Povolit vše</string>
+    <string name="perm_allow">Povolit</string>
+    <string name="perm_granted">Uděleno</string>
+    <string name="perm_optional_format">%1$s (volitelné)</string>
+    <string name="permissions">Oprávnění</string>
+    <string name="permissions_desc">Zkontrolujte a udělte oprávnění, která aplikace potřebuje</string>
+    <string name="perm_mic_title">Mikrofon</string>
+    <string name="perm_mic_help">Umožňuje Android Auto používat hlasové příkazy, Google Assistant a telefonní hovory.</string>
+    <string name="perm_location_title">Poloha</string>
+    <string name="perm_location_help">Odesílá GPS do telefonu pro navigaci, vyhledává bezdrátová připojení a řídí noční režim na základě polohy.</string>
+    <string name="perm_nearby_title">Zařízení v okolí</string>
+    <string name="perm_nearby_help">Potřebné pro připojení přes Bluetooth a Wi-Fi, směrování zvuku Bluetooth a automatické spuštění na spárovaném zařízení.</string>
+    <string name="perm_notifications_title">Oznámení</string>
+    <string name="perm_notifications_help">Zobrazuje průběžné oznámení, když běží Android Auto.</string>
+    <string name="perm_overlay_title">Zobrazit přes jiné aplikace</string>
+    <string name="perm_overlay_help">Umožňuje aplikaci otevřít obrazovku autorádia přes jiné aplikace, včetně automatického spuštění.</string>
+    <string name="perm_write_settings_title">Změna systémových nastavení</string>
+    <string name="perm_write_settings_help">Umožňuje aplikaci automaticky zapnout hotspot pro bezdrátová připojení.</string>
+    <string name="perm_storage_title">Úložiště</string>
+    <string name="perm_storage_help">Potřebné pro zálohování a obnovu nastavení a pro výběr vlastního obrázku načítání.</string>
 </resources>

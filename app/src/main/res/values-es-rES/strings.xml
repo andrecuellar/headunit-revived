@@ -742,4 +742,29 @@
     <string name="onb_vehicle_help_advanced">Puedes ajustar más detalles de tu vehículo en la pestaña Avanzados. Nosotros no usamos estos datos; solo se los enviamos a Android Auto porque los requiere.</string>
     <string name="onb_summary_vehicle_format">Vehículo: %1$s</string>
     <string name="sunrise_reference_help">El punto de referencia utilizado para calcular el amanecer y el atardecer. Elige tu ubicación una vez; funciona sin GPS.</string>
+
+    <!-- Onboarding permissions -->
+    <string name="onb_summary_permissions_format">Permisos: %1$d de %2$d concedidos</string>
+    <string name="onb_permissions_title">Activar permisos</string>
+    <string name="onb_permissions_help">Activa los permisos que la aplicación necesita para que todo funcione sin solicitudes inesperadas más adelante. Puedes cambiarlos en cualquier momento.</string>
+    <string name="onb_perms_enable_all">Activar todos</string>
+    <string name="perm_allow">Permitir</string>
+    <string name="perm_granted">Concedido</string>
+    <string name="perm_optional_format">%1$s (opcional)</string>
+    <string name="permissions">Permisos</string>
+    <string name="permissions_desc">Revisa y concede los permisos que necesita la aplicación</string>
+    <string name="perm_mic_title">Micrófono</string>
+    <string name="perm_mic_help">Permite a Android Auto usar comandos de voz, el Google Assistant y llamadas telefónicas.</string>
+    <string name="perm_location_title">Ubicación</string>
+    <string name="perm_location_help">Envía el GPS al móvil para la navegación, busca conexiones inalámbricas y activa el modo noche basado en la ubicación.</string>
+    <string name="perm_nearby_title">Dispositivos cercanos</string>
+    <string name="perm_nearby_help">Necesario para conectar por Bluetooth y Wi-Fi, enrutar el audio Bluetooth e iniciar automáticamente con un dispositivo emparejado.</string>
+    <string name="perm_notifications_title">Notificaciones</string>
+    <string name="perm_notifications_help">Muestra la notificación persistente mientras Android Auto está en ejecución.</string>
+    <string name="perm_overlay_title">Mostrar sobre otras aplicaciones</string>
+    <string name="perm_overlay_help">Permite a la aplicación abrir la pantalla del coche sobre otras aplicaciones, incluido el inicio automático.</string>
+    <string name="perm_write_settings_title">Modificar ajustes del sistema</string>
+    <string name="perm_write_settings_help">Permite a la aplicación activar la zona Wi-Fi automáticamente para conexiones inalámbricas.</string>
+    <string name="perm_storage_title">Almacenamiento</string>
+    <string name="perm_storage_help">Necesario para hacer copia de seguridad y restaurar tus ajustes, y para elegir una imagen de carga personalizada.</string>
 </resources>

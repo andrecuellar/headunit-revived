@@ -732,4 +732,29 @@
     <string name="onb_vehicle_help_advanced">你可以在進階分頁中調整更多車輛細節。我們不會使用這些資料，只會傳送給 Android Auto，因為它需要這些資料。</string>
     <string name="onb_summary_vehicle_format">車輛：%1$s</string>
     <string name="sunrise_reference_help">用來計算日出和日落時間的參考點。只需選擇一次位置，無需 GPS 即可運作。</string>
+
+    <!-- Onboarding permissions -->
+    <string name="onb_summary_permissions_format">權限：已授予 %1$d / %2$d 項</string>
+    <string name="onb_permissions_title">啟用權限</string>
+    <string name="onb_permissions_help">開啟應用程式所需的權限，以免日後出現意外提示。您隨時可以更改這些設定。</string>
+    <string name="onb_perms_enable_all">全部啟用</string>
+    <string name="perm_allow">允許</string>
+    <string name="perm_granted">已授予</string>
+    <string name="perm_optional_format">%1$s（選用）</string>
+    <string name="permissions">權限</string>
+    <string name="permissions_desc">檢視並授予應用程式所需的權限</string>
+    <string name="perm_mic_title">麥克風</string>
+    <string name="perm_mic_help">讓 Android Auto 使用語音指令、Google Assistant 及通話功能。</string>
+    <string name="perm_location_title">位置</string>
+    <string name="perm_location_help">將 GPS 傳送至手機以供導航使用、掃描無線連線，並驅動依位置判斷的夜間模式。</string>
+    <string name="perm_nearby_title">附近裝置</string>
+    <string name="perm_nearby_help">透過 Bluetooth 和 Wi-Fi 連線、路由 Bluetooth 音訊，以及在已配對裝置上自動啟動所需的權限。</string>
+    <string name="perm_notifications_title">通知</string>
+    <string name="perm_notifications_help">在 Android Auto 執行期間顯示持續通知。</string>
+    <string name="perm_overlay_title">顯示在其他應用程式上層</string>
+    <string name="perm_overlay_help">讓應用程式在其他應用程式上層開啟車機畫面，包括自動啟動。</string>
+    <string name="perm_write_settings_title">修改系統設定</string>
+    <string name="perm_write_settings_help">讓應用程式自動開啟熱點以進行無線連線。</string>
+    <string name="perm_storage_title">儲存空間</string>
+    <string name="perm_storage_help">備份和還原設定，以及選擇自訂載入畫面圖片所需的權限。</string>
 </resources>

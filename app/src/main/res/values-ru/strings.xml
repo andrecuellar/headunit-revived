@@ -733,4 +733,29 @@
     <string name="onb_vehicle_help_advanced">Дополнительные сведения об автомобиле можно настроить на вкладке Дополнительно. Мы не используем эти данные; они отправляются только в Android Auto, потому что он их запрашивает.</string>
     <string name="onb_summary_vehicle_format">Автомобиль: %1$s</string>
     <string name="sunrise_reference_help">Опорная точка для расчёта восхода и заката. Укажите своё местоположение один раз; работает без GPS.</string>
+
+    <!-- Onboarding permissions -->
+    <string name="onb_summary_permissions_format">Разрешения: %1$d из %2$d предоставлено</string>
+    <string name="onb_permissions_title">Предоставление разрешений</string>
+    <string name="onb_permissions_help">Включите разрешения, необходимые приложению, чтобы в дальнейшем всё работало без неожиданных запросов. Вы можете изменить их в любой момент.</string>
+    <string name="onb_perms_enable_all">Разрешить все</string>
+    <string name="perm_allow">Разрешить</string>
+    <string name="perm_granted">Предоставлено</string>
+    <string name="perm_optional_format">%1$s (необязательно)</string>
+    <string name="permissions">Разрешения</string>
+    <string name="permissions_desc">Просмотр и предоставление разрешений, необходимых приложению</string>
+    <string name="perm_mic_title">Микрофон</string>
+    <string name="perm_mic_help">Позволяет Android Auto использовать голосовые команды, Google Assistant и телефонные звонки.</string>
+    <string name="perm_location_title">Местоположение</string>
+    <string name="perm_location_help">Передаёт GPS на телефон для навигации, выполняет поиск беспроводных подключений и управляет ночным режимом по местоположению.</string>
+    <string name="perm_nearby_title">Устройства поблизости</string>
+    <string name="perm_nearby_help">Необходимо для подключения по Bluetooth и Wi-Fi, маршрутизации Bluetooth-аудио и автозапуска при подключении сопряжённого устройства.</string>
+    <string name="perm_notifications_title">Уведомления</string>
+    <string name="perm_notifications_help">Отображает постоянное уведомление во время работы Android Auto.</string>
+    <string name="perm_overlay_title">Отображение поверх других приложений</string>
+    <string name="perm_overlay_help">Позволяет приложению открывать экран автомобиля поверх других приложений, включая автозапуск.</string>
+    <string name="perm_write_settings_title">Изменение системных настроек</string>
+    <string name="perm_write_settings_help">Позволяет приложению автоматически включать точку доступа для беспроводных подключений.</string>
+    <string name="perm_storage_title">Хранилище</string>
+    <string name="perm_storage_help">Необходимо для резервного копирования и восстановления настроек, а также для выбора пользовательского экрана загрузки.</string>
 </resources>

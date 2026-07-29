@@ -744,4 +744,28 @@
     <string name="onb_vehicle_help_advanced">Puedes ajustar más detalles de tu vehículo en la pestaña Avanzados. Nosotros no usamos estos datos; solo se los enviamos a Android Auto porque los requiere.</string>
     <string name="onb_summary_vehicle_format">Vehículo: %1$s</string>
     <string name="sunrise_reference_help">El punto de referencia usado para calcular el amanecer y el atardecer. Elige tu ubicación una vez; funciona sin GPS.</string>
+
+    <string name="onb_summary_permissions_format">Permisos: %1$d de %2$d otorgados</string>
+    <string name="onb_permissions_title">Activar permisos</string>
+    <string name="onb_permissions_help">Activa los permisos que necesita la app para que todo funcione sin interrupciones inesperadas. Puedes cambiarlos en cualquier momento.</string>
+    <string name="onb_perms_enable_all">Activar todos</string>
+    <string name="perm_allow">Permitir</string>
+    <string name="perm_granted">Otorgado</string>
+    <string name="perm_optional_format">%1$s (opcional)</string>
+    <string name="permissions">Permisos</string>
+    <string name="permissions_desc">Revisar y otorgar los permisos que necesita la app</string>
+    <string name="perm_mic_title">Micrófono</string>
+    <string name="perm_mic_help">Permite que Android Auto use comandos de voz, el Google Assistant y llamadas telefónicas.</string>
+    <string name="perm_location_title">Ubicación</string>
+    <string name="perm_location_help">Envía el GPS al teléfono para la navegación, busca conexiones inalámbricas y activa el modo noche según la ubicación.</string>
+    <string name="perm_nearby_title">Dispositivos cercanos</string>
+    <string name="perm_nearby_help">Necesario para conectarse por Bluetooth y Wi-Fi, enrutar audio Bluetooth e iniciar automáticamente con un dispositivo emparejado.</string>
+    <string name="perm_notifications_title">Notificaciones</string>
+    <string name="perm_notifications_help">Muestra la notificación persistente mientras Android Auto está en ejecución.</string>
+    <string name="perm_overlay_title">Mostrar sobre otras apps</string>
+    <string name="perm_overlay_help">Permite que la app abra la pantalla del auto encima de otras apps, incluyendo el inicio automático.</string>
+    <string name="perm_write_settings_title">Modificar ajustes del sistema</string>
+    <string name="perm_write_settings_help">Permite que la app active la zona Wi-Fi automáticamente para conexiones inalámbricas.</string>
+    <string name="perm_storage_title">Almacenamiento</string>
+    <string name="perm_storage_help">Necesario para hacer copia de seguridad y restaurar tu configuración, y para elegir una imagen de carga personalizada.</string>
 </resources>

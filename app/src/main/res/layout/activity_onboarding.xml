@@ -652,7 +652,42 @@
             </LinearLayout>
         </ScrollView>
 
-        <!-- Step 8: Ready -->
+        <!-- Step 9: Permissions -->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/onb_permissions_title"
+                    android:textAppearance="?attr/textAppearanceHeadline5"
+                    android:textStyle="bold" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/onb_permissions_help"
+                    android:textAppearance="?attr/textAppearanceBody2" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/onb_perms_enable_all"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/onb_perms_enable_all" />
+                <LinearLayout
+                    android:id="@+id/onb_perms_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="vertical" />
+            </LinearLayout>
+        </ScrollView>
+
+        <!-- Step 10: Ready -->
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">

@@ -733,4 +733,29 @@
     <string name="onb_vehicle_help_advanced">Je kunt meer voertuiggegevens aanpassen op het tabblad Geavanceerd. Wij gebruiken deze gegevens niet; ze worden alleen naar Android Auto gestuurd omdat het ze vereist.</string>
     <string name="onb_summary_vehicle_format">Voertuig: %1$s</string>
     <string name="sunrise_reference_help">Het referentiepunt dat wordt gebruikt om zonsopkomst en zonsondergang te berekenen. Kies één keer je locatie; het werkt zonder gps.</string>
+
+    <!-- Permissions & onboarding -->
+    <string name="onb_summary_permissions_format">Machtigingen: %1$d van %2$d verleend</string>
+    <string name="onb_permissions_title">Machtigingen inschakelen</string>
+    <string name="onb_permissions_help">Schakel de machtigingen in die de app nodig heeft, zodat alles werkt zonder onverwachte prompts. Je kunt deze altijd later wijzigen.</string>
+    <string name="onb_perms_enable_all">Alles inschakelen</string>
+    <string name="perm_allow">Toestaan</string>
+    <string name="perm_granted">Verleend</string>
+    <string name="perm_optional_format">%1$s (optioneel)</string>
+    <string name="permissions">Machtigingen</string>
+    <string name="permissions_desc">Bekijk en verleen de machtigingen die de app nodig heeft</string>
+    <string name="perm_mic_title">Microfoon</string>
+    <string name="perm_mic_help">Laat Android Auto spraakopdrachten, de Google Assistant en telefoongesprekken gebruiken.</string>
+    <string name="perm_location_title">Locatie</string>
+    <string name="perm_location_help">Stuurt GPS naar de telefoon voor navigatie, scant naar draadloze verbindingen en schakelt de locatiegebaseerde nachtmodus in.</string>
+    <string name="perm_nearby_title">Apparaten in de buurt</string>
+    <string name="perm_nearby_help">Nodig om verbinding te maken via Bluetooth en Wi-Fi, Bluetooth-audio te routeren en automatisch te starten op een gekoppeld apparaat.</string>
+    <string name="perm_notifications_title">Meldingen</string>
+    <string name="perm_notifications_help">Toont de permanente melding terwijl Android Auto actief is.</string>
+    <string name="perm_overlay_title">Weergeven over andere apps</string>
+    <string name="perm_overlay_help">Laat de app het autoscherm boven andere apps openen, inclusief automatisch starten.</string>
+    <string name="perm_write_settings_title">Systeeminstellingen wijzigen</string>
+    <string name="perm_write_settings_help">Laat de app de hotspot automatisch inschakelen voor draadloze verbindingen.</string>
+    <string name="perm_storage_title">Opslag</string>
+    <string name="perm_storage_help">Nodig om je instellingen te back-uppen en te herstellen en om een aangepaste laadafbeelding te kiezen.</string>
 </resources>

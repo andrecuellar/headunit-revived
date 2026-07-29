@@ -735,4 +735,29 @@
     <string name="onb_vehicle_help_advanced">Você pode ajustar mais detalhes do veículo na aba Avançado. Não usamos esses dados; eles são enviados apenas ao Android Auto porque ele os exige.</string>
     <string name="onb_summary_vehicle_format">Veículo: %1$s</string>
     <string name="sunrise_reference_help">O ponto de referência usado para calcular o nascer e o pôr do sol. Escolha sua localização uma vez; funciona sem GPS.</string>
+
+    <!-- Onboarding permissions -->
+    <string name="onb_summary_permissions_format">Permissões: %1$d de %2$d concedidas</string>
+    <string name="onb_permissions_title">Ativar permissões</string>
+    <string name="onb_permissions_help">Ative as permissões que o app precisa para que tudo funcione sem solicitações inesperadas depois. Você pode alterar isso a qualquer momento.</string>
+    <string name="onb_perms_enable_all">Ativar todas</string>
+    <string name="perm_allow">Permitir</string>
+    <string name="perm_granted">Concedida</string>
+    <string name="perm_optional_format">%1$s (opcional)</string>
+    <string name="permissions">Permissões</string>
+    <string name="permissions_desc">Revise e conceda as permissões necessárias ao app</string>
+    <string name="perm_mic_title">Microfone</string>
+    <string name="perm_mic_help">Permite que o Android Auto use comandos de voz, o Google Assistant e chamadas telefônicas.</string>
+    <string name="perm_location_title">Localização</string>
+    <string name="perm_location_help">Envia o GPS ao celular para navegação, escaneia conexões sem fio e aciona o modo noturno baseado em localização.</string>
+    <string name="perm_nearby_title">Dispositivos próximos</string>
+    <string name="perm_nearby_help">Necessário para conectar via Bluetooth e Wi-Fi, rotear áudio Bluetooth e iniciar automaticamente em um dispositivo pareado.</string>
+    <string name="perm_notifications_title">Notificações</string>
+    <string name="perm_notifications_help">Exibe a notificação persistente enquanto o Android Auto está em execução.</string>
+    <string name="perm_overlay_title">Exibir sobre outros apps</string>
+    <string name="perm_overlay_help">Permite que o app abra a tela do carro sobre outros aplicativos, incluindo o início automático.</string>
+    <string name="perm_write_settings_title">Modificar configurações do sistema</string>
+    <string name="perm_write_settings_help">Permite que o app ative o ponto de acesso automaticamente para conexões sem fio.</string>
+    <string name="perm_storage_title">Armazenamento</string>
+    <string name="perm_storage_help">Necessário para fazer backup e restaurar suas configurações e para escolher uma imagem de carregamento personalizada.</string>
 </resources>

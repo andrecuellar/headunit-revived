@@ -1,6 +1,7 @@
 package com.andrerinas.headunitrevived.main
 
 import android.content.Context
+import android.content.Intent
 import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
@@ -16,10 +17,13 @@ import com.andrerinas.headunitrevived.App
 import com.andrerinas.headunitrevived.R
 import com.andrerinas.headunitrevived.app.BaseActivity
 import com.andrerinas.headunitrevived.decoder.VideoDecoder
+import com.andrerinas.headunitrevived.utils.AppPermissions
 import com.andrerinas.headunitrevived.utils.AppThemeManager
 import com.andrerinas.headunitrevived.utils.LocaleHelper
+import com.andrerinas.headunitrevived.utils.PermissionRowBinder
 import com.andrerinas.headunitrevived.utils.Settings
 import com.andrerinas.headunitrevived.utils.SystemOptimizer
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.ViewCompat
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.button.MaterialButtonToggleGroup
@@ -60,6 +64,15 @@ class OnboardingActivity : BaseActivity() {
     private var selectedPortrait = false
     private var dpiPicker: com.andrerinas.headunitrevived.view.DpiPickerView? = null
 
+    // Permissions step (registered here, before the activity is RESUMED).
+    private var permissionBinder: PermissionRowBinder? = null
+    private val permNormalLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions()
+    ) { permissionBinder?.rebind() }
+    private val permSpecialLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { permissionBinder?.rebind() }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -89,6 +102,7 @@ class OnboardingActivity : BaseActivity() {
 
         buildStepperDots()
         bindSteps()
+        bindPermissionsStep()
 
         backBtn.setOnClickListener { if (step > 0) { step--; render() } }
         nextBtn.setOnClickListener { onNext() }
@@ -104,9 +118,11 @@ class OnboardingActivity : BaseActivity() {
 
     override fun onResume() {
         super.onResume()
-        // Reflect any changes made in deep-linked settings screens (theme, automation).
+        // Reflect any changes made in deep-linked settings screens (theme, automation) or after
+        // returning from a special-permission settings screen (overlay / modify system settings).
         updateThemeButtonText()
         updateNightButtonText()
+        permissionBinder?.rebind()
     }
 
     private fun buildStepperDots() {
@@ -347,7 +363,19 @@ class OnboardingActivity : BaseActivity() {
             findViewById<MaterialCheckBox>(R.id.onb_safety_accept).isChecked else true
         if (step == STEP_READY) findViewById<TextView>(R.id.onb_ready_summary).text = summaryText()
         if (step == STEP_AUTOMATION) applyAutomationVisibility()
+        if (step == STEP_PERMISSIONS) permissionBinder?.rebind()
         updateStepperDots()
+    }
+
+    /** Wire the permissions checklist. Rows are rendered from the AppPermissions registry, so a
+     * future permission only needs a registry entry, not changes here. */
+    private fun bindPermissionsStep() {
+        val container = findViewById<LinearLayout>(R.id.onb_perms_container)
+        permissionBinder = PermissionRowBinder(this, container, permNormalLauncher, permSpecialLauncher)
+        findViewById<MaterialButton>(R.id.onb_perms_enable_all).setOnClickListener {
+            permissionBinder?.requestAllMissing()
+        }
+        permissionBinder?.rebind()
     }
 
     /** Show only the auto-start toggles that match the chosen connection type. Self Mode
@@ -568,10 +596,15 @@ class OnboardingActivity : BaseActivity() {
             Settings.Resolution.fromId(settings.resolutionId)?.resName ?: getString(R.string.auto)
         )
         val base = getString(R.string.onb_ready_summary, conn, res, settings.videoCodec)
+        val perms = getString(
+            R.string.onb_summary_permissions_format,
+            AppPermissions.grantedCount(this), AppPermissions.visible().size
+        )
         val vehicle = settings.vehicleDisplayName.trim()
-        return if (vehicle.isNotEmpty())
+        val head = if (vehicle.isNotEmpty())
             getString(R.string.onb_summary_vehicle_format, vehicle) + "\n" + base
         else base
+        return head + "\n" + perms
     }
 
     private fun resolveAttrColor(attr: Int): Int {
@@ -587,12 +620,13 @@ class OnboardingActivity : BaseActivity() {
         @Volatile
         var deferredThisSession = false
         private const val KEY_STEP = "onb_step"
-        private const val STEP_COUNT = 10
+        private const val STEP_COUNT = 11
         private const val STEP_SAFETY = 1
         private const val STEP_DISPLAY = 3
         private const val STEP_DPI = 4
         private const val STEP_AUTOMATION = 6
         private const val STEP_VEHICLE = 8
-        private const val STEP_READY = 9
+        private const val STEP_PERMISSIONS = 9
+        private const val STEP_READY = 10
     }
 }

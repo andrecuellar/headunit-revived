@@ -31,6 +31,7 @@ import com.andrerinas.headunitrevived.aap.AapService
 import com.andrerinas.headunitrevived.app.BaseActivity
 import com.andrerinas.headunitrevived.connection.CommManager
 import com.andrerinas.headunitrevived.utils.AppLog
+import com.andrerinas.headunitrevived.utils.AppPermissions
 import android.content.res.Configuration
 import com.andrerinas.headunitrevived.utils.Settings
 import android.os.SystemClock
@@ -198,7 +199,8 @@ class MainActivity : BaseActivity() {
             findViewById<View>(R.id.splash_overlay)?.visibility = View.GONE
         }
 
-        requestPermissions()
+        // Runtime permissions are requested by the setup wizard's permissions step on fresh
+        // installs; for users who already finished onboarding we request them from checkSetupFlow().
         viewModel.register()
         handleLaunchIntent(intent)
         setupWifiDirectInfo()
@@ -809,27 +811,8 @@ class MainActivity : BaseActivity() {
     }
 
     private fun requestPermissions() {
-        val requiredPermissions = mutableListOf(
-            Manifest.permission.RECORD_AUDIO,
-            Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.ACCESS_COARSE_LOCATION
-        )
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            requiredPermissions.add(Manifest.permission.BLUETOOTH_ADVERTISE)
-            requiredPermissions.add(Manifest.permission.BLUETOOTH_CONNECT)
-            requiredPermissions.add(Manifest.permission.BLUETOOTH_SCAN)
-        }
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            requiredPermissions.add(Manifest.permission.NEARBY_WIFI_DEVICES)
-            requiredPermissions.add(Manifest.permission.POST_NOTIFICATIONS)
-        }
-
-        // Filter out permissions that are already granted
-        val permissionsToRequest = requiredPermissions.filter {
-            ContextCompat.checkSelfPermission(this, it) != PackageManager.PERMISSION_GRANTED
-        }
+        // Single source of truth: the same registry the wizard/Settings permissions screen use.
+        val permissionsToRequest = AppPermissions.missingNormalPermissions(this)
 
         if (permissionsToRequest.isNotEmpty()) {
             AppLog.i("Requesting missing permissions: $permissionsToRequest")
@@ -882,10 +865,15 @@ class MainActivity : BaseActivity() {
         val appSettings = Settings(this)
         // Show the intelligent onboarding wizard once whenever the stored version is
         // older than the current one (covers fresh installs and upgraders alike).
-        if (appSettings.onboardingVersion < OnboardingActivity.CURRENT_ONBOARDING_VERSION &&
-            !OnboardingActivity.deferredThisSession) {
+        val wizardPending = appSettings.onboardingVersion < OnboardingActivity.CURRENT_ONBOARDING_VERSION
+        if (wizardPending && !OnboardingActivity.deferredThisSession) {
+            // The wizard's permissions step handles runtime permissions, so don't also prompt here.
             startActivity(Intent(this, OnboardingActivity::class.java))
+        } else if (!wizardPending) {
+            // Onboarding already completed (e.g. upgraders): request runtime permissions directly.
+            requestPermissions()
         }
+        // Wizard deferred this session ("Do it later"): wait until it runs on the next launch.
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
