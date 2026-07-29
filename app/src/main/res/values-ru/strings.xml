@@ -758,4 +758,7 @@
     <string name="perm_write_settings_help">Позволяет приложению автоматически включать точку доступа для беспроводных подключений.</string>
     <string name="perm_storage_title">Хранилище</string>
     <string name="perm_storage_help">Необходимо для резервного копирования и восстановления настроек, а также для выбора пользовательского экрана загрузки.</string>
+    <string name="onb_dpi_recommended">Рекомендуется для вашего экрана: %1$d dpi</string>
+    <string name="onb_ready_loading_intro">Ещё кое-что: теперь вы можете задать пользовательский экран загрузки, который отображается во время подключения автомобиля.</string>
+    <string name="onb_ready_loading_button">Настроить экран загрузки</string>
 </resources>

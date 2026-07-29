@@ -104,6 +104,11 @@ class OnboardingActivity : BaseActivity() {
         bindSteps()
         bindPermissionsStep()
 
+        // Ready step: offer to jump straight into the loading screen setup (finishes the wizard).
+        findViewById<MaterialButton>(R.id.onb_loading_screen_button).setOnClickListener {
+            finishOnboardingInto(R.id.loadingScreenFragment)
+        }
+
         backBtn.setOnClickListener { if (step > 0) { step--; render() } }
         nextBtn.setOnClickListener { onNext() }
         skipBtn.setOnClickListener { onDoItLater() }
@@ -215,12 +220,13 @@ class OnboardingActivity : BaseActivity() {
             selectedPortrait = id == R.id.onb_orient_port
         }
 
-        // Graphical DPI picker (slider + preview + Small/Medium/Large tabs, all synced),
-        // pre-set to the recommended DPI for the detected panel.
+        // Graphical DPI picker (slider + preview + Small/Medium/Large tabs, all synced).
+        // Seed from the user's saved DPI when they already set one, so re-running the wizard
+        // does not overwrite their choice; the recommended value is shown as a hint instead.
         dpiPicker = findViewById<com.andrerinas.headunitrevived.view.DpiPickerView>(R.id.onb_dpi_picker).apply {
             val m = realMetrics()
             setPanelResolution(m.widthPixels, m.heightPixels)
-            dpi = recommendedDpi()
+            dpi = settings.dpiPixelDensity.takeIf { it != 0 } ?: recommendedDpi()
         }
 
         // --- Appearance: full theme + night-mode pickers; more options live in Settings ---
@@ -364,6 +370,8 @@ class OnboardingActivity : BaseActivity() {
         if (step == STEP_READY) findViewById<TextView>(R.id.onb_ready_summary).text = summaryText()
         if (step == STEP_AUTOMATION) applyAutomationVisibility()
         if (step == STEP_PERMISSIONS) permissionBinder?.rebind()
+        if (step == STEP_DPI) findViewById<TextView>(R.id.onb_dpi_recommended).text =
+            getString(R.string.onb_dpi_recommended, recommendedDpi())
         updateStepperDots()
     }
 
@@ -439,6 +447,19 @@ class OnboardingActivity : BaseActivity() {
         settings.hasCompletedSetupWizard = true
         settings.onboardingVersion = CURRENT_ONBOARDING_VERSION
         settings.commit()
+        finish()
+    }
+
+    /** Complete the wizard and open a specific Settings sub-screen (e.g. the loading screen setup). */
+    private fun finishOnboardingInto(destinationId: Int) {
+        settings.hasAcceptedDisclaimer = true
+        settings.hasCompletedSetupWizard = true
+        settings.onboardingVersion = CURRENT_ONBOARDING_VERSION
+        settings.commit()
+        startActivity(
+            Intent(this, SettingsActivity::class.java)
+                .putExtra(SettingsActivity.EXTRA_DESTINATION, destinationId)
+        )
         finish()
     }
 

@@ -758,4 +758,7 @@
     <string name="perm_write_settings_help">Laat de app de hotspot automatisch inschakelen voor draadloze verbindingen.</string>
     <string name="perm_storage_title">Opslag</string>
     <string name="perm_storage_help">Nodig om je instellingen te back-uppen en te herstellen en om een aangepaste laadafbeelding te kiezen.</string>
+    <string name="onb_dpi_recommended">Aanbevolen voor je scherm: %1$d dpi</string>
+    <string name="onb_ready_loading_intro">Nog één ding: je kunt nu een aangepast laadscherm instellen, dat wordt getoond terwijl de auto verbinding maakt.</string>
+    <string name="onb_ready_loading_button">Een laadscherm instellen</string>
 </resources>

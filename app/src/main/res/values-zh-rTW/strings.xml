@@ -757,4 +757,7 @@
     <string name="perm_write_settings_help">讓應用程式自動開啟熱點以進行無線連線。</string>
     <string name="perm_storage_title">儲存空間</string>
     <string name="perm_storage_help">備份和還原設定，以及選擇自訂載入畫面圖片所需的權限。</string>
+    <string name="onb_dpi_recommended">您螢幕的建議值：%1$d dpi</string>
+    <string name="onb_ready_loading_intro">還有一件事：您現在可以設定自訂載入畫面，在汽車連線時顯示。</string>
+    <string name="onb_ready_loading_button">設定載入畫面</string>
 </resources>

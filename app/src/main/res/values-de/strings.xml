@@ -764,4 +764,7 @@
     <string name="perm_write_settings_help">Ermöglicht der App, den Hotspot für kabellose Verbindungen automatisch einzuschalten.</string>
     <string name="perm_storage_title">Speicher</string>
     <string name="perm_storage_help">Wird benötigt, um Ihre Einstellungen zu sichern und wiederherzustellen sowie ein benutzerdefiniertes Ladebild auszuwählen.</string>
+    <string name="onb_dpi_recommended">Empfohlen für Ihren Bildschirm: %1$d dpi</string>
+    <string name="onb_ready_loading_intro">Noch eine Sache: Sie können jetzt einen benutzerdefinierten Ladebildschirm festlegen, der angezeigt wird, während das Auto eine Verbindung herstellt.</string>
+    <string name="onb_ready_loading_button">Ladebildschirm einrichten</string>
 </resources>

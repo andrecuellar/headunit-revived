@@ -768,4 +768,7 @@
     <string name="perm_write_settings_help">Permite que la app active la zona Wi-Fi automáticamente para conexiones inalámbricas.</string>
     <string name="perm_storage_title">Almacenamiento</string>
     <string name="perm_storage_help">Necesario para hacer copia de seguridad y restaurar tu configuración, y para elegir una imagen de carga personalizada.</string>
+    <string name="onb_dpi_recommended">Recomendado para tu pantalla: %1$d dpi</string>
+    <string name="onb_ready_loading_intro">Una cosa más: ahora puedes establecer una pantalla de carga personalizada, que se muestra mientras el auto se conecta.</string>
+    <string name="onb_ready_loading_button">Configurar una pantalla de carga</string>
 </resources>

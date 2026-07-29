@@ -759,4 +759,7 @@
     <string name="perm_write_settings_help">Umożliwia aplikacji automatyczne włączanie hotspotu dla połączeń bezprzewodowych.</string>
     <string name="perm_storage_title">Pamięć masowa</string>
     <string name="perm_storage_help">Potrzebne do tworzenia i przywracania kopii zapasowej ustawień oraz do wybrania niestandardowego obrazu ładowania.</string>
+    <string name="onb_dpi_recommended">Zalecane dla Twojego ekranu: %1$d dpi</string>
+    <string name="onb_ready_loading_intro">Jeszcze jedno: możesz teraz ustawić niestandardowy ekran ładowania wyświetlany podczas łączenia samochodu.</string>
+    <string name="onb_ready_loading_button">Skonfiguruj ekran ładowania</string>
 </resources>

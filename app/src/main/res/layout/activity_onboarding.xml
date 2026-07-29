@@ -299,6 +299,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp" />
                 <TextView
+                    android:id="@+id/onb_dpi_recommended"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:textAppearance="?attr/textAppearanceCaption" />
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
@@ -707,6 +713,19 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:textAppearance="?attr/textAppearanceBody1" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="@string/onb_ready_loading_intro"
+                    android:textAppearance="?attr/textAppearanceBody2" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/onb_loading_screen_button"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/onb_ready_loading_button" />
             </LinearLayout>
         </ScrollView>
 

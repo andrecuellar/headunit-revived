@@ -760,4 +760,7 @@
     <string name="perm_write_settings_help">Permite que o app ative o ponto de acesso automaticamente para conexões sem fio.</string>
     <string name="perm_storage_title">Armazenamento</string>
     <string name="perm_storage_help">Necessário para fazer backup e restaurar suas configurações e para escolher uma imagem de carregamento personalizada.</string>
+    <string name="onb_dpi_recommended">Recomendado para sua tela: %1$d dpi</string>
+    <string name="onb_ready_loading_intro">Mais uma coisa: agora você pode definir uma tela de carregamento personalizada, exibida enquanto o carro se conecta.</string>
+    <string name="onb_ready_loading_button">Configurar uma tela de carregamento</string>
 </resources>

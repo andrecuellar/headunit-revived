@@ -758,4 +758,7 @@
     <string name="perm_write_settings_help">Umožňuje aplikaci automaticky zapnout hotspot pro bezdrátová připojení.</string>
     <string name="perm_storage_title">Úložiště</string>
     <string name="perm_storage_help">Potřebné pro zálohování a obnovu nastavení a pro výběr vlastního obrázku načítání.</string>
+    <string name="onb_dpi_recommended">Doporučeno pro vaši obrazovku: %1$d dpi</string>
+    <string name="onb_ready_loading_intro">Ještě jedna věc: nyní můžete nastavit vlastní načítací obrazovku, která se zobrazí při připojování auta.</string>
+    <string name="onb_ready_loading_button">Nastavit načítací obrazovku</string>
 </resources>

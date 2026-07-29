@@ -53,6 +53,8 @@
     <string name="onb_summary_vehicle_format">Vehicle: %1$s</string>
     <!-- %1$d granted, %2$d total -->
     <string name="onb_summary_permissions_format">Permissions: %1$d of %2$d granted</string>
+    <string name="onb_ready_loading_intro">One more thing: you can now set a custom loading screen, shown while the car connects.</string>
+    <string name="onb_ready_loading_button">Set up a loading screen</string>
 
     <!-- Onboarding wizard: permissions step + Settings > Permissions -->
     <string name="onb_permissions_title">Enable permissions</string>
@@ -152,6 +154,8 @@
     <string name="onb_appearance_more_hint">You can find more dark mode options in Settings.</string>
     <string name="onb_automation_more_hint">You can find more options in Auto-connect and Auto-start settings.</string>
     <string name="onb_dpi_help">A higher DPI makes Android Auto icons and text larger, so less fits on screen. A lower DPI makes them smaller, so more fits. It applies when you connect Android Auto.</string>
+    <!-- %1$d recommended DPI value -->
+    <string name="onb_dpi_recommended">Recommended for your screen: %1$d dpi</string>
     <string name="onb_change_later">You can change this later in Settings.</string>
     <string name="dpi_automatic">Automatic</string>
     <string name="dpi_automatic_desc">Use the device density</string>
