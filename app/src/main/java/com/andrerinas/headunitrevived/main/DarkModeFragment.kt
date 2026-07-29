@@ -369,6 +369,24 @@ class DarkModeFragment : Fragment(), SensorEventListener {
         }
     }
 
+    /**
+     * Persists the Auto/sunrise mode(s) and the fixed-point source immediately, so the mode
+     * is not deselected when the fragment is recreated on returning from the map (issue #647).
+     * [applyAppTheme] should be false right before navigating away, to avoid an activity
+     * recreate in the middle of the navigation.
+     */
+    private fun commitSunriseMode(applyAppTheme: Boolean) {
+        pendingUseFixedSunriseLocation = true
+        settings.useFixedSunriseLocation = true
+        pendingAppTheme?.let { settings.appTheme = it }
+        pendingNightMode?.let { settings.nightMode = it }
+        // Ask the service to re-send the Android Auto night mode (safe, no activity recreate).
+        requireContext().sendBroadcast(
+            Intent(AapService.ACTION_REQUEST_NIGHT_MODE_UPDATE).setPackage(requireContext().packageName)
+        )
+        if (applyAppTheme) App.appThemeManager?.forceRefresh()
+    }
+
     /** Sub-options for "Location (by area)" mode: outside-places appearance + manage places. */
     /**
      * Dedicated "Location" group, shown whenever either selector is set to Location. Its
@@ -511,10 +529,9 @@ class DarkModeFragment : Fragment(), SensorEventListener {
                 if (lat != null && lon != null && lat in -90.0..90.0 && lon in -180.0..180.0) {
                     settings.fixedSunriseLatitude = lat
                     settings.fixedSunriseLongitude = lon
-                    // Entering coordinates turns on the fixed point so it is not lost if the
-                    // settings screen is left without saving.
-                    settings.useFixedSunriseLocation = true
-                    pendingUseFixedSunriseLocation = true
+                    // Entering coordinates commits the Auto/sunrise mode and the fixed source
+                    // so they are not lost if the settings screen is left without saving.
+                    commitSunriseMode(applyAppTheme = true)
                     checkChanges()
                     updateSettingsList()
                 } else {
@@ -522,6 +539,9 @@ class DarkModeFragment : Fragment(), SensorEventListener {
                 }
             }
             .setNeutralButton(R.string.geofence_pick_on_map) { _, _ ->
+                // Commit the Auto/sunrise mode and the fixed source before leaving, so the mode
+                // is not deselected when the fragment is recreated on return (issue #647).
+                commitSunriseMode(applyAppTheme = false)
                 findNavController().navigate(
                     R.id.action_darkModeFragment_to_mapPickerFragment,
                     androidx.core.os.bundleOf(MapPickerFragment.ARG_MODE to MapPickerFragment.MODE_POINT)
