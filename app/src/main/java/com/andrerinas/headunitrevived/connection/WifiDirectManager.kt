@@ -529,7 +529,24 @@ class WifiDirectManager(private val context: Context) : WifiP2pManager.Connectio
                 createNewGroup(0)
                 return@requestGroupInfo
             } else {
-                AppLog.i("Existing P2P group found, skip createGroup")
+                // The group already exists (reused), so no WIFI_P2P_CONNECTION_CHANGED
+                // broadcast fires to trigger onGroupInfoAvailable. Resolve the device info
+                // and request the group info ourselves so the SSID, passphrase, IP and BSSID
+                // are delivered to the phone via onCredentialsReady, exactly like the freshly
+                // created group path does. Without this the phone never receives the
+                // credentials and cannot auto-join the reused group, so it has to be
+                // connected by hand through the Wireless Helper.
+                AppLog.i("Existing P2P group found, delivering its credentials")
+                isGroupOwner = group.isGroupOwner
+                WifiDirectCompat.requestDeviceInfo(manager, channel) { address ->
+                    AppLog.i("WifiDirectManager: Updated localDeviceAddress via requestDeviceInfo: $address")
+                    localDeviceAddress = address
+                    manager?.requestGroupInfo(channel, this@WifiDirectManager)
+                }
+                // Fallback: if requestDeviceInfo is not supported (< API 29), call directly
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+                    manager?.requestGroupInfo(channel, this)
+                }
             }
         }
     }
