@@ -33,6 +33,19 @@ class NativeAaHandshakeManager(
         private val A2DP_SOURCE_UUID = UUID.fromString("00001112-0000-1000-8000-00805f9b34fb")
         private const val HANDSHAKE_RESPONSE_TIMEOUT_MS = 15_000L
 
+        /** Which of [allServiceNames] are secondary Bluetooth radios, i.e. not [primaryServiceName]
+         *  (dual-Bluetooth-radio head units). Pure and unit-testable: identity is by system
+         *  service name, not MAC address, since BluetoothAdapter.getAddress() returns the fixed
+         *  placeholder "02:00:00:00:00:00" for any non-privileged app on every device since
+         *  Android 6.0 (API 23), so every real adapter instance looks identical by address alone. */
+        internal fun filterSecondaryServiceNames(
+            primaryServiceName: String,
+            allServiceNames: List<String>
+        ): List<String> {
+            val primary = primaryServiceName.ifEmpty { "bluetooth_manager" }
+            return allServiceNames.filter { it != primary }.distinct()
+        }
+
         fun checkCompatibility(context: Context): Boolean {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                 if (ContextCompat.checkSelfPermission(context, android.Manifest.permission.BLUETOOTH_CONNECT) 
@@ -184,23 +197,23 @@ class NativeAaHandshakeManager(
             }
         }
 
-        // Experimental: some head units have two Bluetooth radios (e.g. "K706" and "CAR8032").
-        // The phone may be bonded to the one that is not the default, so it never reaches the
-        // listener above. Also open listeners on any other radio with a real, different address.
-        // Strict no-op on the usual single-radio device, and skipped when the address is masked
-        // (API 31+), so it cannot disturb the primary listener.
-        val primaryAddr = try { adapter.address } catch (e: Exception) { null }
-        if (primaryAddr != null && primaryAddr != "02:00:00:00:00:00") {
-            val secondaries = try {
-                BluetoothHelper.getAllBluetoothAdapters(context).filter {
-                    val a = try { it.address } catch (e: Exception) { null }
-                    a != null && a != "02:00:00:00:00:00" && a != primaryAddr
-                }
-            } catch (e: Exception) { emptyList() }
-            if (secondaries.isNotEmpty()) {
-                AppLog.i("NativeAA: Opening AA listeners on ${secondaries.size} secondary Bluetooth radio(s) for dual-radio head units")
-                secondaries.forEach { launchExtraServers(it) }
-            }
+        // Some head units have two Bluetooth radios (e.g. "K706" and "CAR8032"). The phone may
+        // be bonded to whichever one isn't the primary, so it never reaches the listener above.
+        // Match radios by system service name, not MAC address: BluetoothAdapter.getAddress()
+        // returns the fixed placeholder "02:00:00:00:00:00" for any non-privileged app since
+        // Android 6.0 (API 23), on every device - primary and secondary always look identical
+        // by address alone (see andreknieriem/headunit-revived#706).
+        val handles = try {
+            BluetoothHelper.getAllBluetoothAdapterHandles(context)
+        } catch (e: Exception) { emptyList() }
+        val secondaryNames = filterSecondaryServiceNames(
+            settings.bluetoothManagerServiceName,
+            handles.map { it.serviceName }
+        ).toSet()
+        val secondaries = handles.filter { it.serviceName in secondaryNames }
+        if (secondaries.isNotEmpty()) {
+            AppLog.i("NativeAA: Opening AA listeners on ${secondaries.size} secondary Bluetooth radio(s) for dual-radio head units: ${secondaries.joinToString { it.serviceName }}")
+            secondaries.forEach { launchExtraServers(it.serviceName, it.adapter) }
         }
     }
 
@@ -209,26 +222,26 @@ class NativeAaHandshakeManager(
      * bonded to that radio (dual-Bluetooth head units) can still reach us. Experimental, and
      * fully guarded so a bad radio cannot affect the primary listener.
      */
-    private fun launchExtraServers(extra: BluetoothAdapter) {
+    private fun launchExtraServers(serviceName: String, extra: BluetoothAdapter) {
         val addr = try { extra.address } catch (e: Exception) { "?" }
         scope.launch(Dispatchers.IO + CoroutineName("NativeAa-RfcommServer-2")) {
             try {
                 val server = extra.listenUsingRfcommWithServiceRecord("AA BT Listener", AA_UUID)
                 extraAaServerSockets.add(server)
-                AppLog.i("NativeAA: ACTIVELY LISTENING on Android Auto UUID on secondary radio [$addr]")
+                AppLog.i("NativeAA: ACTIVELY LISTENING on Android Auto UUID on secondary radio '$serviceName' [$addr]")
                 while (isRunning && isActive) {
                     val socket = server.accept()
                     if (socket != null) {
-                        AppLog.i("NativeAA: Connection accepted (secondary radio [$addr]) from ${socket.remoteDevice.name} (${socket.remoteDevice.address})")
+                        AppLog.i("NativeAA: Connection accepted (secondary radio '$serviceName' [$addr]) from ${socket.remoteDevice.name} (${socket.remoteDevice.address})")
                         scope.launch(Dispatchers.IO + CoroutineName("NativeAa-Handshake-${socket.remoteDevice.address}")) {
                             handleHandshake(socket, addr)
                         }
                     }
                 }
             } catch (e: Exception) {
-                if (aaListenersClosedForSession) AppLog.d("NativeAA: Secondary AA server closed after successful handoff [$addr].")
-                else if (isRunning) AppLog.e("NativeAA: Secondary AA server error [$addr]: ${e.message}", e)
-                else AppLog.d("NativeAA: Secondary AA server closed cleanly [$addr].")
+                if (aaListenersClosedForSession) AppLog.d("NativeAA: Secondary AA server closed after successful handoff ['$serviceName' $addr].")
+                else if (isRunning) AppLog.e("NativeAA: Secondary AA server error ['$serviceName' $addr]: ${e.message}", e)
+                else AppLog.d("NativeAA: Secondary AA server closed cleanly ['$serviceName' $addr].")
             }
         }
         scope.launch(Dispatchers.IO + CoroutineName("NativeAa-HfpServer-2")) {
@@ -238,15 +251,15 @@ class NativeAaHandshakeManager(
                 while (isRunning && isActive) {
                     val socket = server.accept()
                     if (socket != null) {
-                        AppLog.i("NativeAA: HFP connection accepted (secondary radio) from ${socket.remoteDevice.name}.")
+                        AppLog.i("NativeAA: HFP connection accepted (secondary radio '$serviceName') from ${socket.remoteDevice.name}.")
                         scope.launch(Dispatchers.IO + CoroutineName("NativeAa-HfpResponder-${socket.remoteDevice.address}")) {
                             handleHfp(socket)
                         }
                     }
                 }
             } catch (e: Exception) {
-                if (isRunning) AppLog.e("NativeAA: Secondary HFP server error [$addr]: ${e.message}", e)
-                else AppLog.d("NativeAA: Secondary HFP server closed cleanly [$addr].")
+                if (isRunning) AppLog.e("NativeAA: Secondary HFP server error ['$serviceName' $addr]: ${e.message}", e)
+                else AppLog.d("NativeAA: Secondary HFP server closed cleanly ['$serviceName' $addr].")
             }
         }
     }
@@ -320,8 +333,10 @@ class NativeAaHandshakeManager(
     }
 
     /**
-     * Wakes up the phone by attempting a brief connection to the A2DP profile.
-     * This acts as a signal for the phone to start looking for the headunit.
+     * Wakes up the phone by attempting a brief connection to an HFP/HSP profile, signaling it
+     * to start looking for the head unit. Retried every 15s (matching the retry cadence of both
+     * nisargjhaveri/WirelessAndroidAutoDongle and mossyhub/openautolink) until a real handshake
+     * starts or another session (USB/etc.) takes over, instead of giving up after a single pass.
      */
     fun triggerPoke() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
