@@ -67,20 +67,27 @@ object BluetoothHelper {
         }
     }
 
+    data class BluetoothAdapterHandle(val serviceName: String, val adapter: BluetoothAdapter)
+
     /**
-     * All distinct, enabled Bluetooth adapters exposed by the system. Usually just the default
-     * radio; some head units expose a second Bluetooth chip as an extra service. Best-effort:
-     * bogus/non-adapter services resolve to null and are skipped.
+     * All distinct, enabled Bluetooth adapters exposed by the system, paired with the system
+     * service name each is backed by. Usually just the default radio; some head units expose a
+     * second Bluetooth chip as an extra service. Best-effort: bogus/non-adapter services resolve
+     * to null and are skipped.
      */
-    fun getAllBluetoothAdapters(context: Context): List<BluetoothAdapter> {
-        val result = mutableListOf<BluetoothAdapter>()
-        getDefaultAdapter(context)?.let { result.add(it) }
+    fun getAllBluetoothAdapterHandles(context: Context): List<BluetoothAdapterHandle> {
+        val result = mutableListOf<BluetoothAdapterHandle>()
+        getDefaultAdapter(context)?.let { result.add(BluetoothAdapterHandle("bluetooth_manager", it)) }
         for (service in listBluetoothServices()) {
             if (service == "bluetooth_manager") continue
-            adapterForService(context, service)?.let { result.add(it) }
+            adapterForService(context, service)?.let { result.add(BluetoothAdapterHandle(service, it)) }
         }
-        return result.filter { try { it.isEnabled } catch (e: Exception) { false } }
+        return result.filter { try { it.adapter.isEnabled } catch (e: Exception) { false } }
     }
+
+    /** All distinct, enabled Bluetooth adapters exposed by the system. See [getAllBluetoothAdapterHandles]. */
+    fun getAllBluetoothAdapters(context: Context): List<BluetoothAdapter> =
+        getAllBluetoothAdapterHandles(context).map { it.adapter }
 
     fun listBluetoothServices(): List<String> {
         val bluetoothServices = mutableListOf<String>()
