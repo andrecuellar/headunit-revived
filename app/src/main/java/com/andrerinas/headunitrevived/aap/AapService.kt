@@ -2133,8 +2133,10 @@ class AapService : Service(), UsbReceiver.Listener {
                         }
                     }
                     5289 -> {
-                        // WiFi Launcher detected — no connection needed, just log
-                        AppLog.i("Triggered Wifi Launcher at $ip:$port.")
+                        // WiFi Launcher detected. The wake (holding the probe socket open) already
+                        // happened in NetworkDiscovery; here we just wait for the helper to launch
+                        // and connect back to our WirelessServer on 5288.
+                        AppLog.i("AapService: WiFi Launcher detected at $ip:$port; awaiting inbound helper connection on 5288")
                     }
                 }
             }

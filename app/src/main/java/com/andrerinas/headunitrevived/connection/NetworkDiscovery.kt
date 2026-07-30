@@ -10,6 +10,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.net.Inet4Address
@@ -146,10 +147,17 @@ class NetworkDiscovery(private val context: Context, private val listener: Liste
         // Check Port 5289 (Wifi Launcher) - prioritizing this
         val launcherSocket = checkPort(ip, 5289, timeout = 300)
         if (launcherSocket != null) {
-            AppLog.i("NetworkDiscovery: Found Wifi Launcher on $ip:5289")
+            // The phone-side Wireless Helper watches for this inbound probe to auto-launch
+            // itself. Hold the socket open briefly before closing so it has time to react;
+            // closing it instantly (as the consolidated scan did) stopped waking the helper,
+            // so the user had to open it by hand.
+            val holdMs = 500L
+            AppLog.i("NetworkDiscovery: Found Wifi Launcher on $ip:5289, holding probe ${holdMs}ms to wake the helper")
             reportedIps.add(ip)
+            try { delay(holdMs) } catch (e: Exception) {}
             withContext(Dispatchers.Main) {
                 try { launcherSocket.close() } catch (e: Exception) {}
+                AppLog.i("NetworkDiscovery: Wifi Launcher probe released; awaiting inbound helper connection on 5288")
                 listener.onServiceFound(ip, 5289)
             }
             return true
@@ -176,6 +184,9 @@ class NetworkDiscovery(private val context: Context, private val listener: Liste
             socket.connect(InetSocketAddress(ip, port), timeout)
             socket
         } catch (e: Exception) {
+            // Surface a failed Wifi Launcher probe so logs can tell "helper not listening"
+            // apart from "the scan never ran".
+            if (port == 5289) AppLog.d("NetworkDiscovery: $ip:5289 probe failed (${e.javaClass.simpleName}); Wifi Launcher not listening")
             null
         }
     }
