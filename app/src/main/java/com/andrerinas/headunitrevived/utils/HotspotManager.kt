@@ -22,7 +22,7 @@ object HotspotManager {
     private var cachedCallbackClass: Class<*>? = null
 
     fun setHotspotEnabled(context: Context, enabled: Boolean): Boolean {
-        AppLog.i("HotspotManager: Setting hotspot enabled=$enabled (API ${Build.VERSION.SDK_INT})")
+        AppLog.i("HotspotManager: Setting hotspot enabled=$enabled (API ${Build.VERSION.SDK_INT}, canWriteSettings=${canWriteSystemSettings(context)})")
 
         // On Android 8+, WiFi must be disabled before tethering can start
         if (enabled) {
@@ -46,12 +46,24 @@ object HotspotManager {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             if (tryTetheringManager(context, enabled)) return true
         }
-        if (tryConnectivityManager(context, enabled)) return true
-        if (tryLegacyWifiManager(context, enabled)) return true
+        // The remaining reflection paths (startTethering / setWifiApEnabled) require the special
+        // "Modify system settings" access (WRITE_SETTINGS). Without it the framework throws a
+        // SecurityException, so check first and surface a clear, actionable message instead.
+        if (canWriteSystemSettings(context)) {
+            if (tryConnectivityManager(context, enabled)) return true
+            if (tryLegacyWifiManager(context, enabled)) return true
+        } else {
+            AppLog.w("HotspotManager: Cannot enable the hotspot without the \"Modify system settings\" permission (WRITE_SETTINGS). Grant it in the setup wizard or Settings > Permissions.")
+        }
 
         AppLog.w("HotspotManager: All hotspot attempts failed.")
         return false
     }
+
+    /** WRITE_SETTINGS is a special access; a manifest declaration alone never grants it. */
+    private fun canWriteSystemSettings(context: Context): Boolean =
+        Build.VERSION.SDK_INT < Build.VERSION_CODES.M ||
+            android.provider.Settings.System.canWrite(context)
 
     private fun tryConnectivityManager(context: Context, enabled: Boolean): Boolean {
         try {
