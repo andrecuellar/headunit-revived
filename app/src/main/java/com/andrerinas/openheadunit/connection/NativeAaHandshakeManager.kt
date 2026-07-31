@@ -155,23 +155,26 @@ class NativeAaHandshakeManager(
 
         isRunning = true
         aaListenersClosedForSession = false
-        // Local Bluetooth radio address; logged on every accept so a dual-radio head unit's logs
-        // show which radio the phone actually reached (compare with the HU MAC in the phone's log).
-        val localAddr = try { adapter.address } catch (e: Exception) { "?" }
-        AppLog.i("NativeAA: Starting Bluetooth Handshake Servers (primary radio [$localAddr])...")
+        // Local Bluetooth radio name; logged on every accept so a dual-radio head unit's logs
+        // show which radio the phone actually reached (compare with the HU name in the phone's
+        // log). Uses adapter.name, not adapter.address: getAddress() returns the fixed masked
+        // placeholder "02:00:00:00:00:00" for any non-privileged app since Android 6.0 (API 23),
+        // but getName() returns the real radio name (confirmed on-device: e.g. "Navegadortz2").
+        val localRadioName = try { adapter.name ?: "?" } catch (e: Exception) { "?" }
+        AppLog.i("NativeAA: Starting Bluetooth Handshake Servers (primary radio [$localRadioName])...")
 
         // Start AA RFCOMM Server
         scope.launch(Dispatchers.IO + CoroutineName("NativeAa-RfcommServer")) {
             try {
                 aaServerSocket = adapter.listenUsingRfcommWithServiceRecord("AA BT Listener", AA_UUID)
-                AppLog.i("NativeAA: ACTIVELY LISTENING on Android Auto UUID ($AA_UUID) on radio [$localAddr]... Waiting for phone to connect back!")
+                AppLog.i("NativeAA: ACTIVELY LISTENING on Android Auto UUID ($AA_UUID) on radio [$localRadioName]... Waiting for phone to connect back!")
                 while (isRunning && isActive) {
                     val socket = aaServerSocket?.accept()
                     if (socket != null) {
-                        AppLog.i("NativeAA: Connection accepted from ${socket.remoteDevice.name} (${socket.remoteDevice.address}) on local radio [$localAddr]")
+                        AppLog.i("NativeAA: Connection accepted from ${socket.remoteDevice.name} (${socket.remoteDevice.address}) on local radio [$localRadioName]")
                         // [FIX] Launch handshake in a separate coroutine so the server can accept the next connection!
                         scope.launch(Dispatchers.IO + CoroutineName("NativeAa-Handshake-${socket.remoteDevice.address}")) {
-                            handleHandshake(socket, localAddr)
+                            handleHandshake(socket, localRadioName)
                         }
                     }
                 }
@@ -234,25 +237,27 @@ class NativeAaHandshakeManager(
      * fully guarded so a bad radio cannot affect the primary listener.
      */
     private fun launchExtraServers(serviceName: String, extra: BluetoothAdapter) {
-        val addr = try { extra.address } catch (e: Exception) { "?" }
+        // extra.name, not extra.address - see the comment on localRadioName in start(); the
+        // address is always the masked placeholder, the name is the real, useful identifier.
+        val radioName = try { extra.name ?: "?" } catch (e: Exception) { "?" }
         scope.launch(Dispatchers.IO + CoroutineName("NativeAa-RfcommServer-2")) {
             try {
                 val server = extra.listenUsingRfcommWithServiceRecord("AA BT Listener", AA_UUID)
                 extraAaServerSockets.add(server)
-                AppLog.i("NativeAA: ACTIVELY LISTENING on Android Auto UUID on secondary radio '$serviceName' [$addr]")
+                AppLog.i("NativeAA: ACTIVELY LISTENING on Android Auto UUID on secondary radio '$serviceName' [$radioName]")
                 while (isRunning && isActive) {
                     val socket = server.accept()
                     if (socket != null) {
-                        AppLog.i("NativeAA: Connection accepted (secondary radio '$serviceName' [$addr]) from ${socket.remoteDevice.name} (${socket.remoteDevice.address})")
+                        AppLog.i("NativeAA: Connection accepted (secondary radio '$serviceName' [$radioName]) from ${socket.remoteDevice.name} (${socket.remoteDevice.address})")
                         scope.launch(Dispatchers.IO + CoroutineName("NativeAa-Handshake-${socket.remoteDevice.address}")) {
-                            handleHandshake(socket, addr)
+                            handleHandshake(socket, radioName)
                         }
                     }
                 }
             } catch (e: Exception) {
-                if (aaListenersClosedForSession) AppLog.d("NativeAA: Secondary AA server closed after successful handoff ['$serviceName' $addr].")
-                else if (isRunning) AppLog.e("NativeAA: Secondary AA server error ['$serviceName' $addr]: ${e.message}", e)
-                else AppLog.d("NativeAA: Secondary AA server closed cleanly ['$serviceName' $addr].")
+                if (aaListenersClosedForSession) AppLog.d("NativeAA: Secondary AA server closed after successful handoff ['$serviceName' $radioName].")
+                else if (isRunning) AppLog.e("NativeAA: Secondary AA server error ['$serviceName' $radioName]: ${e.message}", e)
+                else AppLog.d("NativeAA: Secondary AA server closed cleanly ['$serviceName' $radioName].")
             }
         }
         scope.launch(Dispatchers.IO + CoroutineName("NativeAa-HfpServer-2")) {
@@ -269,8 +274,8 @@ class NativeAaHandshakeManager(
                     }
                 }
             } catch (e: Exception) {
-                if (isRunning) AppLog.e("NativeAA: Secondary HFP server error ['$serviceName' $addr]: ${e.message}", e)
-                else AppLog.d("NativeAA: Secondary HFP server closed cleanly ['$serviceName' $addr].")
+                if (isRunning) AppLog.e("NativeAA: Secondary HFP server error ['$serviceName' $radioName]: ${e.message}", e)
+                else AppLog.d("NativeAA: Secondary HFP server closed cleanly ['$serviceName' $radioName].")
             }
         }
     }
