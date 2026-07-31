@@ -31,17 +31,13 @@ class NativeAaHandshakeManager(
     companion object {
         private val AA_UUID = UUID.fromString("4de17a00-52cb-11e6-bdf4-0800200c9a66")
         private val HFP_UUID = UUID.fromString("0000111e-0000-1000-8000-00805f9b34fb")
-        // Headset Profile Audio-Gateway role. Despite the old name this repo carried
-        // ("A2DP_SOURCE_UUID"), this is not A2DP Source (real assigned number
-        // 0000110a-0000-1000-8000-00805f9b34fb) - confirmed against two independent open-source
-        // wireless Android Auto implementations (nisargjhaveri/WirelessAndroidAutoDongle,
-        // mossyhub/openautolink), which both use this exact UUID as a phone-wake target.
-        private val HSP_AG_UUID = UUID.fromString("00001112-0000-1000-8000-00805f9b34fb")
-        // Hands-Free Profile Audio-Gateway role. openautolink's _connect_device() tries this
-        // first, falling back to HSP_AG_UUID - mirrored here for the same reason: HFP is the
-        // more modern profile and more likely what a given phone/OEM stack gates wireless AA
-        // detection on.
-        private val HFP_AG_UUID = UUID.fromString("0000111f-0000-1000-8000-00805f9b34fb")
+        // Phone-wake targets, tried HFP then HSP (mirrors openautolink's ConnectProfile
+        // fallback chain). HSP_AG_UUID is the old "A2DP_SOURCE_UUID" - despite that name it was
+        // never A2DP Source (real assigned number 0000110a-...); both UUIDs are confirmed
+        // against nisargjhaveri/WirelessAndroidAutoDongle and mossyhub/openautolink, which use
+        // the same pair for this exact purpose.
+        private val HSP_AG_UUID = UUID.fromString("00001112-0000-1000-8000-00805f9b34fb") // Headset Profile AG
+        private val HFP_AG_UUID = UUID.fromString("0000111f-0000-1000-8000-00805f9b34fb") // Hands-Free Profile AG
         private const val HANDSHAKE_RESPONSE_TIMEOUT_MS = 15_000L
 
         /** Which of [allServiceNames] are secondary Bluetooth radios, i.e. not [primaryServiceName]
