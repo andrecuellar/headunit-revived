@@ -302,6 +302,14 @@
     <string name="log_saved_to">Log zapisany w:\n%s</string>
     <string name="share">Udostępnij</string>
     <string name="close">Zamknij</string>
+    <string name="rename_notice_title">Headunit Revived to teraz Open Headunit</string>
+    <string name="rename_notice_message">Ta aplikacja staje się Open Headunit, czyli świeży start pod nową nazwą. Aby zachować swoją konfigurację, zapisz tutaj kopię zapasową ustawień, a następnie zainstaluj Open Headunit i przywróć ją podczas konfiguracji.</string>
+    <string name="rename_notice_save_backup">Zapisz kopię zapasową</string>
+    <string name="rename_notice_get_app">Pobierz Open Headunit</string>
+    <string name="rename_notice_later">Później</string>
+    <string name="rename_notice_backup_saved_title">Kopia zapasowa zapisana</string>
+    <string name="rename_notice_backup_saved_message">Teraz zainstaluj Open Headunit i przywróć tę kopię zapasową podczas konfiguracji.</string>
+    <string name="rename_notice_export_failed">Nie udało się zapisać kopii zapasowej. Spróbuj ponownie.</string>
     <string name="failed_export_logs">Eksport logów nieudany</string>
     <string name="failed_export_in_silent_logs">Nie można wyeksportować dzienników: wybrano cichy poziom rejestrowania</string>
     <string name="switching_to_android_auto">Przełączanie do Android Auto…</string>

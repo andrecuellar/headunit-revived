@@ -327,6 +327,14 @@
     <string name="log_saved_to">Log được lưu tại:\n%s</string>
     <string name="share">Chia sẻ</string>
     <string name="close">Đóng</string>
+    <string name="rename_notice_title">Headunit Revived nay là Open Headunit</string>
+    <string name="rename_notice_message">Ứng dụng này đang trở thành Open Headunit, một khởi đầu mới với tên gọi mới. Để giữ lại thiết lập của bạn, hãy lưu bản sao lưu cài đặt tại đây, sau đó cài Open Headunit và khôi phục trong lúc thiết lập.</string>
+    <string name="rename_notice_save_backup">Lưu bản sao lưu</string>
+    <string name="rename_notice_get_app">Tải Open Headunit</string>
+    <string name="rename_notice_later">Để sau</string>
+    <string name="rename_notice_backup_saved_title">Đã lưu bản sao lưu</string>
+    <string name="rename_notice_backup_saved_message">Giờ hãy cài Open Headunit và khôi phục bản sao lưu này trong lúc thiết lập.</string>
+    <string name="rename_notice_export_failed">Không thể lưu bản sao lưu. Vui lòng thử lại.</string>
     <string name="failed_export_logs">Xuất log thất bại</string>
     <string name="failed_export_in_silent_logs">Không thể xuất log: Đang chọn mức log Silent</string>
     <string name="switching_to_android_auto">Đang chuyển sang Android Auto…</string>

@@ -302,6 +302,14 @@
     <string name="log_saved_to">Log salvo em:\n%s</string>
     <string name="share">Compartilhar</string>
     <string name="close">Fechar</string>
+    <string name="rename_notice_title">O Headunit Revived agora é o Open Headunit</string>
+    <string name="rename_notice_message">Este app está se tornando o Open Headunit, um recomeço com um novo nome. Para manter sua configuração, salve um backup das suas configurações aqui, depois instale o Open Headunit e restaure durante a configuração.</string>
+    <string name="rename_notice_save_backup">Salvar um backup</string>
+    <string name="rename_notice_get_app">Baixar o Open Headunit</string>
+    <string name="rename_notice_later">Depois</string>
+    <string name="rename_notice_backup_saved_title">Backup salvo</string>
+    <string name="rename_notice_backup_saved_message">Agora instale o Open Headunit e restaure este backup durante a configuração.</string>
+    <string name="rename_notice_export_failed">Não foi possível salvar o backup. Tente novamente.</string>
     <string name="failed_export_logs">Falha ao exportar logs</string>
     <string name="failed_export_in_silent_logs">Não é possível exportar os registros: nível de registro Silencioso selecionado</string>
     <string name="switching_to_android_auto">Alternando para Android Auto…</string>

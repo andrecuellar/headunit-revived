@@ -302,6 +302,14 @@
     <string name="log_saved_to">Журнал збережено в:\n%s</string>
     <string name="share">Поділитися</string>
     <string name="close">Закрити</string>
+    <string name="rename_notice_title">Headunit Revived тепер Open Headunit</string>
+    <string name="rename_notice_message">Цей застосунок стає Open Headunit, новий початок під новою назвою. Щоб зберегти свої налаштування, створіть тут резервну копію, потім встановіть Open Headunit і відновіть її під час налаштування.</string>
+    <string name="rename_notice_save_backup">Зберегти копію</string>
+    <string name="rename_notice_get_app">Отримати Open Headunit</string>
+    <string name="rename_notice_later">Пізніше</string>
+    <string name="rename_notice_backup_saved_title">Копію збережено</string>
+    <string name="rename_notice_backup_saved_message">Тепер встановіть Open Headunit і відновіть цю копію під час його налаштування.</string>
+    <string name="rename_notice_export_failed">Не вдалося зберегти копію. Спробуйте ще раз.</string>
     <string name="failed_export_logs">Помилка експорту журналу</string>
     <string name="failed_export_in_silent_logs">Не вдалося експортувати логи: вибрано рівень логування Silent</string>
     <string name="switching_to_android_auto">Перемикання на Android Auto…</string>

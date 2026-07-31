@@ -301,6 +301,14 @@
     <string name="log_saved_to">Log opgeslagen in:\n%s</string>
     <string name="share">Delen</string>
     <string name="close">Sluiten</string>
+    <string name="rename_notice_title">Headunit Revived is nu Open Headunit</string>
+    <string name="rename_notice_message">Deze app wordt Open Headunit, een frisse start met een nieuwe naam. Om je configuratie te behouden, sla hier een back-up van je instellingen op, installeer daarna Open Headunit en zet de back-up terug tijdens de installatie.</string>
+    <string name="rename_notice_save_backup">Back-up opslaan</string>
+    <string name="rename_notice_get_app">Open Headunit downloaden</string>
+    <string name="rename_notice_later">Later</string>
+    <string name="rename_notice_backup_saved_title">Back-up opgeslagen</string>
+    <string name="rename_notice_backup_saved_message">Installeer nu Open Headunit en zet deze back-up terug tijdens de installatie.</string>
+    <string name="rename_notice_export_failed">Kon de back-up niet opslaan. Probeer het opnieuw.</string>
     <string name="failed_export_logs">Exporteren van logs mislukt</string>
     <string name="failed_export_in_silent_logs">Kan de logbestanden niet exporteren: Stille logboekregistratie geselecteerd</string>
     <string name="switching_to_android_auto">Overschakelen naar Android Auto…</string>

@@ -302,6 +302,14 @@
     <string name="log_saved_to">Protokol uložen do:\n%s</string>
     <string name="share">Sdílet</string>
     <string name="close">Zavřít</string>
+    <string name="rename_notice_title">Headunit Revived je nyní Open Headunit</string>
+    <string name="rename_notice_message">Tato aplikace se stává Open Headunit, nový začátek pod novým jménem. Pokud si chcete zachovat své nastavení, uložte si zde zálohu nastavení, poté nainstalujte Open Headunit a obnovte ji během jeho nastavení.</string>
+    <string name="rename_notice_save_backup">Uložit zálohu</string>
+    <string name="rename_notice_get_app">Získat Open Headunit</string>
+    <string name="rename_notice_later">Později</string>
+    <string name="rename_notice_backup_saved_title">Záloha uložena</string>
+    <string name="rename_notice_backup_saved_message">Nyní nainstalujte Open Headunit a obnovte tuto zálohu během jeho nastavení.</string>
+    <string name="rename_notice_export_failed">Zálohu se nepodařilo uložit. Zkuste to prosím znovu.</string>
     <string name="failed_export_logs">Export protokolů selhal</string>
     <string name="failed_export_in_silent_logs">Nelze exportovat protokoly: vybrána úroveň tichého protokolování</string>
     <string name="switching_to_android_auto">Přepínání do Android Auto…</string>

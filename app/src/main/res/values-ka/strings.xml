@@ -359,6 +359,14 @@
     <string name="log_saved_to">ლოგი შენახულია აქ:\n%s</string>
     <string name="share">გაზიარება</string>
     <string name="close">დახურვა</string>
+    <string name="rename_notice_title">Headunit Revived ახლა Open Headunit-ია</string>
+    <string name="rename_notice_message">ეს აპლიკაცია ხდება Open Headunit, ახალი დასაწყისი ახალი სახელით. თქვენი კონფიგურაციის შესანარჩუნებლად, შეინახეთ პარამეტრების სარეზერვო ასლი აქ, შემდეგ დააინსტალირეთ Open Headunit და აღადგინეთ იგი დაყენების დროს.</string>
+    <string name="rename_notice_save_backup">სარეზერვო ასლის შენახვა</string>
+    <string name="rename_notice_get_app">Open Headunit-ის მიღება</string>
+    <string name="rename_notice_later">მოგვიანებით</string>
+    <string name="rename_notice_backup_saved_title">სარეზერვო ასლი შენახულია</string>
+    <string name="rename_notice_backup_saved_message">ახლა დააინსტალირეთ Open Headunit და აღადგინეთ ეს სარეზერვო ასლი მისი დაყენების დროს.</string>
+    <string name="rename_notice_export_failed">სარეზერვო ასლის შენახვა ვერ მოხერხდა. გთხოვთ, სცადოთ ხელახლა.</string>
     <string name="failed_export_logs">ლოგების ექსპორტი ჩაიშალა</string>
     <string name="failed_export_in_silent_logs">ლოგების ექსპორტი შეუძლებელია: არჩეულია ჩუმი (Silent) ლოგირების დონე</string>
     <string name="switching_to_android_auto">მიმდინარეობს Android Auto-ზე გადართვა…</string>

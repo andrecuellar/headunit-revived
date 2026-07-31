@@ -17,6 +17,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.activity.result.contract.ActivityResultContracts
 import android.content.pm.PackageManager
 import android.net.ConnectivityManager
+import android.net.Uri
 import android.os.Build
 import androidx.fragment.app.Fragment
 import androidx.core.content.ContextCompat
@@ -40,6 +41,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.collect
 import com.andrerinas.headunitrevived.utils.Settings
+import com.andrerinas.headunitrevived.utils.SettingsBackupManager
 import com.andrerinas.headunitrevived.utils.VpnControl
 import com.andrerinas.headunitrevived.utils.BluetoothHelper
 import com.andrerinas.headunitrevived.connection.UsbReceiver
@@ -68,6 +70,11 @@ class HomeFragment : Fragment() {
             Toast.makeText(requireContext(), R.string.bt_permission_denied, Toast.LENGTH_LONG).show()
         }
     }
+
+    // Rename notice: lets the user save a settings backup before moving to Open Headunit.
+    private val exportBackupLauncher = registerForActivityResult(
+        ActivityResultContracts.CreateDocument(SettingsBackupManager.MIME_TYPE)
+    ) { uri -> uri?.let { exportBackupTo(it) } }
 
     private lateinit var self_mode_button: Button
     private lateinit var usb: Button
@@ -612,12 +619,42 @@ class HomeFragment : Fragment() {
         updateProjectionButtonText()
         updateButtonStyle()
         updateTextColors()
+        RenameNotice.maybeShow(requireActivity(), App.provide(requireContext()).settings) {
+            exportBackupLauncher.launch(SettingsBackupManager.defaultFileName())
+        }
     }
 
     override fun onPause() {
         super.onPause()
         activeDialog?.dismiss()
         activeDialog = null
+        RenameNotice.dismiss()
+    }
+
+    /** Writes the settings backup the user picked, then points them to Open Headunit. */
+    private fun exportBackupTo(uri: Uri) {
+        val appContext = requireContext().applicationContext
+        viewLifecycleOwner.lifecycleScope.launch {
+            try {
+                withContext(Dispatchers.IO) { SettingsBackupManager.exportToUri(appContext, uri) }
+                showBackupSavedPrompt()
+            } catch (e: Exception) {
+                if (e is kotlinx.coroutines.CancellationException) throw e
+                Toast.makeText(requireContext(), getString(R.string.rename_notice_export_failed), Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
+    private fun showBackupSavedPrompt() {
+        MaterialAlertDialogBuilder(requireContext(), R.style.DarkAlertDialog)
+            .setTitle(R.string.rename_notice_backup_saved_title)
+            .setMessage(R.string.rename_notice_backup_saved_message)
+            .setPositiveButton(R.string.rename_notice_get_app) { d, _ ->
+                d.dismiss()
+                RenameNotice.openListing(requireActivity())
+            }
+            .setNegativeButton(R.string.close, null)
+            .show()
     }
 
     private fun showNativeAaDeviceSelector() {

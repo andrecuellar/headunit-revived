@@ -314,6 +314,14 @@
     <string name="log_saved_to">Günlük şuraya kaydedildi:\n%s</string>
     <string name="share">Paylaş</string>
     <string name="close">Kapat</string>
+    <string name="rename_notice_title">Headunit Revived artık Open Headunit</string>
+    <string name="rename_notice_message">Bu uygulama Open Headunit oluyor, yeni bir adla taze bir başlangıç. Ayarlarınızı korumak için buradan bir yedek kaydedin, ardından Open Headunit\'i kurup kurulum sırasında geri yükleyin.</string>
+    <string name="rename_notice_save_backup">Yedek kaydet</string>
+    <string name="rename_notice_get_app">Open Headunit\'i edinin</string>
+    <string name="rename_notice_later">Daha sonra</string>
+    <string name="rename_notice_backup_saved_title">Yedek kaydedildi</string>
+    <string name="rename_notice_backup_saved_message">Şimdi Open Headunit\'i kurun ve kurulumu sırasında bu yedeği geri yükleyin.</string>
+    <string name="rename_notice_export_failed">Yedek kaydedilemedi. Lütfen tekrar deneyin.</string>
     <string name="failed_export_logs">Günlükler dışa aktarılamadı</string>
     <string name="failed_export_in_silent_logs">Günlükler dışa aktarılamıyor: Sessiz günlükleme seviyesi seçildi</string>
     <string name="switching_to_android_auto">Android Auto\'ya geçiliyor…</string>

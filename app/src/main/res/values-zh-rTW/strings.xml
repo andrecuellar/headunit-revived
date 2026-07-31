@@ -301,6 +301,14 @@
     <string name="log_saved_to">日誌儲存至：\n%s</string>
     <string name="share">分享</string>
     <string name="close">關閉</string>
+    <string name="rename_notice_title">Headunit Revived 現已更名為 Open Headunit</string>
+    <string name="rename_notice_message">這款應用程式即將成為 Open Headunit，以全新名稱重新出發。若要保留您的設定，請在此儲存設定備份，接著安裝 Open Headunit 並在設定過程中還原。</string>
+    <string name="rename_notice_save_backup">儲存備份</string>
+    <string name="rename_notice_get_app">取得 Open Headunit</string>
+    <string name="rename_notice_later">稍後</string>
+    <string name="rename_notice_backup_saved_title">備份已儲存</string>
+    <string name="rename_notice_backup_saved_message">現在請安裝 Open Headunit，並在其設定過程中還原此備份。</string>
+    <string name="rename_notice_export_failed">無法儲存備份，請再試一次。</string>
     <string name="failed_export_logs">匯出日誌失敗</string>
     <string name="failed_export_in_silent_logs">無法導出日誌：已選擇靜音日誌級別</string>
     <string name="switching_to_android_auto">切換至 Android Auto…</string>

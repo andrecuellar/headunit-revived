@@ -382,6 +382,12 @@ class Settings(private val context: Context) {
         }
         set(value) { prefs.edit().putInt("onboarding-version", value).apply() }
 
+    // One-time rename notice: the app is moving to Open Headunit. Spent when the user takes a
+    // migration action (saves a backup or opens the new app's listing).
+    var renameNoticeShown: Boolean
+        get() = prefs.getBoolean("rename_notice_shown_v2", false)
+        set(value) { prefs.edit().putBoolean("rename_notice_shown_v2", value).apply() }
+
     // How the user primarily connects. Drives which options are surfaced in the Basic tab
     // (e.g. cable users do not see the Wireless Connection group there). UNSET shows everything.
     var primaryConnection: ConnectionKind

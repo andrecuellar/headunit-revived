@@ -318,6 +318,14 @@
     <string name="log_saved_to">Log salvat în:\n%s</string>
     <string name="share">Distribuie</string>
     <string name="close">Închide</string>
+    <string name="rename_notice_title">Headunit Revived se numește acum Open Headunit</string>
+    <string name="rename_notice_message">Această aplicație devine Open Headunit, un nou început cu un nume nou. Ca să îți păstrezi configurarea, salvează aici o copie de rezervă a setărilor, apoi instalează Open Headunit și restaureaz-o în timpul configurării.</string>
+    <string name="rename_notice_save_backup">Salvează o copie</string>
+    <string name="rename_notice_get_app">Obține Open Headunit</string>
+    <string name="rename_notice_later">Mai târziu</string>
+    <string name="rename_notice_backup_saved_title">Copie de rezervă salvată</string>
+    <string name="rename_notice_backup_saved_message">Acum instalează Open Headunit și restaurează această copie de rezervă în timpul configurării.</string>
+    <string name="rename_notice_export_failed">Copia de rezervă nu a putut fi salvată. Încearcă din nou.</string>
     <string name="failed_export_logs">Exportul logurilor a eșuat</string>
     <string name="failed_export_in_silent_logs">Nu se pot exporta jurnalele: nivelul jurnalului Silențios selectat</string>
     <string name="switching_to_android_auto">Se trece la Android Auto…</string>

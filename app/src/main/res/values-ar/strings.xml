@@ -302,6 +302,14 @@
     <string name="log_saved_to">تم حفظ السجل في:\n%s</string>
     <string name="share">مشاركة</string>
     <string name="close">إغلاق</string>
+    <string name="rename_notice_title">Headunit Revived أصبح الآن Open Headunit</string>
+    <string name="rename_notice_message">هذا التطبيق يتحول إلى Open Headunit، بداية جديدة باسم جديد. للاحتفاظ بإعداداتك، احفظ نسخة احتياطية من إعداداتك هنا، ثم ثبّت Open Headunit واستعدها أثناء الإعداد.</string>
+    <string name="rename_notice_save_backup">حفظ نسخة احتياطية</string>
+    <string name="rename_notice_get_app">الحصول على Open Headunit</string>
+    <string name="rename_notice_later">لاحقًا</string>
+    <string name="rename_notice_backup_saved_title">تم حفظ النسخة الاحتياطية</string>
+    <string name="rename_notice_backup_saved_message">الآن ثبّت Open Headunit واستعد هذه النسخة الاحتياطية أثناء إعداده.</string>
+    <string name="rename_notice_export_failed">تعذر حفظ النسخة الاحتياطية. يرجى المحاولة مرة أخرى.</string>
     <string name="failed_export_logs">فشل تصدير السجلات</string>
     <string name="failed_export_in_silent_logs">تعذر تصدير السجلات: تم تحديد مستوى التسجيل الصامت</string>
     <string name="switching_to_android_auto">جار التبديل إلى Android Auto…</string>

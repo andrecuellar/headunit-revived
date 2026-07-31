@@ -302,6 +302,14 @@
     <string name="log_saved_to">Registro guardado en:\n%s</string>
     <string name="share">Compartir</string>
     <string name="close">Cerrar</string>
+    <string name="rename_notice_title">Headunit Revived ahora es Open Headunit</string>
+    <string name="rename_notice_message">Esta aplicación se está convirtiendo en Open Headunit, un nuevo comienzo con un nuevo nombre. Para conservar tu configuración, guarda aquí una copia de seguridad de tus ajustes, luego instala Open Headunit y restáurala durante la configuración.</string>
+    <string name="rename_notice_save_backup">Guardar copia</string>
+    <string name="rename_notice_get_app">Obtener Open Headunit</string>
+    <string name="rename_notice_later">Más tarde</string>
+    <string name="rename_notice_backup_saved_title">Copia guardada</string>
+    <string name="rename_notice_backup_saved_message">Ahora instala Open Headunit y restaura esta copia de seguridad durante su configuración.</string>
+    <string name="rename_notice_export_failed">No se pudo guardar la copia de seguridad. Inténtalo de nuevo.</string>
     <string name="failed_export_logs">Error al exportar registros</string>
     <string name="failed_export_in_silent_logs">No se pueden exportar los registros: nivel de registro silencioso seleccionado</string>
     <string name="switching_to_android_auto">Cambiando a Android Auto…</string>

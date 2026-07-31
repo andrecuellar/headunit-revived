@@ -301,6 +301,14 @@
     <string name="log_saved_to">Naplók elmentve ide:\n%s</string>
     <string name="share">Megosztás</string>
     <string name="close">Bezárás</string>
+    <string name="rename_notice_title">A Headunit Revived mostantól Open Headunit</string>
+    <string name="rename_notice_message">Ez az alkalmazás Open Headunit néven folytatódik, egy új kezdet egy új névvel. A beállításaid megőrzéséhez ments egy biztonsági mentést itt, majd telepítsd az Open Headunit alkalmazást, és a beállítás során állítsd vissza.</string>
+    <string name="rename_notice_save_backup">Mentés</string>
+    <string name="rename_notice_get_app">Open Headunit letöltése</string>
+    <string name="rename_notice_later">Később</string>
+    <string name="rename_notice_backup_saved_title">Mentés elkészült</string>
+    <string name="rename_notice_backup_saved_message">Most telepítsd az Open Headunit alkalmazást, és a beállítás során állítsd vissza ezt a mentést.</string>
+    <string name="rename_notice_export_failed">Nem sikerült menteni a biztonsági mentést. Kérlek, próbáld újra.</string>
     <string name="failed_export_logs">Naplók exportálása sikertelen</string>
     <string name="failed_export_in_silent_logs">A naplók exportálása nem sikerült: Csendes naplózási szint kiválasztva</string>
     <string name="switching_to_android_auto">Váltás Android Auto-ra…</string>

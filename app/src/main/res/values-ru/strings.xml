@@ -305,6 +305,14 @@
     <string name="log_saved_to">Лог сохранен в:\n%s</string>
     <string name="share">Поделиться</string>
     <string name="close">Закрыть</string>
+    <string name="rename_notice_title">Headunit Revived теперь называется Open Headunit</string>
+    <string name="rename_notice_message">Это приложение становится Open Headunit, новый старт под новым именем. Чтобы сохранить свою конфигурацию, создайте здесь резервную копию настроек, затем установите Open Headunit и восстановите её при настройке.</string>
+    <string name="rename_notice_save_backup">Сохранить копию</string>
+    <string name="rename_notice_get_app">Установить Open Headunit</string>
+    <string name="rename_notice_later">Позже</string>
+    <string name="rename_notice_backup_saved_title">Копия сохранена</string>
+    <string name="rename_notice_backup_saved_message">Теперь установите Open Headunit и восстановите эту резервную копию при настройке.</string>
+    <string name="rename_notice_export_failed">Не удалось сохранить резервную копию. Попробуйте ещё раз.</string>
     <string name="failed_export_logs">Ошибка экспорта логов</string>
     <string name="failed_export_in_silent_logs">Невозможно экспортировать логи: выбран Silent уровень логирования</string>
     <string name="switching_to_android_auto">Переключение в Android Auto…</string>

@@ -573,6 +573,16 @@
     <string name="log_saved_to">Log saved to:\n%s</string>
     <string name="share">Share</string>
     <string name="close">Close</string>
+
+    <!-- Rename notice (migration to Open Headunit) -->
+    <string name="rename_notice_title">Headunit Revived is now Open Headunit</string>
+    <string name="rename_notice_message">This app is becoming Open Headunit, a fresh start with a new name. To keep your setup, save a backup of your settings here, then install Open Headunit and restore it during setup.</string>
+    <string name="rename_notice_save_backup">Save a backup</string>
+    <string name="rename_notice_get_app">Get Open Headunit</string>
+    <string name="rename_notice_later">Later</string>
+    <string name="rename_notice_backup_saved_title">Backup saved</string>
+    <string name="rename_notice_backup_saved_message">Now install Open Headunit and restore this backup during its setup.</string>
+    <string name="rename_notice_export_failed">Could not save the backup. Please try again.</string>
     <string name="failed_export_logs">Failed to export logs</string>
     <string name="failed_export_in_silent_logs">Unable to export logs: Silent logging level selected</string>
     <string name="switching_to_android_auto">Switching to Android Auto…</string>
