@@ -1187,6 +1187,12 @@ class Settings(private val context: Context) {
         get() = prefs.getString("bluetooth-manager-service-name", "bluetooth_manager")!!
         set(value) = prefs.edit().putString("bluetooth-manager-service-name", value).apply()
 
+    // Manual fallback for dual-radio head units whose second radio isn't discoverable via
+    // ServiceManager.listServices() at all. Empty = disabled (rely on automatic discovery only).
+    var manualSecondaryBluetoothServiceName: String
+        get() = prefs.getString("manual-secondary-bt-service-name", "")!!
+        set(value) = prefs.edit().putString("manual-secondary-bt-service-name", value).apply()
+
     var hotspotSsid: String
         get() = prefs.getString("hotspot-ssid", "")!!
         set(value) = prefs.edit().putString("hotspot-ssid", value).apply()

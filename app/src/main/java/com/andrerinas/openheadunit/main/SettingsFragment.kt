@@ -128,6 +128,7 @@ class SettingsFragment : Fragment() {
     private var pendingWaitForWifi: Boolean? = null
     private var pendingWaitForWifiTimeout: Int? = null
     private var pendingBluetoothManagerServiceName: String? = null
+    private var pendingManualSecondaryBluetoothServiceName: String? = null
 
     // Flag to determine if the projection should stretch to fill the screen
     private var pendingStretchToFill: Boolean? = null
@@ -252,6 +253,7 @@ class SettingsFragment : Fragment() {
         pendingWaitForWifi = settings.waitForWifiBeforeWifiDirect
         pendingWaitForWifiTimeout = settings.waitForWifiTimeout
         pendingBluetoothManagerServiceName = settings.bluetoothManagerServiceName
+        pendingManualSecondaryBluetoothServiceName = settings.manualSecondaryBluetoothServiceName
 
         pendingInsetLeft = settings.insetLeft
         pendingInsetTop = settings.insetTop
@@ -351,6 +353,7 @@ class SettingsFragment : Fragment() {
         pendingWaitForWifi = settings.waitForWifiBeforeWifiDirect
         pendingWaitForWifiTimeout = settings.waitForWifiTimeout
         pendingBluetoothManagerServiceName = settings.bluetoothManagerServiceName
+        pendingManualSecondaryBluetoothServiceName = settings.manualSecondaryBluetoothServiceName
         pendingInsetLeft = settings.insetLeft
         pendingInsetTop = settings.insetTop
         pendingInsetRight = settings.insetRight
@@ -479,6 +482,7 @@ class SettingsFragment : Fragment() {
         pendingWaitForWifi?.let { settings.waitForWifiBeforeWifiDirect = it }
         pendingWaitForWifiTimeout?.let { settings.waitForWifiTimeout = it }
         pendingBluetoothManagerServiceName?.let { settings.bluetoothManagerServiceName = it }
+        pendingManualSecondaryBluetoothServiceName?.let { settings.manualSecondaryBluetoothServiceName = it }
 
         pendingInsetLeft?.let { settings.insetLeft = it }
         pendingInsetTop?.let { settings.insetTop = it }
@@ -582,6 +586,7 @@ class SettingsFragment : Fragment() {
                         pendingWaitForWifi != settings.waitForWifiBeforeWifiDirect ||
                         pendingWaitForWifiTimeout != settings.waitForWifiTimeout ||
                         pendingBluetoothManagerServiceName != settings.bluetoothManagerServiceName ||
+                        pendingManualSecondaryBluetoothServiceName != settings.manualSecondaryBluetoothServiceName ||
                         pendingUseLibusb != settings.useLibusb
 
         hasChanges = anyChange
@@ -809,6 +814,27 @@ class SettingsFragment : Fragment() {
                             updateSettingsList()
                         }
                         .show()
+                }
+            ))
+
+            val manualSecondary = pendingManualSecondaryBluetoothServiceName
+            items.add(SettingItem.SettingEntry(
+                stableId = "manualSecondaryBluetoothService",
+                nameResId = R.string.manual_secondary_bt_service_title,
+                value = if (manualSecondary.isNullOrEmpty()) getString(R.string.auto)
+                         else BluetoothHelper.getAdapterDescription(requireContext(), manualSecondary),
+                onClick = { _ ->
+                    DialogUtils.showTextInputDialogWithMessage(
+                        requireContext(),
+                        R.string.manual_secondary_bt_service_title,
+                        R.string.manual_secondary_bt_service_message,
+                        manualSecondary ?: "",
+                        { newVal ->
+                            pendingManualSecondaryBluetoothServiceName = newVal.trim()
+                            checkChanges()
+                            updateSettingsList()
+                        }
+                    )
                 }
             ))
         }

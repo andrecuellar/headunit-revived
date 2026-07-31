@@ -220,11 +220,28 @@ class NativeAaHandshakeManager(
         val handles = try {
             BluetoothHelper.getAllBluetoothAdapterHandles(context)
         } catch (e: Exception) { emptyList() }
+
+        // Manual fallback: some ROMs' second radio isn't discoverable via
+        // ServiceManager.listServices() at all (blocked, or named without "bluetooth"), so
+        // automatic enumeration never finds it. Let the user force it by exact system service
+        // name instead.
+        val manualServiceName = settings.manualSecondaryBluetoothServiceName
+        val allHandles = if (manualServiceName.isNotEmpty() && handles.none { it.serviceName == manualServiceName }) {
+            val manualHandle = try { BluetoothHelper.getAdapterHandleForService(context, manualServiceName) } catch (e: Exception) { null }
+            if (manualHandle != null) {
+                AppLog.i("NativeAA: Manual secondary Bluetooth service '$manualServiceName' resolved successfully.")
+                handles + manualHandle
+            } else {
+                AppLog.w("NativeAA: Manual secondary Bluetooth service '$manualServiceName' could not be resolved to a working adapter.")
+                handles
+            }
+        } else handles
+
         val secondaryNames = filterSecondaryServiceNames(
             settings.bluetoothManagerServiceName,
-            handles.map { it.serviceName }
+            allHandles.map { it.serviceName }
         ).toSet()
-        val secondaries = handles.filter { it.serviceName in secondaryNames }
+        val secondaries = allHandles.filter { it.serviceName in secondaryNames }
         if (secondaries.isNotEmpty()) {
             AppLog.i("NativeAA: Opening AA listeners on ${secondaries.size} secondary Bluetooth radio(s) for dual-radio head units: ${secondaries.joinToString { it.serviceName }}")
             secondaries.forEach { launchExtraServers(it.serviceName, it.adapter) }

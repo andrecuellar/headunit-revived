@@ -89,6 +89,16 @@ object BluetoothHelper {
     fun getAllBluetoothAdapters(context: Context): List<BluetoothAdapter> =
         getAllBluetoothAdapterHandles(context).map { it.adapter }
 
+    /** Resolve a single, arbitrary system service name to a BluetoothAdapterHandle, if it backs a
+     *  real, enabled adapter. Used for the manual secondary-radio override in Settings, where the
+     *  user supplies a service name automatic discovery (listBluetoothServices()) didn't find. */
+    fun getAdapterHandleForService(context: Context, serviceName: String): BluetoothAdapterHandle? {
+        if (serviceName.isEmpty()) return null
+        val adapter = adapterForService(context, serviceName) ?: return null
+        return try { if (adapter.isEnabled) BluetoothAdapterHandle(serviceName, adapter) else null }
+        catch (e: Exception) { null }
+    }
+
     fun listBluetoothServices(): List<String> {
         val bluetoothServices = mutableListOf<String>()
         try {
