@@ -22,8 +22,12 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.IntentCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.activity.result.contract.ActivityResultContracts
+import android.net.Uri
 import androidx.lifecycle.repeatOnLifecycle
 import com.andrerinas.headunitrevived.App
+import com.andrerinas.headunitrevived.main.RenameNotice
+import com.andrerinas.headunitrevived.utils.SettingsBackupManager
 import com.andrerinas.headunitrevived.R
 import com.andrerinas.headunitrevived.aap.protocol.messages.TouchEvent
 import com.andrerinas.headunitrevived.aap.protocol.messages.VideoFocusEvent
@@ -66,6 +70,12 @@ class AapProjectionActivity : SurfaceActivity(), IProjectionView.Callbacks, Vide
 
     private lateinit var projectionView: IProjectionView
     private val videoDecoder: VideoDecoder by lazy { App.provide(this).videoDecoder }
+
+    // Rename notice: lets the user save a settings backup before moving to Open Headunit, offered
+    // on top of the projection too so users who auto-connect straight into it still see it.
+    private val exportBackupLauncher = registerForActivityResult(
+        ActivityResultContracts.CreateDocument(SettingsBackupManager.MIME_TYPE)
+    ) { uri: Uri? -> uri?.let { RenameNotice.exportBackup(this, it, lifecycleScope) } }
     private val settings: Settings by lazy { Settings(this) }
     private val cachedKeyCodes: Map<Int, Int> by lazy { settings.keyCodes }
     private var isSurfaceSet = false
@@ -545,6 +555,7 @@ class AapProjectionActivity : SurfaceActivity(), IProjectionView.Callbacks, Vide
         isForeground = false
         AppLog.i("AapProjectionActivity: onPause")
         super.onPause()
+        RenameNotice.dismiss()
         // Clear any activity-local fullscreen override when leaving the Activity so
         // the stored settings remain authoritative on next resume.
         activityFullscreenOverride = null
@@ -574,6 +585,9 @@ class AapProjectionActivity : SurfaceActivity(), IProjectionView.Callbacks, Vide
         super.onResume()
         isForeground = true
         AppLog.i("AapProjectionActivity: onResume")
+        RenameNotice.maybeShow(this, App.provide(this).settings) {
+            exportBackupLauncher.launch(SettingsBackupManager.defaultFileName())
+        }
         applyStickyOrientation()
         watchdogHandler.postDelayed(watchdogRunnable, 2000)
         watchdogHandler.postDelayed(videoWatchdogRunnable, 3000)

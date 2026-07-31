@@ -74,7 +74,7 @@ class HomeFragment : Fragment() {
     // Rename notice: lets the user save a settings backup before moving to Open Headunit.
     private val exportBackupLauncher = registerForActivityResult(
         ActivityResultContracts.CreateDocument(SettingsBackupManager.MIME_TYPE)
-    ) { uri -> uri?.let { exportBackupTo(it) } }
+    ) { uri -> uri?.let { RenameNotice.exportBackup(requireActivity(), it, viewLifecycleOwner.lifecycleScope) } }
 
     private lateinit var self_mode_button: Button
     private lateinit var usb: Button
@@ -629,32 +629,6 @@ class HomeFragment : Fragment() {
         activeDialog?.dismiss()
         activeDialog = null
         RenameNotice.dismiss()
-    }
-
-    /** Writes the settings backup the user picked, then points them to Open Headunit. */
-    private fun exportBackupTo(uri: Uri) {
-        val appContext = requireContext().applicationContext
-        viewLifecycleOwner.lifecycleScope.launch {
-            try {
-                withContext(Dispatchers.IO) { SettingsBackupManager.exportToUri(appContext, uri) }
-                showBackupSavedPrompt()
-            } catch (e: Exception) {
-                if (e is kotlinx.coroutines.CancellationException) throw e
-                Toast.makeText(requireContext(), getString(R.string.rename_notice_export_failed), Toast.LENGTH_LONG).show()
-            }
-        }
-    }
-
-    private fun showBackupSavedPrompt() {
-        MaterialAlertDialogBuilder(requireContext(), R.style.DarkAlertDialog)
-            .setTitle(R.string.rename_notice_backup_saved_title)
-            .setMessage(R.string.rename_notice_backup_saved_message)
-            .setPositiveButton(R.string.rename_notice_get_app) { d, _ ->
-                d.dismiss()
-                RenameNotice.openListing(requireActivity())
-            }
-            .setNegativeButton(R.string.close, null)
-            .show()
     }
 
     private fun showNativeAaDeviceSelector() {
